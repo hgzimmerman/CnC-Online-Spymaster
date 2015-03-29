@@ -81,15 +81,61 @@ public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
 
     @Override
     public JSONObject doInBackground(URL... params) {
-
-        JSONObject json = getJSONFromUrl();
-
-
-
-        return json;
+        return getJSONFromUrl();
     }
 
 
+    @Override
+    public void onPostExecute(JSONObject result){
+        try {
+
+            JSONObject game = result.getJSONObject("cnc3kw");
+
+            /*===START_PLAYERS===*/
+            JSONObject usersForGame = game.getJSONObject("users");
+
+            ArrayList<String> usersArray = new ArrayList<>();
+            Iterator<String> iter = usersForGame.keys();
+            while (iter.hasNext()) {
+                String key = iter.next();
+                try {
+                    JSONObject value = (JSONObject) usersForGame.get(key);
+                    usersArray.add(key);
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }
+            /*===END_PLAYERS===*/
+
+            JSONObject gameClasses = game.getJSONObject("games");
+            /*===START_LOBBY===*/
+            ArrayList<GameInLobby> gamesInLobbyArrList = getGames(gameClasses, "staging");
+            /*===END_LOBBY===*/
+            /*===Start_IN_PROGRESS===*/
+            ArrayList<GameInLobby> gamesInProgressArrList = getGames(gameClasses, "playing");
+             /*==End_IN_Progress===*/
+
+
+            //Refresh the data for each view.
+            PlayersFragment playerFrag = myActivity.mSectionsPagerAdapter.player;
+            playerFrag.refreshData(usersArray);
+
+            GamesFragment gamesFrag = myActivity.mSectionsPagerAdapter.lobby;
+            gamesFrag.refreshData(gamesInLobbyArrList);
+
+            GamesInProgressFragment progressFrag = myActivity.mSectionsPagerAdapter.inGame;
+            progressFrag.refreshData(gamesInProgressArrList);
+
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    /*
+     * Helper method for onPostExecute
+     * This gets and assembles all of the json data into an arraylist of games.
+     */
     public ArrayList<GameInLobby> getGames(JSONObject gameClasses, String typeOfGame) {
         ArrayList<GameInLobby> returnArr = new ArrayList<>();
 
@@ -123,69 +169,6 @@ public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
            e.printStackTrace();
         }
         return returnArr;
-    }
-
-    @Override
-    public void onPostExecute(JSONObject result){
-         try {
-
-
-            JSONObject game = result.getJSONObject("cnc3kw");
-            //Log.v(TAG, game.toString());
-
-            /*===START_PLAYERS===*/
-            JSONObject usersForGame = game.getJSONObject("users");
-            //Log.v(TAG, usersForGame.toString());
-
-            ArrayList<String> usersArray = new ArrayList<>();
-            Iterator<String> iter = usersForGame.keys();
-            while (iter.hasNext()) {
-                String key = iter.next();
-                try {
-                    JSONObject value = (JSONObject) usersForGame.get(key);
-                    usersArray.add(key);
-                    //Log.v(TAG, key);
-
-                    //Log.v(TAG, value.getJSONObject("nickname").toString());
-
-                } catch (JSONException e){
-                    e.printStackTrace();
-                }
-            }
-            /*===END_PLAYERS===*/
-
-            JSONObject gameClasses = game.getJSONObject("games");
-            /*===START_LOBBY===*/
-            ArrayList<GameInLobby> gamesInLobbyArrList = getGames(gameClasses, "staging");
-
-            /*===END_LOBBY===*/
-            /*===Start_IN_PROGRESS===*/
-            ArrayList<GameInLobby> gamesInProgressArrList = getGames(gameClasses, "playing");
-
-
-
-
-
-
-
-
-
-
-            PlayersFragment playerFrag = myActivity.mSectionsPagerAdapter.player;
-            playerFrag.refreshData(usersArray);
-
-            GamesFragment gamesFrag = myActivity.mSectionsPagerAdapter.lobby;
-            gamesFrag.refreshData(gamesInLobbyArrList);
-
-            GamesInProgressFragment progressFrag = myActivity.mSectionsPagerAdapter.inGame;
-            progressFrag.refreshData(gamesInProgressArrList);
-
-
-
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-
     }
 
 
