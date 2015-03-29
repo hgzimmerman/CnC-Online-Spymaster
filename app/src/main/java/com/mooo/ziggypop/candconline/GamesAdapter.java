@@ -62,7 +62,11 @@ public class GamesAdapter extends ArrayAdapter<GameInLobby> {
             tt2.setText(p.getMap());
         }
         if (tt3 != null) {
-            //tt3.setImageDrawable(getContext().getDrawable(R.id.lock));
+            if (p.getLockStatus()){
+                tt3.setVisibility(View.VISIBLE);
+            } else {
+                tt3.setVisibility(View.GONE);
+            }
         }
         if (tt4 != null) {
             tt4.setText(p.getPlayersFormat());

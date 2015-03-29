@@ -13,11 +13,15 @@ import java.util.ArrayList;
  * Created by ziggypop on 3/28/15.
  */
 public class PlayersAdapter extends ArrayAdapter<String>{
+
+    public ArrayList<String> myPlayers;
+
     public PlayersAdapter(Context context, int resource) {
         super(context, resource);
     }
-    public PlayersAdapter(Context context, int resource, String[] players) {
+    public PlayersAdapter(Context context, int resource, ArrayList<String> players) {
         super(context, resource, players);
+        myPlayers = players;
     }
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -41,6 +45,11 @@ public class PlayersAdapter extends ArrayAdapter<String>{
 
 
         return v;
+
+    }
+    @Override
+    public int getCount(){
+        return myPlayers.size();
 
     }
 }

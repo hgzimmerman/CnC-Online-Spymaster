@@ -9,12 +9,13 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
+        android:paddingStart="15dp"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
-        android:paddingRight="15dp"
+        android:paddingEnd="15dp"
+        android:layout_gravity="center_horizontal"
         android:background="@drawable/selector_card_background"
         android:descendantFocusability="afterDescendants">
 

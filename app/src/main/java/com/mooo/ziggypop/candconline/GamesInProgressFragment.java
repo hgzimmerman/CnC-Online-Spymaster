@@ -1,5 +1,6 @@
 package com.mooo.ziggypop.candconline;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * Created by ziggypop on 3/28/15.
  */
-public class GamesFragment extends ListFragment {
+public class GamesInProgressFragment extends ListFragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -26,13 +27,14 @@ public class GamesFragment extends ListFragment {
 
 
 
-    private List myList;
     private GamesAdapter mAdapter;
     private static ArrayList<GameInLobby> games = new ArrayList<>();
+    private boolean isAttached = false;
+    private static ArrayList<GameInLobby> failedToLoadGames = new ArrayList<>();
 
 
 
-    public GamesFragment() {
+    public GamesInProgressFragment() {
     }
 
     @Override
@@ -44,23 +46,34 @@ public class GamesFragment extends ListFragment {
         setListAdapter(mAdapter);
 
 
+
+        refreshData(failedToLoadGames);
         return rootView;
     }
 
+    @Override
+    public void onAttach(Activity activity){
+        super.onAttach(activity);
+        isAttached = true;
+    }
+
     public void refreshData(final ArrayList<GameInLobby> data){
-            getActivity().runOnUiThread(new Runnable() {
+        if(isAttached) {
+            Activity mActivity = getActivity();
+            mActivity.runOnUiThread(new Runnable() {
                 public void run() {
-                    Log.v("I AM RUNNING", "RUNNING");
+                    Log.v("GamesInProgressFragment", "RUNNING");
                     mAdapter.clear();
                     games.addAll(data);
                     mAdapter.notifyDataSetChanged();
                 }
 
-
             });
-
-
+        } else {
+            failedToLoadGames = data;
         }
 
-}
 
+    }
+
+}

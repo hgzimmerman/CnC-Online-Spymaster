@@ -1,77 +1,78 @@
 package com.mooo.ziggypop.candconline;
 
+/**
+ * Created by ziggypop on 3/29/15.
+ */
+
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by ziggypop on 3/28/15.
- */
-public class PlayersFragment extends ListFragment {
-
-
-
-    private ArrayAdapter<PlayerItem> listAdapter;
-    private ListView listView;
-    private Adapter mAdapter;
-
-    private static final String[] WORDS = { "Lorem", "ipsum", "dolor", "sit",
-            "amet", "consectetur", "adipiscing", "elit", "Fusce", "pharetra",
-            "luctus", "sodales" };
-    private List myList;
-
-    private static final String TAG = "com.mooo.ziggypop.candconline.PlayersFragment";
-
-
-     /**
-     * The fragment argument representing the section number for this
-     * fragment.
+     * A placeholder fragment containing a simple view.
      */
-    private static final String ARG_SECTION_NUMBER = "section_number";
+    public class PlayersFragment extends ListFragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        public static final String ARG_SECTION_NUMBER = "section_number";
 
 
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
-    public static PlayersFragment newInstance(int sectionNumber) {
-        PlayersFragment fragment = new PlayersFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-        fragment.setArguments(args);
-        return fragment;
-    }
+        private static ArrayList<String> wordsArr = new ArrayList<>();
+        private ArrayAdapter<String> mAdapter;
+        private boolean isAttached = false;
+
 
     public PlayersFragment() {
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.players_fragment, container, false);
-
-        myList = new ArrayList();
-        for( String element : WORDS){
-            myList.add(new PlayerItem(element));
         }
 
-        listAdapter = new PlayerListAdapter(getActivity(), myList);
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.players_fragment, container, false);
 
 
+            mAdapter = new PlayersAdapter(getActivity(), R.layout.list_item_card, wordsArr);
+
+            setListAdapter(mAdapter);
 
 
-        return rootView;
+            return rootView;
+        }
+
+        public void refreshData(final ArrayList<String> data){
+            if (isAttached) {
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        Log.v("PLAYER_FRAGMENT", "RUNNING");
+                        mAdapter.clear();
+                        wordsArr.addAll(data);
+                        mAdapter.notifyDataSetChanged();
+                    }
+
+
+                });
+            }
+        }
+
+    @Override
+    public void onAttach(Activity activity){
+        super.onAttach(activity);
+        isAttached = true;
     }
 
 
-}
+
+
+    }

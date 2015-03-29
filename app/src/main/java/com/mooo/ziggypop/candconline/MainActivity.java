@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,6 +27,8 @@ import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import org.json.JSONObject;
 //import android.support.v7.app.ActionBar;
 
 
@@ -69,7 +72,7 @@ public class MainActivity extends ActionBarActivity {
                 });
 
 
-
+        //JsonGetter.getJSONFromUrl();
 
         // Create a tab listener that is called when the user changes tabs.
         ActionBar.TabListener tabListener = new ActionBar.TabListener() {
@@ -95,6 +98,9 @@ public class MainActivity extends ActionBarActivity {
         actionBar.addTab(actionBar.newTab().setText("Lobbies").setTabListener(tabListener));
         actionBar.addTab(actionBar.newTab().setText("In Progress").setTabListener(tabListener));
 
+
+        new JsonGetter(this).execute();
+
     }
 
 
@@ -102,6 +108,7 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.refresh, menu); // find some src for this
         return true;
     }
 
@@ -116,6 +123,9 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id  == R.id.refresh_button){
+            new JsonGetter(this).execute();
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -127,24 +137,32 @@ public class MainActivity extends ActionBarActivity {
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        PlayersFragment player;
+        GamesFragment lobby;
+        GamesInProgressFragment inGame;
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
+            player = new PlayersFragment();
+            lobby = new GamesFragment();
+            inGame = new GamesInProgressFragment();
         }
 
         @Override
         public ListFragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
 
             ListFragment fragment;
-            if(position >= 1) {
-                fragment = new GamesFragment();
+            if(position == 2) {
+                fragment = inGame;
+
+            } else if( position == 1) {
+                fragment = lobby;
             } else {
-                fragment = new PlaceholderFragment();
+                fragment = player;
             }
             Bundle args = new Bundle();
-            args.putInt(PlaceholderFragment.ARG_SECTION_NUMBER, position+1);
+            args.putInt(PlayersFragment.ARG_SECTION_NUMBER, position+1);
             fragment.setArguments(args);
             return fragment;
 
@@ -172,42 +190,6 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends ListFragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
 
-
-        private static final String[] WORDS = { "Lorem", "ipsum", "dolor", "sit",
-                "amet", "consectetur", "adipiscing", "elit", "Fusce", "pharetra",
-                "luctus", "sodales" };
-        private List myList;
-        private ArrayAdapter<String> mAdapter;
-
-        private ListView listView;
-
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.players_fragment, container, false);
-            listView = (ListView) getActivity().findViewById(android.R.id.list);
-            mAdapter = new PlayersAdapter(getActivity(), R.layout.list_item_card, WORDS);
-            setListAdapter(mAdapter);
-
-
-            return rootView;
-        }
-
-
-    }
 
 }

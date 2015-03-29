@@ -13,7 +13,8 @@ public class GameInLobby {
     private String map;
 
 
-    public GameInLobby(String title, String slots, ArrayList<String> players, boolean isLocked, String map) {
+    public GameInLobby(String title, String slots, ArrayList<String> players,
+                       boolean isLocked, String map) {
         gameTitle = title;
         lobbySlots = slots;
         this.map = map;
