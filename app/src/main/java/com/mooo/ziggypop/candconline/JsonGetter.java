@@ -110,6 +110,7 @@ public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
                 }
                 //get the map name and remove all characters before the last "/"
                 String map = lobby.get("map").toString();
+                map = map.substring(map.lastIndexOf('/'));
 
                 /* TODO: add locked status */
                 String lock = lobby.get("pw").toString();
