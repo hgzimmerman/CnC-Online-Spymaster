@@ -6,10 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +25,7 @@ public class GamesFragment extends ListFragment {
 
     private List myList;
     private GamesAdapter mAdapter;
-    private static ArrayList<GameInLobby> games = new ArrayList<>();
+    private static ArrayList<Game> games = new ArrayList<>();
 
 
 
@@ -47,7 +44,7 @@ public class GamesFragment extends ListFragment {
         return rootView;
     }
 
-    public void refreshData(final ArrayList<GameInLobby> data){
+    public void refreshData(final ArrayList<Game> data){
             getActivity().runOnUiThread(new Runnable() {
                 public void run() {
                     Log.v("I AM RUNNING", "RUNNING");

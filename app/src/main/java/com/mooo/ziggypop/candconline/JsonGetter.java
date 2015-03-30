@@ -1,7 +1,5 @@
 package com.mooo.ziggypop.candconline;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -18,14 +16,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by ziggypop on 3/29/15.
  */
 public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
 
-    String TAG = "JSON";
+    public static final String TAG = "JSON";
 
     static JSONObject jobj = null;
     static String json = "";
@@ -36,8 +33,9 @@ public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
         myActivity = activity;
     }
 
-    public static JSONObject getJSONFromUrl() {
 
+    @Override
+    public JSONObject doInBackground(URL... params) {
 
         try {
             URL url = new URL("http", "online.the3rdage.net", 29998, "index.html");
@@ -74,14 +72,6 @@ public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
         }
         //Log.v("JSON", jobj.toString());
         return jobj;
-
-
-    }
-
-
-    @Override
-    public JSONObject doInBackground(URL... params) {
-        return getJSONFromUrl();
     }
 
 
@@ -109,10 +99,10 @@ public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
 
             JSONObject gameClasses = game.getJSONObject("games");
             /*===START_LOBBY===*/
-            ArrayList<GameInLobby> gamesInLobbyArrList = getGames(gameClasses, "staging");
+            ArrayList<Game> gamesInLobbyArrList = getGames(gameClasses, "staging");
             /*===END_LOBBY===*/
             /*===Start_IN_PROGRESS===*/
-            ArrayList<GameInLobby> gamesInProgressArrList = getGames(gameClasses, "playing");
+            ArrayList<Game> gamesInProgressArrList = getGames(gameClasses, "playing");
              /*==End_IN_Progress===*/
 
 
@@ -133,11 +123,11 @@ public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
     }
 
     /*
-     * Helper method for onPostExecute
+     * Helper method for onPostExecute()
      * This gets and assembles all of the json data into an arraylist of games.
      */
-    public ArrayList<GameInLobby> getGames(JSONObject gameClasses, String typeOfGame) {
-        ArrayList<GameInLobby> returnArr = new ArrayList<>();
+    public ArrayList<Game> getGames(JSONObject gameClasses, String typeOfGame) {
+        ArrayList<Game> returnArr = new ArrayList<>();
 
         try {
             JSONArray lobbies = gameClasses.getJSONArray(typeOfGame);
@@ -156,23 +146,19 @@ public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
                 }
                 //get the map name and remove all characters before the last "/"
                 String map = lobby.get("map").toString();
-                map = map.substring(map.lastIndexOf('/'));
+                map = map.substring(map.lastIndexOf('/')+1);
 
-                /* TODO: add locked status */
+                //Set up the lock.
                 String lock = lobby.get("pw").toString();
                 boolean isLocked = false;
                 if (lock.equals("1")){ isLocked = true;}
 
-                returnArr.add(new GameInLobby(title, slots, players, isLocked, map));
+                //Add a new Game to the array.
+                returnArr.add(new Game(title, slots, players, isLocked, map));
             }
         } catch (JSONException e) {
            e.printStackTrace();
         }
         return returnArr;
     }
-
-
-
-
-
 }

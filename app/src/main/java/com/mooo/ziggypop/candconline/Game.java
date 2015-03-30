@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by ziggypop on 3/28/15.
  */
-public class GameInLobby {
+public class Game {
     private String gameTitle;
     private String lobbySlots;
     private ArrayList<String> players;
@@ -13,8 +13,8 @@ public class GameInLobby {
     private String map;
 
 
-    public GameInLobby(String title, String slots, ArrayList<String> players,
-                       boolean isLocked, String map) {
+    public Game(String title, String slots, ArrayList<String> players,
+                boolean isLocked, String map) {
         gameTitle = title;
         lobbySlots = slots;
         this.map = map;

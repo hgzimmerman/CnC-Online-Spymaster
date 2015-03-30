@@ -7,12 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ziggypop on 3/28/15.
@@ -28,9 +24,9 @@ public class GamesInProgressFragment extends ListFragment {
 
 
     private GamesAdapter mAdapter;
-    private static ArrayList<GameInLobby> games = new ArrayList<>();
+    private static ArrayList<Game> games = new ArrayList<>();
     private boolean isAttached = false;
-    private static ArrayList<GameInLobby> failedToLoadGames = new ArrayList<>();
+    private static ArrayList<Game> failedToLoadGames = new ArrayList<>();
 
 
 
@@ -57,7 +53,7 @@ public class GamesInProgressFragment extends ListFragment {
         isAttached = true;
     }
 
-    public void refreshData(final ArrayList<GameInLobby> data){
+    public void refreshData(final ArrayList<Game> data){
         if(isAttached) {
             Activity mActivity = getActivity();
             mActivity.runOnUiThread(new Runnable() {
