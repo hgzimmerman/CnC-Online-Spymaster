@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,7 @@ import java.util.List;
         private boolean isAttached = false;
 
 
+
     public PlayersFragment() {
         }
 
@@ -41,6 +45,7 @@ import java.util.List;
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.players_fragment, container, false);
+
 
 
             mAdapter = new PlayersAdapter(getActivity(), R.layout.list_item_card, wordsArr);
@@ -57,6 +62,7 @@ import java.util.List;
                     public void run() {
                         Log.v("PLAYER_FRAGMENT", "RUNNING");
                         mAdapter.clear();
+                        data.add(0, "Players Online: "+ data.size());
                         wordsArr.addAll(data);
                         mAdapter.notifyDataSetChanged();
                     }
