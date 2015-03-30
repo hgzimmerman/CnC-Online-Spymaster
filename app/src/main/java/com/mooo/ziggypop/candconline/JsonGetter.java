@@ -114,8 +114,11 @@ public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
             GamesFragment gamesFrag = myActivity.mSectionsPagerAdapter.lobby;
             gamesFrag.refreshData(gamesInLobbyArrList);
 
+
             GamesInProgressFragment progressFrag = myActivity.mSectionsPagerAdapter.inGame;
-            progressFrag.refreshData(gamesInProgressArrList);
+            progressFrag.onAttach(myActivity);
+
+            progressFrag.refreshData(gamesInProgressArrList, myActivity);
 
         } catch (JSONException e){
             e.printStackTrace();

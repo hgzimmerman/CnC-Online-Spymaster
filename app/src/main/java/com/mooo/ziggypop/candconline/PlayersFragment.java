@@ -12,14 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
      * A placeholder fragment containing a simple view.
@@ -44,11 +38,11 @@ import java.util.List;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.players_fragment, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_list_view, container, false);
 
 
 
-            mAdapter = new PlayersAdapter(getActivity(), R.layout.list_item_card, wordsArr);
+            mAdapter = new PlayersAdapter(getActivity(), R.layout.players_layout, wordsArr);
 
             setListAdapter(mAdapter);
 

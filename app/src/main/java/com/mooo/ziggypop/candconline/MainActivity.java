@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import android.app.Activity;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.ListFragment;
@@ -112,7 +113,9 @@ public class MainActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         // request new data to fill out the tabs.
-        new JsonGetter(this).execute();
+
+
+        //new JsonGetter(this).execute();
     }
 
 
@@ -163,6 +166,8 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         Log.v("NAVIGATIONBAR", position+"");
         onSectionAttached(position+1);
+        // Update the tabs with new data.
+        // This appears to run at startup.
         new JsonGetter(this).execute();
 
     }

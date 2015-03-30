@@ -36,14 +36,11 @@ public class GamesInProgressFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.players_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_list_view, container, false);
 
         mAdapter = new GamesAdapter(getActivity(), R.layout.games_layout, games);
         setListAdapter(mAdapter);
 
-
-
-        refreshData(failedToLoadGames);
         return rootView;
     }
 
@@ -51,24 +48,24 @@ public class GamesInProgressFragment extends ListFragment {
     public void onAttach(Activity activity){
         super.onAttach(activity);
         isAttached = true;
+
     }
 
-    public void refreshData(final ArrayList<Game> data){
-        if(isAttached) {
-            Activity mActivity = getActivity();
-            mActivity.runOnUiThread(new Runnable() {
-                public void run() {
-                    Log.v("GamesInProgressFragment", "RUNNING");
-                    mAdapter.clear();
-                    games.addAll(data);
-                    mAdapter.notifyDataSetChanged();
-                }
-
-            });
-        } else {
-            failedToLoadGames = data;
+    /*
+     * Refreshes the data used in this "tab" fragment.
+     */
+    public void refreshData(final ArrayList<Game> data, Activity activity){
+        // This is a hacky way of avoiding a crash caused by this fragment not being added
+        // fast enough- calling the getActivity() method will return null.
+        // So this method takes an activity as well, in order to create a new adapter if
+        // this hasn't attached yet.
+        if(!isAdded()){
+            mAdapter = new GamesAdapter(activity, R.layout.games_layout, games);
         }
-
+        Log.v("GamesInProgressFragment", "RUNNING");
+        mAdapter.clear();
+        games.addAll(data);
+        mAdapter.notifyDataSetChanged();
 
     }
 
