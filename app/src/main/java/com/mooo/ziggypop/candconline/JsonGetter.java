@@ -79,7 +79,8 @@ public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
     public void onPostExecute(JSONObject result){
         try {
 
-            JSONObject game = result.getJSONObject("cnc3kw");
+            Log.v(TAG, myActivity.queryJsonString);
+            JSONObject game = result.getJSONObject(myActivity.queryJsonString);
 
             /*===START_PLAYERS===*/
             JSONObject usersForGame = game.getJSONObject("users");

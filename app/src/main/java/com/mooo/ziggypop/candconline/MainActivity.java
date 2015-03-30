@@ -7,6 +7,7 @@ import java.util.Locale;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.ListFragment;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -32,7 +33,13 @@ import org.json.JSONObject;
 //import android.support.v7.app.ActionBar;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity
+    implements  NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private CharSequence mTitle;
+    private ActionBar actionBar;
+    public String queryJsonString = "";
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -51,7 +58,7 @@ public class MainActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_main);
 
-        final ActionBar actionBar =  getSupportActionBar();
+        actionBar =  getSupportActionBar();
         actionBar.setNavigationMode(android.app.ActionBar.NAVIGATION_MODE_TABS);
 
         // Create the adapter that will return a fragment for each of the three
@@ -72,7 +79,6 @@ public class MainActivity extends ActionBarActivity {
                 });
 
 
-        //JsonGetter.getJSONFromUrl();
 
         // Create a tab listener that is called when the user changes tabs.
         ActionBar.TabListener tabListener = new ActionBar.TabListener() {
@@ -98,17 +104,28 @@ public class MainActivity extends ActionBarActivity {
         actionBar.addTab(actionBar.newTab().setText("Lobbies").setTabListener(tabListener));
         actionBar.addTab(actionBar.newTab().setText("In Progress").setTabListener(tabListener));
 
+        // set up nav drawer
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mTitle = getTitle();
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout));
 
+        // request new data to fill out the tabs.
         new JsonGetter(this).execute();
-
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        getMenuInflater().inflate(R.menu.refresh, menu); // find some src for this
+        if(!mNavigationDrawerFragment.isDrawerOpen()) {
+            // Inflate the menu; this adds items to the action bar if it is present.
+            getMenuInflater().inflate(R.menu.menu_main, menu);
+            getMenuInflater().inflate(R.menu.refresh, menu); // find some src for this
+            restoreActionBar();
+        }
+
+
         return true;
     }
 
@@ -126,10 +143,59 @@ public class MainActivity extends ActionBarActivity {
         if (id  == R.id.refresh_button){
             new JsonGetter(this).execute();
         }
+        else {
+            Log.v("wot",item.toString());
+            DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if( mDrawerLayout.isDrawerOpen(Gravity.START)){
+                mDrawerLayout.closeDrawer(Gravity.START);
+            } else {
+                mDrawerLayout.openDrawer(Gravity.START);
+            }
+        }
 
         return super.onOptionsItemSelected(item);
     }
 
+    /*
+     * Navigation Bar setup
+     */
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+        Log.v("NAVIGATIONBAR", position+"");
+        onSectionAttached(position+1);
+        new JsonGetter(this).execute();
+
+    }
+
+     public void onSectionAttached(int number) {
+        switch (number) {
+            case 1:
+                mTitle = getString(R.string.KanesWrath);
+                queryJsonString = "cnc3kw";
+                break;
+            case 2:
+                mTitle = getString(R.string.CandC3);
+                queryJsonString = "cnc3";
+                break;
+            case 3:
+                mTitle = getString(R.string.Generals);
+                queryJsonString = "generals";
+                break;
+            case 4:
+                mTitle = getString(R.string.ZeroHour);
+                queryJsonString = "generalszh";
+                break;
+            case 5:
+                mTitle = getString(R.string.RedAlert3);
+                queryJsonString = "ra3";
+                break;
+        }
+    }
+
+    public void restoreActionBar() {
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(mTitle);
+    }
 
 
     /**

@@ -8,5 +8,14 @@
 
     <string name="hello_world">Hello world!</string>
 
+
+    <string name="KanesWrath">Kane\'s Wrath</string>
+    <string name="CandC3">C&amp;C 3</string>
+    <string name="Generals">Generals</string>
+    <string name="ZeroHour">Zero Hour</string>
+    <string name="RedAlert3">Red Alert 3</string>
+
     <string name="action_settings">Settings</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

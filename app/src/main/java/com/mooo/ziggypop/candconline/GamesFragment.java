@@ -47,7 +47,7 @@ public class GamesFragment extends ListFragment {
     public void refreshData(final ArrayList<Game> data){
             getActivity().runOnUiThread(new Runnable() {
                 public void run() {
-                    Log.v("I AM RUNNING", "RUNNING");
+                    Log.v("GAMES_IN_LOBBY", "RUNNING");
                     mAdapter.clear();
                     games.addAll(data);
                     mAdapter.notifyDataSetChanged();
