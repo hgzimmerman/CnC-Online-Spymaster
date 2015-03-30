@@ -41,7 +41,6 @@ android:descendantFocusability="beforeDescendants">
                     android:layout_width="wrap_content"
                     android:layout_height="15dp"
                     android:src="@drawable/lock64"
-
                     android:visibility="invisible"/>
 
                 <TextView
