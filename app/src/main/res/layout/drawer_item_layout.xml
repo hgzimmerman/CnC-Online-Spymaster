@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="15dp"
+    android:paddingBottom="12dp"
+    android:paddingStart="12dp"
+    android:background="@drawable/drawer_selector"
+    android:paddingEnd="30dp">
+
+    <TextView
+        android:id="@+id/drawer_game_title"
+        android:textSize="20sp"
+        android:layout_weight="5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/drawer_player_count"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

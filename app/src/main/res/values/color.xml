@@ -4,6 +4,8 @@
     <color name="card_shadow">#ffffffff</color>
     <color name="card_white">#8c666666</color>
 
+    <color name="menu_item_active_color">#f040AA90</color>
+    <color name="menu_item_color">#00222222</color>
 
 
 </resources>

@@ -13,15 +13,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -61,9 +56,8 @@ public class NavigationDrawerFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
-    private ArrayList<String> gameNames;
-    private ArrayList<String> defaultNames;
-    private ArrayAdapter<String> mAdapter;
+    private ArrayList<DrawerItem> gameNames;
+    private DrawerAdapter mAdapter;
 
     public NavigationDrawerFragment() {
     }
@@ -97,12 +91,11 @@ public class NavigationDrawerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         gameNames = new ArrayList<>();
-        gameNames.add(getString(R.string.KanesWrath));
-        gameNames.add(getString(R.string.CandC3));
-        gameNames.add(getString(R.string.Generals));
-        gameNames.add(getString(R.string.ZeroHour));
-        gameNames.add(getString(R.string.RedAlert3));
-        defaultNames = new ArrayList<>(gameNames);
+        gameNames.add(new DrawerItem(getString(R.string.KanesWrath),0));
+        gameNames.add(new DrawerItem(getString(R.string.CandC3),0));
+        gameNames.add(new DrawerItem(getString(R.string.Generals),0));
+        gameNames.add(new DrawerItem(getString(R.string.ZeroHour), 0));
+        gameNames.add(new DrawerItem(getString(R.string.RedAlert3),0));
 
 
         mDrawerListView = (ListView) inflater.inflate(
@@ -113,10 +106,9 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
-        mAdapter =  new ArrayAdapter<String>(
+        mAdapter =  new DrawerAdapter(
                 getActionBar().getThemedContext(),
                 android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
                 gameNames);
 
         mDrawerListView.setAdapter( mAdapter );
@@ -171,6 +163,7 @@ public class NavigationDrawerFragment extends Fragment {
                 if (!isAdded()) {
                     return;
                 }
+                showGlobalContextActionBar();
 
                 if (!mUserLearnedDrawer) {
                     // The user manually opened the drawer; store this flag to prevent auto-showing
@@ -252,7 +245,7 @@ public class NavigationDrawerFragment extends Fragment {
     private void showGlobalContextActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setTitle(R.string.app_name);
     }
 
@@ -271,17 +264,13 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
 
-    //TODO Create an adapter and class for items in the nav drawer.
-    // because this looks bad; because it uses non-monospaced letters for spacing...
+    /*
+     * Updates the names for the nav drawer to reflect the numbers of players currently online.
+     */
     public void updateNames(ArrayList<Integer> numbers){
         Log.v("NAV_DRAWER", "UPDATING");
-        mAdapter.clear();
         for (int i = 0; i < numbers.size(); i++) {
-            String defaultName = defaultNames.get(i);
-            int numSpaces = 20 - defaultName.length();
-            String spaces = "                    ";
-            gameNames.add(defaultNames.get(i) +spaces.substring(0,numSpaces)
-                    +"("+ numbers.get(i)+")");
+            gameNames.get(i).updatePlayerCount(numbers.get(i));
         }
 
         mAdapter.notifyDataSetChanged();
