@@ -78,33 +78,16 @@ public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
     @Override
     public void onPostExecute(JSONObject result){
         try {
-
-            Log.v(TAG, myActivity.queryJsonString);
-            JSONObject game = result.getJSONObject(myActivity.queryJsonString);
+            Log.v(TAG, myActivity.getQueryJsonString());
+            JSONObject game = result.getJSONObject(myActivity.getQueryJsonString());
 
             /*===START_PLAYERS===*/
-            JSONObject usersForGame = game.getJSONObject("users");
-
-            ArrayList<String> usersArray = new ArrayList<>();
-            Iterator<String> iter = usersForGame.keys();
-            while (iter.hasNext()) {
-                String key = iter.next();
-                try {
-                    JSONObject value = (JSONObject) usersForGame.get(key);
-                    usersArray.add(key);
-                } catch (JSONException e){
-                    e.printStackTrace();
-                }
-            }
-            /*===END_PLAYERS===*/
+            ArrayList<Player> usersArray = getPlayers(game);
 
             JSONObject gameClasses = game.getJSONObject("games");
-            /*===START_LOBBY===*/
+            /*===START_LOBBIES===*/
             ArrayList<Game> gamesInLobbyArrList = getGames(gameClasses, "staging");
-            /*===END_LOBBY===*/
-            /*===Start_IN_PROGRESS===*/
             ArrayList<Game> gamesInProgressArrList = getGames(gameClasses, "playing");
-             /*==End_IN_Progress===*/
 
 
             //Refresh the data for each view.
@@ -114,17 +97,48 @@ public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
             GamesFragment gamesFrag = myActivity.mSectionsPagerAdapter.lobby;
             gamesFrag.refreshData(gamesInLobbyArrList);
 
-
             GamesInProgressFragment progressFrag = myActivity.mSectionsPagerAdapter.inGame;
-            progressFrag.onAttach(myActivity);
-
             progressFrag.refreshData(gamesInProgressArrList, myActivity);
+
+
+            getPlayersPerGame(result);
 
         } catch (JSONException e){
             e.printStackTrace();
         }
 
     }
+
+    /*
+     * Helper method for onPostExecute()
+     * This gets and assembles the json data into an arraylist of Players
+     */
+    public ArrayList<Player> getPlayers(JSONObject gameObject){
+        ArrayList<Player> returnArr = new ArrayList<>();
+
+        JSONObject usersObject = null;
+        try {
+           usersObject = gameObject.getJSONObject("users");
+        } catch(JSONException e){
+            e.printStackTrace();
+        }
+
+
+        Iterator<String> iter = usersObject.keys();
+        while (iter.hasNext()) {
+            String key = iter.next();
+            try {
+                JSONObject value = (JSONObject) usersObject.get(key);
+                returnArr.add(new Player(key,false));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        //TODO fix the problem with multiple other players being formatted as result of this t/f flag
+        //returnArr.add(0, new Player("Players Online: "+ returnArr.size(), false));
+        return returnArr;
+    }
+
 
     /*
      * Helper method for onPostExecute()
@@ -163,6 +177,38 @@ public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
         } catch (JSONException e) {
            e.printStackTrace();
         }
+        return returnArr;
+    }
+
+
+    /*
+     * Given the top level JSON Object, find the player count of each game and return them
+     * in an arraylist.
+     */
+    public ArrayList<Integer> getPlayersPerGame(JSONObject jsonAll){
+        ArrayList<Integer> returnArr = new ArrayList<>();
+        try {
+            //Initialize the array of queries to iterate through.
+            ArrayList<String> gameQueries = new ArrayList<>();
+            gameQueries.add(myActivity.getString(R.string.KanesWrathJSON));
+            gameQueries.add(myActivity.getString(R.string.CandC3JSON));
+            gameQueries.add(myActivity.getString(R.string.GeneralsJSON));
+            gameQueries.add(myActivity.getString(R.string.ZeroHourJSON));
+            gameQueries.add(myActivity.getString(R.string.RedAlert3JSON));
+
+            // get create arrays of the players for each game and give
+            for( String query : gameQueries){
+                JSONObject game = jsonAll.getJSONObject(query);
+                ArrayList<Player> playerArray = getPlayers(game);
+                returnArr.add(playerArray.size());
+            }
+
+
+            myActivity.mNavigationDrawerFragment.updateNames(returnArr);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         return returnArr;
     }
 }

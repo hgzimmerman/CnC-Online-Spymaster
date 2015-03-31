@@ -25,7 +25,6 @@ public class GamesInProgressFragment extends ListFragment {
 
     private GamesAdapter mAdapter;
     private static ArrayList<Game> games = new ArrayList<>();
-    private boolean isAttached = false;
     private static ArrayList<Game> failedToLoadGames = new ArrayList<>();
 
 
@@ -42,13 +41,6 @@ public class GamesInProgressFragment extends ListFragment {
         setListAdapter(mAdapter);
 
         return rootView;
-    }
-
-    @Override
-    public void onAttach(Activity activity){
-        super.onAttach(activity);
-        isAttached = true;
-
     }
 
     /*

@@ -23,6 +23,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
@@ -52,12 +54,16 @@ public class NavigationDrawerFragment extends Fragment {
     public ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
-    private ListView mDrawerListView;
+    public ListView mDrawerListView;
     private View mFragmentContainerView;
 
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
+
+    private ArrayList<String> gameNames;
+    private ArrayList<String> defaultNames;
+    private ArrayAdapter<String> mAdapter;
 
     public NavigationDrawerFragment() {
     }
@@ -90,6 +96,15 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        gameNames = new ArrayList<>();
+        gameNames.add(getString(R.string.KanesWrath));
+        gameNames.add(getString(R.string.CandC3));
+        gameNames.add(getString(R.string.Generals));
+        gameNames.add(getString(R.string.ZeroHour));
+        gameNames.add(getString(R.string.RedAlert3));
+        defaultNames = new ArrayList<>(gameNames);
+
+
         mDrawerListView = (ListView) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -98,17 +113,13 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
+        mAdapter =  new ArrayAdapter<String>(
                 getActionBar().getThemedContext(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
-                new String[]{
-                        getString(R.string.KanesWrath),
-                        getString(R.string.CandC3),
-                        getString(R.string.Generals),
-                        getString(R.string.ZeroHour),
-                        getString(R.string.RedAlert3),
-                }));
+                gameNames);
+
+        mDrawerListView.setAdapter( mAdapter );
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
@@ -257,5 +268,22 @@ public class NavigationDrawerFragment extends Fragment {
          * Called when an item in the navigation drawer is selected.
          */
         void onNavigationDrawerItemSelected(int position);
+    }
+
+
+    //TODO Create an adapter and class for items in the nav drawer.
+    // because this looks bad; because it uses non-monospaced letters for spacing...
+    public void updateNames(ArrayList<Integer> numbers){
+        Log.v("NAV_DRAWER", "UPDATING");
+        mAdapter.clear();
+        for (int i = 0; i < numbers.size(); i++) {
+            String defaultName = defaultNames.get(i);
+            int numSpaces = 20 - defaultName.length();
+            String spaces = "                    ";
+            gameNames.add(defaultNames.get(i) +spaces.substring(0,numSpaces)
+                    +"("+ numbers.get(i)+")");
+        }
+
+        mAdapter.notifyDataSetChanged();
     }
 }

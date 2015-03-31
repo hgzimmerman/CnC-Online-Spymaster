@@ -37,10 +37,10 @@ import org.json.JSONObject;
 public class MainActivity extends ActionBarActivity
     implements  NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    private NavigationDrawerFragment mNavigationDrawerFragment;
+    public NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
     private ActionBar actionBar;
-    public String queryJsonString = "";
+    private String queryJsonString = "";
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -115,7 +115,6 @@ public class MainActivity extends ActionBarActivity
         // request new data to fill out the tabs.
 
 
-        //new JsonGetter(this).execute();
     }
 
 
@@ -176,23 +175,23 @@ public class MainActivity extends ActionBarActivity
         switch (number) {
             case 1:
                 mTitle = getString(R.string.KanesWrath);
-                queryJsonString = "cnc3kw";
+                queryJsonString = getString(R.string.KanesWrathJSON);
                 break;
             case 2:
                 mTitle = getString(R.string.CandC3);
-                queryJsonString = "cnc3";
+                queryJsonString = getString(R.string.CandC3JSON);
                 break;
             case 3:
                 mTitle = getString(R.string.Generals);
-                queryJsonString = "generals";
+                queryJsonString = getString(R.string.GeneralsJSON);
                 break;
             case 4:
                 mTitle = getString(R.string.ZeroHour);
-                queryJsonString = "generalszh";
+                queryJsonString = getString(R.string.ZeroHourJSON);
                 break;
             case 5:
                 mTitle = getString(R.string.RedAlert3);
-                queryJsonString = "ra3";
+                queryJsonString = getString(R.string.RedAlert3JSON);
                 break;
         }
     }
@@ -261,6 +260,12 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
+    /*
+     * Returns the string used to query individual games.
+     */
+    public String getQueryJsonString(){
+        return queryJsonString;
+    }
 
 
 }

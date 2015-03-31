@@ -26,8 +26,8 @@ import java.util.ArrayList;
         public static final String ARG_SECTION_NUMBER = "section_number";
 
 
-        private static ArrayList<String> wordsArr = new ArrayList<>();
-        private ArrayAdapter<String> mAdapter;
+        private static ArrayList<Player> wordsArr = new ArrayList<>();
+        private ArrayAdapter<Player> mAdapter;
         private boolean isAttached = false;
 
 
@@ -50,13 +50,13 @@ import java.util.ArrayList;
             return rootView;
         }
 
-        public void refreshData(final ArrayList<String> data){
+        public void refreshData(final ArrayList<Player> data){
             if (isAttached) {
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
                         Log.v("PLAYER_FRAGMENT", "RUNNING");
                         mAdapter.clear();
-                        data.add(0, "Players Online: "+ data.size());
+                        //data.add(0, "Players Online: "+ data.size());
                         wordsArr.addAll(data);
                         mAdapter.notifyDataSetChanged();
                     }
