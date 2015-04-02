@@ -29,6 +29,7 @@ public class GamesFragment extends ListFragment {
 
 
 
+
     public GamesFragment() {
     }
 
@@ -45,18 +46,19 @@ public class GamesFragment extends ListFragment {
     }
 
     public void refreshData(final ArrayList<Game> data){
-            getActivity().runOnUiThread(new Runnable() {
-                public void run() {
-                    Log.v("GAMES_IN_LOBBY", "RUNNING");
-                    mAdapter.clear();
-                    games.addAll(data);
-                    mAdapter.notifyDataSetChanged();
-                }
+            if (isAdded()) {
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        Log.v("GAMES_IN_LOBBY", "RUNNING");
+                        mAdapter.clear();
+                        games.addAll(data);
+                        mAdapter.notifyDataSetChanged();
+                    }
 
 
-            });
+                });
 
-
+            }
         }
 
 }

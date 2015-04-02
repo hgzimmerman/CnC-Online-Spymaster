@@ -51,7 +51,7 @@ import java.util.ArrayList;
         }
 
         public void refreshData(final ArrayList<Player> data){
-            if (isAttached) {
+            //if (isAttached) {
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
                         Log.v("PLAYER_FRAGMENT", "RUNNING");
@@ -63,12 +63,13 @@ import java.util.ArrayList;
 
 
                 });
-            }
+            //}
         }
 
     @Override
     public void onAttach(Activity activity){
         super.onAttach(activity);
+        Log.v("PLAYERS", "IS_ATTACHED");
         isAttached = true;
     }
 

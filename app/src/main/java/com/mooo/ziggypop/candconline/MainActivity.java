@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.json.JSONObject;
 
 
 public class MainActivity extends ActionBarActivity
@@ -25,6 +26,7 @@ public class MainActivity extends ActionBarActivity
     private CharSequence mTitle;
     private ActionBar actionBar;
     private String queryJsonString = "";
+    private JSONObject jsonCache;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -251,5 +253,12 @@ public class MainActivity extends ActionBarActivity
         return queryJsonString;
     }
 
+    /*
+     * Stores the most recent JSON object.
+     * TODO: migrate the handling of json to this class from JsonGetter.
+     */
+    public void setJsonCache(JSONObject cache){
+       jsonCache = cache;
+    }
 
 }
