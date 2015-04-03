@@ -4,6 +4,14 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="android:windowActionBar">true</item>
+        <item name="android:actionBarStyle">@style/AppTheme.CustomActionBar</item>
     </style>
+    <style
+        name="AppTheme.CustomActionBar"
+        parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/dark_background</item>
+    </style>
+
+
 
 </resources>
