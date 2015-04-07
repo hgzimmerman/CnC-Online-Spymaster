@@ -7,5 +7,5 @@
 <item android:drawable="@color/grey_blue" android:state_checked="true"/>
 <item android:drawable="@color/grey_blue" android:state_selected="true"/>
 
-<item android:drawable="@color/menu_item_color" android:state_activated="false"></item>
+<item android:drawable="@color/menu_item_color" android:state_activated="false"/>
 </selector>

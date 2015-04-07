@@ -1,7 +1,53 @@
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/offwhite"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+   <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="fill_parent"
+       app:contentInsetStart="0dp"
+
+       android:minHeight="0dp"
+        android:layout_height="wrap_content">
+
+
+
+            <com.mooo.ziggypop.candconline.SlidingTabLayout
+                android:id="@+id/sliding_tabs"
+
+                android:background="@color/less_dark_backgroun"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+    </android.support.v7.widget.Toolbar>
+
+
+
+
+
+
+
+
+
+
+
+<android.support.v4.widget.DrawerLayout
     xmlns:tools="http://schemas.android.com/tools" android:id="@+id/drawer_layout"
     android:layout_width="match_parent" android:layout_height="match_parent"
     tools:context=".MainActivity">
+
+
+
+
+
 
     <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools" android:id="@+id/pager"
@@ -22,4 +68,7 @@
         android:name="com.mooo.ziggypop.candconline.NavigationDrawerFragment"
         tools:layout="@layout/fragment_navigation_drawer" />
 
+
 </android.support.v4.widget.DrawerLayout>
+
+</LinearLayout>

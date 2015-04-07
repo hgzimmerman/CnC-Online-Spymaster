@@ -2,6 +2,7 @@ package com.mooo.ziggypop.candconline;
 
 import java.util.Locale;
 
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -27,6 +29,8 @@ public class MainActivity extends ActionBarActivity
     private ActionBar actionBar;
     private String queryJsonString = "";
     private JSONObject jsonCache;
+    private Toolbar toolbar;
+    private SlidingTabLayout mSlidingTabLayout;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -44,9 +48,10 @@ public class MainActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
-        actionBar =  getSupportActionBar();
-        actionBar.setNavigationMode(android.app.ActionBar.NAVIGATION_MODE_TABS);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().
+                getColor(R.color.dark_background)));
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -56,6 +61,12 @@ public class MainActivity extends ActionBarActivity
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+
+        mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+
+        mSlidingTabLayout.setDistributeEvenly(true);
+        mSlidingTabLayout.setViewPager(mViewPager);
+        /*
         mViewPager.setOnPageChangeListener(
                 new ViewPager.SimpleOnPageChangeListener() {
                     @Override
@@ -64,10 +75,11 @@ public class MainActivity extends ActionBarActivity
 
                     }
                 });
-
+*/
 
 
         // Create a tab listener that is called when the user changes tabs.
+        /*
         ActionBar.TabListener tabListener = new ActionBar.TabListener() {
             @Override
             public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
@@ -84,12 +96,13 @@ public class MainActivity extends ActionBarActivity
 
             }
         };
+        */
 
         // Add 3 tabs, specifying the tab's text and TabListener
 
-        actionBar.addTab(actionBar.newTab().setText("Players").setTabListener(tabListener));
-        actionBar.addTab(actionBar.newTab().setText("Lobbies").setTabListener(tabListener));
-        actionBar.addTab(actionBar.newTab().setText("In Progress").setTabListener(tabListener));
+        //actionBar.addTab(actionBar.newTab().setText("Players").setTabListener(tabListener));
+        //actionBar.addTab(actionBar.newTab().setText("Lobbies").setTabListener(tabListener));
+        //actionBar.addTab(actionBar.newTab().setText("In Progress").setTabListener(tabListener));
 
         // set up nav drawer
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -98,7 +111,6 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        // request new data to fill out the tabs.
 
 
     }
@@ -183,7 +195,8 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void restoreActionBar() {
-        actionBar.setDisplayShowTitleEnabled(true);
+        //toolbar.setDisplayShowTitleEnabled(true);
+        //toolbar.setTitle("hi");
         actionBar.setTitle(mTitle);
     }
 
