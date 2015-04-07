@@ -44,6 +44,7 @@ public class Game {
     public String getMap(){
         return map;
     }
+    //TODO Adapt these into a 2xn/2 arrangement instead of inserting newlines.
     public ArrayList<String> getPlayersArray(){
         return players;
     }
@@ -95,31 +96,31 @@ public class Game {
 
             if (p != null) {
 
-                TextView tt = (TextView) v.findViewById(R.id.game_title);
-                TextView tt1 = (TextView) v.findViewById(R.id.slots);
-                ImageView tt3 = (ImageView) v.findViewById(R.id.lock);
+                TextView gameTitleText = (TextView) v.findViewById(R.id.game_title);
+                TextView slotsText = (TextView) v.findViewById(R.id.slots);
+                ImageView lockImage = (ImageView) v.findViewById(R.id.lock);
 
-                TextView tt4 = (TextView) v.findViewById(R.id.players);
-                TextView tt2 = (TextView) v.findViewById(R.id.map);
+                TextView playersText = (TextView) v.findViewById(R.id.players);
+                TextView mapNameText = (TextView) v.findViewById(R.id.map);
 
-                if (tt != null) {
-                    tt.setText(p.getTitle());
+                if (gameTitleText != null) {
+                    gameTitleText.setText(p.getTitle());
                 }
-                if (tt1 != null) {
-                    tt1.setText(p.getSlots());
+                if (slotsText != null) {
+                    slotsText.setText(p.getSlots());
                 }
-                if (tt2 != null) {
-                    tt2.setText(p.getMap());
+                if (mapNameText != null) {
+                    mapNameText.setText(p.getMap());
                 }
-                if (tt3 != null) {
+                if (lockImage != null) {
                     if (p.getLockStatus()){
-                        tt3.setVisibility(View.VISIBLE);
+                        lockImage.setVisibility(View.VISIBLE);
                     } else {
-                        tt3.setVisibility(View.GONE);
+                        lockImage.setVisibility(View.GONE);
                     }
                 }
-                if (tt4 != null) {
-                    tt4.setText(p.getPlayersFormat());
+                if (playersText != null) {
+                    playersText.setText(p.getPlayersFormat());
                 }
             }
 
@@ -133,7 +134,6 @@ public class Game {
     public static class GamesFragment extends ListFragment {
 
 
-        private List myList;
         private GamesAdapter mAdapter;
         private static ArrayList<Game> games = new ArrayList<>();
 
