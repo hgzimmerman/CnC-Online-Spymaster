@@ -94,7 +94,7 @@ public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
 
 
             //Refresh the data for each view.
-            PlayersFragment playerFrag = myActivity.mSectionsPagerAdapter.player;
+            Player.PlayersFragment playerFrag = myActivity.mSectionsPagerAdapter.player;
             playerFrag.refreshData(usersArray);
 
             GamesFragment gamesFrag = myActivity.mSectionsPagerAdapter.lobby;

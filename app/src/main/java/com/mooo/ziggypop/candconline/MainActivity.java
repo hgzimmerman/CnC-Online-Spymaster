@@ -170,13 +170,13 @@ public class MainActivity extends ActionBarActivity
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-        PlayersFragment player;
+        Player.PlayersFragment player;
         GamesFragment lobby;
         GamesInProgressFragment inGame;
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
-            player = new PlayersFragment();
+            player = new Player.PlayersFragment();
             lobby = new GamesFragment();
             inGame = new GamesInProgressFragment();
         }
@@ -195,7 +195,7 @@ public class MainActivity extends ActionBarActivity
                 fragment = player;
             }
             Bundle args = new Bundle();
-            args.putInt(PlayersFragment.ARG_SECTION_NUMBER, position+1);
+            args.putInt(Player.PlayersFragment.ARG_SECTION_NUMBER, position+1);
             fragment.setArguments(args);
             return fragment;
 
