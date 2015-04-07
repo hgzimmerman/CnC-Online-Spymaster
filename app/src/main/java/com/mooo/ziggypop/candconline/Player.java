@@ -31,11 +31,15 @@ public class Player {
         this.nickname = nickname;
         this.isHeader = isHeader;
     }
+
     public String getNickname(){
         return nickname;
     }
 
 
+    /*
+     * Adapter used with the PlayersFragment
+     */
     public static class PlayersAdapter extends ArrayAdapter<Player> {
 
         public ArrayList<Player> myPlayers;

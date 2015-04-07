@@ -171,14 +171,14 @@ public class MainActivity extends ActionBarActivity
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Player.PlayersFragment player;
-        GamesFragment lobby;
-        GamesInProgressFragment inGame;
+        Game.GamesFragment lobby;
+        Game.GamesInProgressFragment inGame;
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
             player = new Player.PlayersFragment();
-            lobby = new GamesFragment();
-            inGame = new GamesInProgressFragment();
+            lobby = new Game.GamesFragment();
+            inGame = new Game.GamesInProgressFragment();
         }
 
         @Override

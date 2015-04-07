@@ -97,10 +97,10 @@ public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
             Player.PlayersFragment playerFrag = myActivity.mSectionsPagerAdapter.player;
             playerFrag.refreshData(usersArray);
 
-            GamesFragment gamesFrag = myActivity.mSectionsPagerAdapter.lobby;
+            Game.GamesFragment gamesFrag = myActivity.mSectionsPagerAdapter.lobby;
             gamesFrag.refreshData(gamesInLobbyArrList);
 
-            GamesInProgressFragment progressFrag = myActivity.mSectionsPagerAdapter.inGame;
+            Game.GamesInProgressFragment progressFrag = myActivity.mSectionsPagerAdapter.inGame;
             progressFrag.refreshData(gamesInProgressArrList, myActivity);
 
 
@@ -137,8 +137,6 @@ public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
                 e.printStackTrace();
             }
         }
-        //TODO fix the problem with multiple other players being formatted as result of this t/f flag
-        //returnArr.add(0, new Player("Players Online: "+ returnArr.size(), false));
         return returnArr;
     }
 
