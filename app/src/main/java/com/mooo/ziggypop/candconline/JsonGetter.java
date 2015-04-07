@@ -34,6 +34,9 @@ public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
     }
 
 
+    //TODO Separate the getting of data from the handling of it
+    //TODO Cache the json and update off of that rather than pull every time
+    //TODO Add a spinner for while the data updates.
     @Override
     public JSONObject doInBackground(URL... params) {
 
@@ -162,9 +165,10 @@ public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
                 for (int j = 0; j < playersJSON.length(); j++) {
                     players.add(playersJSON.getJSONObject(j).get("nickname").toString());
                 }
-                //get the map name and remove all characters before the last "/"
+                //get the map name and remove all characters before the last "/" or "\"
                 String map = lobby.get("map").toString();
                 map = map.substring(map.lastIndexOf('/')+1);
+                map = map.substring(map.lastIndexOf('\\')+1);
 
                 //Set up the lock.
                 String lock = lobby.get("pw").toString();

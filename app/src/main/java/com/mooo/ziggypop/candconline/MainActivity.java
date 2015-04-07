@@ -49,6 +49,7 @@ public class MainActivity extends ActionBarActivity
 
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //TODO replace the ActionBar with a toolbar (currently I have a AB and TB)
         actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().
                 getColor(R.color.dark_background)));
@@ -66,43 +67,7 @@ public class MainActivity extends ActionBarActivity
 
         mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mViewPager);
-        /*
-        mViewPager.setOnPageChangeListener(
-                new ViewPager.SimpleOnPageChangeListener() {
-                    @Override
-                    public void onPageSelected(int position) {
-                        actionBar.setSelectedNavigationItem(position);
 
-                    }
-                });
-*/
-
-
-        // Create a tab listener that is called when the user changes tabs.
-        /*
-        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
-            @Override
-            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-                mViewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
-            }
-
-            @Override
-            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
-            }
-        };
-        */
-
-        // Add 3 tabs, specifying the tab's text and TabListener
-
-        //actionBar.addTab(actionBar.newTab().setText("Players").setTabListener(tabListener));
-        //actionBar.addTab(actionBar.newTab().setText("Lobbies").setTabListener(tabListener));
-        //actionBar.addTab(actionBar.newTab().setText("In Progress").setTabListener(tabListener));
 
         // set up nav drawer
         mNavigationDrawerFragment = (NavigationDrawerFragment)

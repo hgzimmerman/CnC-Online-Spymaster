@@ -49,15 +49,9 @@ android:descendantFocusability="beforeDescendants">
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-
-
-
                 </LinearLayout>
 
-
             </LinearLayout>
-
-
 
         <View
             android:layout_width="fill_parent"
@@ -65,7 +59,6 @@ android:descendantFocusability="beforeDescendants">
             android:layout_marginTop="2dp"
             android:layout_marginBottom="1dp"
             android:background="@android:color/darker_gray" />
-
 
         <LinearLayout
             android:orientation="horizontal"
@@ -114,7 +107,5 @@ android:descendantFocusability="beforeDescendants">
             android:background="@android:color/darker_gray" />
 
     </LinearLayout>
-
-
 
 </FrameLayout>
