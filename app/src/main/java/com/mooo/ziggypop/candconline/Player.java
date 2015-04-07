@@ -17,8 +17,13 @@ import java.util.ArrayList;
 
 /**
  * Created by ziggypop on 3/30/15.
+ *
+ * Holds the data for the players in the game
+ * Wraps Adapter and Fragment Subclasses
+ *
  */
 public class Player {
+
     private String nickname;
     private boolean isHeader = false;
 
@@ -28,9 +33,6 @@ public class Player {
     }
     public String getNickname(){
         return nickname;
-    }
-    public boolean getIsHeader(){
-        return isHeader;
     }
 
 
@@ -63,20 +65,16 @@ public class Player {
             Player player = getItem(position);
             String nickname = player.getNickname();
 
-            //Log.v("PLAYER_POS", position + "");
 
 
             TextView textView = (TextView) v.findViewById(R.id.text);
 
-            if (player.getIsHeader() || true) {
-                textView.setText(nickname);
+            textView.setText(nickname);
 
-                LinearLayout ll = (LinearLayout) v.findViewById(R.id.outerLayout);
-                ll.setGravity(Gravity.CENTER_HORIZONTAL);
-                //textView.setTextSize(14);
+            LinearLayout ll = (LinearLayout) v.findViewById(R.id.outerLayout);
+            ll.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                hasSetCount = true;
-            }
+            hasSetCount = true;
 
 
             return v;
@@ -87,6 +85,9 @@ public class Player {
 
 
 
+    /*
+     * TODO when clicked, expand to show other player information (Id vs name)
+     */
     public static class PlayersFragment extends ListFragment {
         /**
          * The fragment argument representing the section number for this
@@ -120,19 +121,16 @@ public class Player {
         }
 
         public void refreshData(final ArrayList<Player> data){
-            //if (isAttached) {
             getActivity().runOnUiThread(new Runnable() {
                 public void run() {
                     Log.v("PLAYER_FRAGMENT", "RUNNING");
                     mAdapter.clear();
-                    //data.add(0, "Players Online: "+ data.size());
                     wordsArr.addAll(data);
                     mAdapter.notifyDataSetChanged();
                 }
 
 
             });
-            //}
         }
 
         @Override
