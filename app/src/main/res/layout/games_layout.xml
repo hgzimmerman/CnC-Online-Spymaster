@@ -26,7 +26,7 @@ android:descendantFocusability="beforeDescendants">
                 android:id="@+id/game_title"
                 android:gravity="start|center"
                 android:layout_weight="5"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />
             <LinearLayout
@@ -45,6 +45,7 @@ android:descendantFocusability="beforeDescendants">
 
                 <TextView
                     android:id="@+id/slots"
+                    android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -61,7 +62,7 @@ android:descendantFocusability="beforeDescendants">
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="2dp"
             android:layout_marginBottom="1dp"
             android:background="@android:color/darker_gray" />
 
@@ -71,15 +72,17 @@ android:descendantFocusability="beforeDescendants">
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:textSize="10sp"
+                android:textSize="18sp"
                 android:text="Map: "
+                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
            <TextView
                 android:id="@+id/map"
-                android:textSize="8sp"
-                android:layout_marginBottom="1dp"
+                android:textSize="14sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="0dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -87,23 +90,31 @@ android:descendantFocusability="beforeDescendants">
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="1dp"
             android:background="@android:color/darker_gray" />
 
 
         <TextView
             android:text="Players:"
-            android:textSize="14sp"
+            android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/players"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:background="@android:color/darker_gray" />
+
     </LinearLayout>
+
+
 
 </FrameLayout>

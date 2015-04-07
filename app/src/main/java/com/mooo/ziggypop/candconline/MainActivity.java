@@ -144,7 +144,6 @@ public class MainActivity extends ActionBarActivity
             new JsonGetter(this).execute();
         }
         else {
-            Log.v("wot",item.toString());
             DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             if( mDrawerLayout.isDrawerOpen(Gravity.START)){
                 mDrawerLayout.closeDrawer(Gravity.START);

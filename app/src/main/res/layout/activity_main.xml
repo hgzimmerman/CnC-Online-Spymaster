@@ -11,9 +11,8 @@
    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="fill_parent"
-       app:contentInsetStart="0dp"
-
-       android:minHeight="0dp"
+        app:contentInsetStart="0dp"
+        android:minHeight="0dp"
         android:layout_height="wrap_content">
 
 
@@ -21,21 +20,13 @@
             <com.mooo.ziggypop.candconline.SlidingTabLayout
                 android:id="@+id/sliding_tabs"
 
-                android:background="@color/less_dark_backgroun"
+                android:background="@color/less_dark_background"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
 
     </android.support.v7.widget.Toolbar>
-
-
-
-
-
-
-
-
 
 
 

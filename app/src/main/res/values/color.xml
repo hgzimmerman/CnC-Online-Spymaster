@@ -10,7 +10,7 @@
     <color name="dark_background">#313131</color>
 
     <color name="less_dark_background_transparent">#cc464646</color>
-    <color name="less_dark_backgroun">#464646</color>
+    <color name="less_dark_background">#464646</color>
     <color name="light_blue">#0fc5ff</color>
     <color name="grey_blue">#5d8194</color>
     <color name="dark_blue">#0f3d5e</color>
