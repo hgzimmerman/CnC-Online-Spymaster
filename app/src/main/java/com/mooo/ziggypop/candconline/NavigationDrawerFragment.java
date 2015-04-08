@@ -3,6 +3,7 @@ package com.mooo.ziggypop.candconline;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -16,7 +17,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -107,9 +110,16 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
         mAdapter =  new DrawerAdapter(
-                getActionBar().getThemedContext(),
+                getActivity().getApplicationContext(),
                 android.R.layout.simple_list_item_activated_1,
                 gameNames);
+
+        //set the header to an imageView
+        ImageView imageHeaderView = new ImageView(getActivity());
+        imageHeaderView.setImageBitmap(BitmapFactory
+                .decodeResource(getResources(),R.drawable.cnc_cropped));
+        imageHeaderView.setAdjustViewBounds(true); //This fixes a padding issue
+        mDrawerListView.addHeaderView(imageHeaderView, null, false);
 
         mDrawerListView.setAdapter( mAdapter );
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
@@ -131,12 +141,12 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerLayout = drawerLayout;
 
         // set a custom shadow that overlays the main content when the drawer opens
-        mDrawerLayout.setDrawerShadow(R.mipmap.drawer_shadow, GravityCompat.START);
+        //mDrawerLayout.setDrawerShadow(R.mipmap.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
 
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+        //ActionBar actionBar = getActionBar();
+        //actionBar.setDisplayHomeAsUpEnabled(true);
+        //actionBar.setHomeButtonEnabled(true);
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the navigation drawer and the action bar app icon.
@@ -244,8 +254,7 @@ public class NavigationDrawerFragment extends Fragment {
      */
     private void showGlobalContextActionBar() {
         ActionBar actionBar = getActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-        //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        //actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(R.string.app_name);
     }
 

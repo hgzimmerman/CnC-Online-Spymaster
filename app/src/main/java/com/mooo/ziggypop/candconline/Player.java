@@ -25,11 +25,11 @@ import java.util.ArrayList;
 public class Player {
 
     private String nickname;
-    private boolean isHeader = false;
+    private String username;
 
-    public Player(String nickname, boolean isHeader){
+    public Player(String nickname, String username){
         this.nickname = nickname;
-        this.isHeader = isHeader;
+        this.username = username;
     }
 
     public String getNickname(){

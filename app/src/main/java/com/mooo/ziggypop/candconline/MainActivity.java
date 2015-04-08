@@ -28,10 +28,11 @@ public class MainActivity extends ActionBarActivity
 
     public NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
-    private ActionBar actionBar;
+    //private ActionBar actionBar;
     private String queryJsonString = "";
     private JSONObject jsonCache;
     private Toolbar toolbar;
+    private Toolbar topToolbar;
     private SlidingTabLayout mSlidingTabLayout;
     private JsonHandler jsonHandler;
 
@@ -56,11 +57,16 @@ public class MainActivity extends ActionBarActivity
         setContentView(R.layout.activity_main);
 
         //get the toolbar
+
+
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        topToolbar = (Toolbar) findViewById(R.id.top_toolbar);
         //TODO replace the ActionBar with a toolbar (currently I have a AB and TB)
-        actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().
-                getColor(R.color.dark_background)));
+        //actionBar = getSupportActionBar();
+        //actionBar.setBackgroundDrawable(new ColorDrawable(getResources().
+        //        getColor(R.color.dark_background)));
+        setSupportActionBar(topToolbar);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -127,7 +133,6 @@ public class MainActivity extends ActionBarActivity
                 jsonHandler.refreshAndUpdateViews();
             }
 
-                    //.JsonGetter(this).execute();
         }
         else {
             DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -187,7 +192,7 @@ public class MainActivity extends ActionBarActivity
 
     public void restoreActionBar() {
         //toolbar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
+        getSupportActionBar().setTitle(mTitle);
     }
 
 

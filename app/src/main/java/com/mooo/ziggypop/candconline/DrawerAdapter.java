@@ -34,9 +34,12 @@ public class DrawerAdapter extends ArrayAdapter<DrawerItem> {
             vi = LayoutInflater.from(getContext());
             v = vi.inflate(R.layout.drawer_item_layout, null);
 
+
         }
 
+
         DrawerItem p = getItem(position);
+
 
         if (p != null) {
             TextView title = (TextView) v.findViewById(R.id.drawer_game_title);

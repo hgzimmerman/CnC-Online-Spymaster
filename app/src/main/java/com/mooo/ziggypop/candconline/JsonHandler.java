@@ -95,12 +95,13 @@ public class JsonHandler {
         }
 
 
-        Iterator<String> iter = usersObject.keys();
-        while (iter.hasNext()) {
-            String key = iter.next();
+        Iterator<String> iterator = usersObject.keys();
+        while (iterator.hasNext()) {
+            String key = iterator.next();
             try {
                 JSONObject value = (JSONObject) usersObject.get(key);
-                returnArr.add(new Player(key,false));
+                returnArr.add(new Player(value.getString("nickname"),
+                        value.getString("username")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
