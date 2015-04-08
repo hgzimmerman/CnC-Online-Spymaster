@@ -3,6 +3,9 @@ package com.mooo.ziggypop.candconline;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,6 +24,60 @@ import java.util.Iterator;
  * Created by ziggypop on 4/7/15.
  */
 public class JsonHandler {
+
+
+    public static final String TAG = "JSON";
+
+
+    private JSONObject jsonCache;
+    private MainActivity mainActivity;
+    public JsonHandler(MainActivity activity){
+        mainActivity = activity;
+    }
+
+    public void updateViews(){
+        if (jsonCache != null) {
+            try {
+
+                Log.v(TAG, mainActivity.getQueryJsonString());
+                Log.v(TAG, mainActivity.toString());
+                JSONObject game = jsonCache.getJSONObject(mainActivity.getQueryJsonString());
+
+            /*===START_PLAYERS===*/
+                ArrayList<Player> usersArray = getPlayers(game);
+
+                JSONObject gameClasses = game.getJSONObject("games");
+            /*===START_LOBBIES===*/
+                ArrayList<Game> gamesInLobbyArrList = getGames(gameClasses, "staging");
+                ArrayList<Game> gamesInProgressArrList = getGames(gameClasses, "playing");
+
+
+                //Refresh the data for each view.
+                Player.PlayersFragment playerFrag = mainActivity.mSectionsPagerAdapter.player;
+                playerFrag.refreshData(usersArray);
+
+                Game.GamesFragment gamesFrag = mainActivity.mSectionsPagerAdapter.lobby;
+                gamesFrag.refreshData(gamesInLobbyArrList);
+
+                Game.GamesInProgressFragment progressFrag = mainActivity.mSectionsPagerAdapter.inGame;
+                progressFrag.refreshData(gamesInProgressArrList, mainActivity);
+
+
+                getPlayersPerGame(jsonCache, mainActivity);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        }
+
+
+    public void refreshAndUpdateViews(){
+
+        new JsonGetter(mainActivity).execute();
+        //updateViews();
+    }
 
 
     /*
@@ -125,12 +182,11 @@ public class JsonHandler {
         return returnArr;
     }
 
-    public static class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
+    public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
 
-        public static final String TAG = "JSON";
 
-        static JSONObject jobj = null;
-        static String json = "";
+         JSONObject jobj = null;
+         String json = "";
 
         MainActivity myActivity;
 
@@ -139,16 +195,16 @@ public class JsonHandler {
         }
 
 
-        //TODO Separate the getting of data from the handling of it
-        //TODO Cache the json and update off of that rather than pull every time
-        //TODO Add a spinner for while the data updates.
         @Override
         public JSONObject doInBackground(URL... params) {
+            int progress = 0;
+
 
             try {
                 URL url = new URL("http", "online.the3rdage.net", 29998, "index.html");
                 Log.v("URL", url.toString());
                 InputStream is = null;
+
 
                 try{
                     is = url.openStream();
@@ -162,6 +218,8 @@ public class JsonHandler {
                     String line = null;
                     while((line = reader.readLine()) != null){
                         sb.append(line + "\n");
+                        progress++;
+                        publishProgress(progress);
                     }
                     is.close();
                     json = sb.toString();
@@ -182,41 +240,28 @@ public class JsonHandler {
             return jobj;
         }
 
-
         @Override
-        public void onPostExecute(JSONObject result){
-            try {
-                Log.v(TAG, myActivity.getQueryJsonString());
-                JSONObject game = result.getJSONObject(myActivity.getQueryJsonString());
-
-            /*===START_PLAYERS===*/
-                ArrayList<Player> usersArray = getPlayers(game);
-
-                JSONObject gameClasses = game.getJSONObject("games");
-            /*===START_LOBBIES===*/
-                ArrayList<Game> gamesInLobbyArrList = getGames(gameClasses, "staging");
-                ArrayList<Game> gamesInProgressArrList = getGames(gameClasses, "playing");
-
-
-                //Refresh the data for each view.
-                Player.PlayersFragment playerFrag = myActivity.mSectionsPagerAdapter.player;
-                playerFrag.refreshData(usersArray);
-
-                Game.GamesFragment gamesFrag = myActivity.mSectionsPagerAdapter.lobby;
-                gamesFrag.refreshData(gamesInLobbyArrList);
-
-                Game.GamesInProgressFragment progressFrag = myActivity.mSectionsPagerAdapter.inGame;
-                progressFrag.refreshData(gamesInProgressArrList, myActivity);
-
-
-                getPlayersPerGame(result, myActivity);
-
-            } catch (JSONException e){
-                e.printStackTrace();
-            }
-
+        protected void onPreExecute() {
+            myActivity.findViewById(R.id.linlaHeaderProgress)
+                    .setVisibility(View.VISIBLE);
+            myActivity.findViewById(R.id.pager).setVisibility(View.INVISIBLE);
         }
 
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            ProgressBar progressBar = (ProgressBar) myActivity.findViewById(R.id.loadingPanel);
+            progressBar.setProgress(values[0]);
+        }
 
+        @Override
+        public void onPostExecute(JSONObject result) {
+            jsonCache = result;
+            if (result != null){
+                myActivity.findViewById(R.id.pager).setVisibility(View.VISIBLE);
+                myActivity.findViewById(R.id.linlaHeaderProgress)
+                        .setVisibility(View.GONE);
+            }
+            updateViews();
+        }
     }
 }

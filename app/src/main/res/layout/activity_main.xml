@@ -37,6 +37,23 @@
 
 
 
+     <LinearLayout
+        android:id="@+id/linlaHeaderProgress"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" >
+        <ProgressBar
+            android:gravity="center"
+            android:id="@+id/loadingPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="false" />
+    </LinearLayout>
+
+
+
 
 
 
@@ -63,3 +80,4 @@
 </android.support.v4.widget.DrawerLayout>
 
 </LinearLayout>
+

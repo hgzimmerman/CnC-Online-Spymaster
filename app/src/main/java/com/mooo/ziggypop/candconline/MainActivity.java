@@ -2,6 +2,7 @@ package com.mooo.ziggypop.candconline;
 
 import java.util.Locale;
 
+import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 import org.json.JSONObject;
 
@@ -31,6 +33,7 @@ public class MainActivity extends ActionBarActivity
     private JSONObject jsonCache;
     private Toolbar toolbar;
     private SlidingTabLayout mSlidingTabLayout;
+    private JsonHandler jsonHandler;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -46,8 +49,13 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //request ability to show progressbar
+        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        setSupportProgressBarIndeterminateVisibility(true);
+        //Normal setup:
         setContentView(R.layout.activity_main);
+
+        //get the toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         //TODO replace the ActionBar with a toolbar (currently I have a AB and TB)
         actionBar = getSupportActionBar();
@@ -63,8 +71,8 @@ public class MainActivity extends ActionBarActivity
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
 
+        // Set up the SlidingTabLayout
         mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
-
         mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mViewPager);
 
@@ -72,11 +80,17 @@ public class MainActivity extends ActionBarActivity
         // set up nav drawer
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        //mTitle = getTitle();
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
 
+
+    }
+    @Override
+    public void onStart(){
+        super.onStart();
+        //jsonHandler = new JsonHandler(this);
+        jsonHandler.refreshAndUpdateViews();
 
     }
 
@@ -106,7 +120,14 @@ public class MainActivity extends ActionBarActivity
             return true;
         }
         if (id  == R.id.refresh_button){
-            new JsonHandler.JsonGetter(this).execute();
+            if(jsonHandler == null){
+                jsonHandler = new JsonHandler(this);
+            }
+            else {
+                jsonHandler.refreshAndUpdateViews();
+            }
+
+                    //.JsonGetter(this).execute();
         }
         else {
             DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -129,7 +150,13 @@ public class MainActivity extends ActionBarActivity
         onSectionAttached(position+1);
         // Update the tabs with new data.
         // This appears to run at startup.
-        new JsonHandler.JsonGetter(this).execute();
+        //new JsonHandler.JsonGetter(this).execute();
+        if(jsonHandler == null){
+            jsonHandler = new JsonHandler(this);
+        }
+        else{
+            jsonHandler.updateViews();
+        }
 
     }
 
@@ -160,7 +187,6 @@ public class MainActivity extends ActionBarActivity
 
     public void restoreActionBar() {
         //toolbar.setDisplayShowTitleEnabled(true);
-        //toolbar.setTitle("hi");
         actionBar.setTitle(mTitle);
     }
 
@@ -199,7 +225,6 @@ public class MainActivity extends ActionBarActivity
             fragment.setArguments(args);
             return fragment;
 
-            //return  PlaceholderFragment.newInstance(position + 1);
         }
 
         @Override
@@ -230,12 +255,5 @@ public class MainActivity extends ActionBarActivity
         return queryJsonString;
     }
 
-    /*
-     * Stores the most recent JSON object.
-     * TODO: migrate the handling of json to this class from JsonGetter.
-     */
-    public void setJsonCache(JSONObject cache){
-       jsonCache = cache;
-    }
 
 }
