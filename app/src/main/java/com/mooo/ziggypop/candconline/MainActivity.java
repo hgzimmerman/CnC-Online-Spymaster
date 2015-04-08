@@ -106,7 +106,7 @@ public class MainActivity extends ActionBarActivity
             return true;
         }
         if (id  == R.id.refresh_button){
-            new JsonGetter(this).execute();
+            new JsonHandler.JsonGetter(this).execute();
         }
         else {
             DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -129,7 +129,7 @@ public class MainActivity extends ActionBarActivity
         onSectionAttached(position+1);
         // Update the tabs with new data.
         // This appears to run at startup.
-        new JsonGetter(this).execute();
+        new JsonHandler.JsonGetter(this).execute();
 
     }
 

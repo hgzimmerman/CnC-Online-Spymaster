@@ -64,11 +64,6 @@ public class Game {
 
 
 
-
-
-
-
-
     public static class GamesAdapter extends ArrayAdapter<Game> {
         public GamesAdapter(Context context, int textViewResourceId) {
             super(context, textViewResourceId);
@@ -133,12 +128,8 @@ public class Game {
 
     public static class GamesFragment extends ListFragment {
 
-
         private GamesAdapter mAdapter;
         private static ArrayList<Game> games = new ArrayList<>();
-
-
-
 
         public GamesFragment() {
         }
@@ -150,7 +141,6 @@ public class Game {
 
             mAdapter = new GamesAdapter(getActivity(), R.layout.games_layout, games);
             setListAdapter(mAdapter);
-
 
             return rootView;
         }
@@ -165,9 +155,7 @@ public class Game {
                         mAdapter.notifyDataSetChanged();
                     }
 
-
                 });
-
             }
         }
 
@@ -179,7 +167,6 @@ public class Game {
 
         private GamesAdapter mAdapter;
         private static ArrayList<Game> games = new ArrayList<>();
-
 
         public GamesInProgressFragment() {
         }
