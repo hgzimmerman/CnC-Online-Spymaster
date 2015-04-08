@@ -197,14 +197,10 @@ public class JsonHandler {
 
         @Override
         public JSONObject doInBackground(URL... params) {
-            int progress = 0;
-
-
             try {
                 URL url = new URL("http", "online.the3rdage.net", 29998, "index.html");
                 Log.v("URL", url.toString());
                 InputStream is = null;
-
 
                 try{
                     is = url.openStream();
@@ -218,8 +214,6 @@ public class JsonHandler {
                     String line = null;
                     while((line = reader.readLine()) != null){
                         sb.append(line + "\n");
-                        progress++;
-                        publishProgress(progress);
                     }
                     is.close();
                     json = sb.toString();
@@ -242,15 +236,9 @@ public class JsonHandler {
 
         @Override
         protected void onPreExecute() {
-            myActivity.findViewById(R.id.linlaHeaderProgress)
+            myActivity.findViewById(R.id.llProgBar)
                     .setVisibility(View.VISIBLE);
             myActivity.findViewById(R.id.pager).setVisibility(View.INVISIBLE);
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            ProgressBar progressBar = (ProgressBar) myActivity.findViewById(R.id.loadingPanel);
-            progressBar.setProgress(values[0]);
         }
 
         @Override
@@ -258,7 +246,7 @@ public class JsonHandler {
             jsonCache = result;
             if (result != null){
                 myActivity.findViewById(R.id.pager).setVisibility(View.VISIBLE);
-                myActivity.findViewById(R.id.linlaHeaderProgress)
+                myActivity.findViewById(R.id.llProgBar)
                         .setVisibility(View.GONE);
             }
             updateViews();

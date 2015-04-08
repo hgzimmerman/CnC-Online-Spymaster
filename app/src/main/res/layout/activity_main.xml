@@ -38,7 +38,7 @@
 
 
      <LinearLayout
-        android:id="@+id/linlaHeaderProgress"
+        android:id="@+id/llProgBar"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center"
