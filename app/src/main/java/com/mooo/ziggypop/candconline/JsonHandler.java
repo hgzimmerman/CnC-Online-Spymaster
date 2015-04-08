@@ -211,7 +211,7 @@ public class JsonHandler {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(
                             is, "UTF-8"), 8);
                     StringBuilder sb = new StringBuilder();
-                    String line = null;
+                    String line;
                     while((line = reader.readLine()) != null){
                         sb.append(line + "\n");
                     }
