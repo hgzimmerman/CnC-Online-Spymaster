@@ -236,20 +236,24 @@ public class JsonHandler {
 
         @Override
         protected void onPreExecute() {
-            myActivity.findViewById(R.id.llProgBar)
-                    .setVisibility(View.VISIBLE);
+            //Hide the pager content, show the loading circle
+            myActivity.findViewById(R.id.llProgBar).setVisibility(View.VISIBLE);
+            myActivity.findViewById(R.id.connection_error_text).setVisibility(View.GONE);
             myActivity.findViewById(R.id.pager).setVisibility(View.INVISIBLE);
         }
 
         @Override
         public void onPostExecute(JSONObject result) {
-            jsonCache = result;
-            if (result != null){
+            jsonCache = result; // update the cache with new data
+            if (result != null) {
+                //Show the pager content, hide the loading circle
                 myActivity.findViewById(R.id.pager).setVisibility(View.VISIBLE);
-                myActivity.findViewById(R.id.llProgBar)
-                        .setVisibility(View.GONE);
+                myActivity.findViewById(R.id.llProgBar).setVisibility(View.GONE);
+            } else {
+                myActivity.findViewById(R.id.connection_error_text).setVisibility(View.VISIBLE);
+                myActivity.findViewById(R.id.llProgBar).setVisibility(View.GONE);
             }
-            updateViews();
+            updateViews(); //fill the pager with new content
         }
     }
 }

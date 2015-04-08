@@ -52,6 +52,19 @@
             android:indeterminate="false" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/connection_error_text"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <TextView
+            android:text="@string/connection_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
 
 
 
