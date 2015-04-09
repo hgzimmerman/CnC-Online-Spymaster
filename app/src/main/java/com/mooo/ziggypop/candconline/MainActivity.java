@@ -68,6 +68,7 @@ public class MainActivity extends ActionBarActivity
         //        getColor(R.color.dark_background)));
         setSupportActionBar(topToolbar);
 
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -105,7 +106,7 @@ public class MainActivity extends ActionBarActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         if(!mNavigationDrawerFragment.isDrawerOpen()) {
             // Inflate the menu; this adds items to the action bar if it is present.
-            getMenuInflater().inflate(R.menu.menu_main, menu);
+            //getMenuInflater().inflate(R.menu.menu_main, menu);
             getMenuInflater().inflate(R.menu.refresh, menu); // find some src for this
             restoreActionBar();
         }
@@ -168,22 +169,27 @@ public class MainActivity extends ActionBarActivity
      public void onSectionAttached(int number) {
         switch (number) {
             case 1:
+                //The first element is the Header, which has no corresponding layout.
+                //The app calls onSectionAttached(1) on startup, so reroute to the second option.
+                onSectionAttached(2);
+                break;
+            case 2:
                 mTitle = getString(R.string.KanesWrath);
                 queryJsonString = getString(R.string.KanesWrathJSON);
                 break;
-            case 2:
+            case 3:
                 mTitle = getString(R.string.CandC3);
                 queryJsonString = getString(R.string.CandC3JSON);
                 break;
-            case 3:
+            case 4:
                 mTitle = getString(R.string.Generals);
                 queryJsonString = getString(R.string.GeneralsJSON);
                 break;
-            case 4:
+            case 5:
                 mTitle = getString(R.string.ZeroHour);
                 queryJsonString = getString(R.string.ZeroHourJSON);
                 break;
-            case 5:
+            case 6:
                 mTitle = getString(R.string.RedAlert3);
                 queryJsonString = getString(R.string.RedAlert3JSON);
                 break;

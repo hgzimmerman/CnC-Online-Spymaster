@@ -8,6 +8,7 @@
     <color name="menu_item_color">#00222222</color>
 
     <color name="dark_background">#313131</color>
+    <color name="black">#151515</color>
 
     <color name="less_dark_background_transparent">#cc464646</color>
     <color name="less_dark_background">#464646</color>
