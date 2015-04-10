@@ -60,7 +60,9 @@ public class NavigationDrawerFragment extends Fragment {
     private boolean mUserLearnedDrawer;
 
     private ArrayList<DrawerItem> gameNames;
+    private ImageView imageHeaderView;
     private DrawerAdapter mAdapter;
+
 
     public NavigationDrawerFragment() {
     }
@@ -115,9 +117,9 @@ public class NavigationDrawerFragment extends Fragment {
                 gameNames);
 
         //set the header to an imageView
-        ImageView imageHeaderView = new ImageView(getActivity());
+        imageHeaderView = new ImageView(getActivity());
         imageHeaderView.setImageBitmap(BitmapFactory
-                .decodeResource(getResources(),R.drawable.cnc_cropped));
+                .decodeResource(getResources(), R.drawable.kw_cropped));
         imageHeaderView.setAdjustViewBounds(true); //This fixes a padding issue
         mDrawerListView.addHeaderView(imageHeaderView, null, false);
 
@@ -283,5 +285,34 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         mAdapter.notifyDataSetChanged();
+    }
+
+    public void updateHeader(GameTitle gameTitle){
+        switch (gameTitle){
+            case KW:    imageHeaderView.setImageBitmap(BitmapFactory
+                    .decodeResource(getResources(), R.drawable.kw_cropped));
+                break;
+            case CnC3:  imageHeaderView.setImageBitmap(BitmapFactory
+                    .decodeResource(getResources(), R.drawable.cnc3_cropped));
+                break;
+            case Generals: imageHeaderView.setImageBitmap(BitmapFactory
+                    .decodeResource(getResources(), R.drawable.generals_crop));
+                break;
+            case ZH:    imageHeaderView.setImageBitmap(BitmapFactory
+                    .decodeResource(getResources(), R.drawable.zh_box_art_crop));
+                break;
+            case RA3:   imageHeaderView.setImageBitmap(BitmapFactory
+                    .decodeResource(getResources(), R.drawable.red_alert_crop));
+                break;
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public enum GameTitle{
+        KW,
+        CnC3,
+        Generals,
+        ZH,
+        RA3
     }
 }

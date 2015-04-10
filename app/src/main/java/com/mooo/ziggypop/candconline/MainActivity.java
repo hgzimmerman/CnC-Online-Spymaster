@@ -3,6 +3,7 @@ package com.mooo.ziggypop.candconline;
 import java.util.Locale;
 
 import android.app.Activity;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
@@ -19,6 +20,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.ImageView;
 
 import org.json.JSONObject;
 
@@ -159,27 +161,38 @@ public class MainActivity extends ActionBarActivity
             case 1:
                 //The first element is the Header, which has no corresponding layout.
                 //The app calls onSectionAttached(1) on startup, so reroute to the second case.
-                onSectionAttached(2);
+                //onSectionAttached(2);
+                mTitle = getString(R.string.KanesWrath);
+                queryJsonString = getString(R.string.KanesWrathJSON);
                 break;
             case 2:
                 mTitle = getString(R.string.KanesWrath);
                 queryJsonString = getString(R.string.KanesWrathJSON);
+                mNavigationDrawerFragment.updateHeader(NavigationDrawerFragment.GameTitle.KW);
                 break;
             case 3:
                 mTitle = getString(R.string.CandC3);
                 queryJsonString = getString(R.string.CandC3JSON);
+
+                mNavigationDrawerFragment.updateHeader(NavigationDrawerFragment.GameTitle.CnC3);
                 break;
             case 4:
                 mTitle = getString(R.string.Generals);
                 queryJsonString = getString(R.string.GeneralsJSON);
+
+                mNavigationDrawerFragment.updateHeader(NavigationDrawerFragment.GameTitle.Generals);
                 break;
             case 5:
                 mTitle = getString(R.string.ZeroHour);
                 queryJsonString = getString(R.string.ZeroHourJSON);
+
+                mNavigationDrawerFragment.updateHeader(NavigationDrawerFragment.GameTitle.ZH);
                 break;
             case 6:
                 mTitle = getString(R.string.RedAlert3);
                 queryJsonString = getString(R.string.RedAlert3JSON);
+
+                mNavigationDrawerFragment.updateHeader(NavigationDrawerFragment.GameTitle.RA3);
                 break;
         }
     }
