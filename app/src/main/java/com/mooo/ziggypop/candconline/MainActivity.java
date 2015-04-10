@@ -56,18 +56,10 @@ public class MainActivity extends ActionBarActivity
         //Normal setup:
         setContentView(R.layout.activity_main);
 
-        //get the toolbar
-
-
-
+        //get the toolbars
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         topToolbar = (Toolbar) findViewById(R.id.top_toolbar);
-        //TODO replace the ActionBar with a toolbar (currently I have a AB and TB)
-        //actionBar = getSupportActionBar();
-        //actionBar.setBackgroundDrawable(new ColorDrawable(getResources().
-        //        getColor(R.color.dark_background)));
         setSupportActionBar(topToolbar);
-
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -84,7 +76,7 @@ public class MainActivity extends ActionBarActivity
         mSlidingTabLayout.setViewPager(mViewPager);
 
 
-        // set up nav drawer
+        // Set up nav-drawer
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
@@ -98,7 +90,6 @@ public class MainActivity extends ActionBarActivity
         super.onStart();
         //jsonHandler = new JsonHandler(this);
         jsonHandler.refreshAndUpdateViews();
-
     }
 
 
@@ -110,8 +101,6 @@ public class MainActivity extends ActionBarActivity
             getMenuInflater().inflate(R.menu.refresh, menu); // find some src for this
             restoreActionBar();
         }
-
-
         return true;
     }
 
@@ -127,15 +116,14 @@ public class MainActivity extends ActionBarActivity
             return true;
         }
         if (id  == R.id.refresh_button){
+            //stagger the initial update cycle - this is a hacky method of preventing a crash
+            // resulting from "this" being null on app startup.
             if(jsonHandler == null){
                 jsonHandler = new JsonHandler(this);
-            }
-            else {
+            } else {
                 jsonHandler.refreshAndUpdateViews();
             }
-
-        }
-        else {
+        } else {
             DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             if( mDrawerLayout.isDrawerOpen(Gravity.START)){
                 mDrawerLayout.closeDrawer(Gravity.START);
@@ -152,11 +140,9 @@ public class MainActivity extends ActionBarActivity
      */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        Log.v("NAVIGATIONBAR", position+"");
         onSectionAttached(position+1);
         // Update the tabs with new data.
         // This appears to run at startup.
-        //new JsonHandler.JsonGetter(this).execute();
         if(jsonHandler == null){
             jsonHandler = new JsonHandler(this);
         }
@@ -166,11 +152,13 @@ public class MainActivity extends ActionBarActivity
 
     }
 
+    //TODO set the header picture to the respective game.
+    //TODO make clicking the header close the drawer.
      public void onSectionAttached(int number) {
         switch (number) {
             case 1:
                 //The first element is the Header, which has no corresponding layout.
-                //The app calls onSectionAttached(1) on startup, so reroute to the second option.
+                //The app calls onSectionAttached(1) on startup, so reroute to the second case.
                 onSectionAttached(2);
                 break;
             case 2:
@@ -207,6 +195,7 @@ public class MainActivity extends ActionBarActivity
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        // The three fragments to be adapted.
         Player.PlayersFragment player;
         Game.GamesFragment lobby;
         Game.GamesInProgressFragment inGame;
@@ -221,11 +210,9 @@ public class MainActivity extends ActionBarActivity
         @Override
         public ListFragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-
             ListFragment fragment;
             if(position == 2) {
                 fragment = inGame;
-
             } else if( position == 1) {
                 fragment = lobby;
             } else {
@@ -261,6 +248,7 @@ public class MainActivity extends ActionBarActivity
 
     /*
      * Returns the string used to query individual games.
+     * This string will be changed based upon the selection in the nav-drawer.
      */
     public String getQueryJsonString(){
         return queryJsonString;
