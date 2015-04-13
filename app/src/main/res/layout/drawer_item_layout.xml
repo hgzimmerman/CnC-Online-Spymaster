@@ -2,24 +2,28 @@
 <LinearLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_height="wrap_content"
-    android:layout_width="match_parent" >
+    android:layout_width="match_parent">
 
     <LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingTop="15dp"
-    android:paddingBottom="12dp"
-    android:paddingStart="12dp"
-    android:background="@drawable/drawer_selector"
-    android:paddingEnd="30dp">
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:paddingBottom="12dp"
+        android:paddingStart="12dp"
+        android:paddingLeft="12dp"
+        android:paddingEnd="30dp"
+        android:paddingRight="30dp"
+        android:background="@drawable/drawer_selector"
+        >
 
     <TextView
         android:id="@+id/drawer_game_title"
         android:textSize="20sp"
-        android:layout_weight="5"
+        android:layout_weight="4"
         android:layout_width="0dp"
         android:layout_height="wrap_content" />
     <TextView

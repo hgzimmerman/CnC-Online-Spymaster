@@ -5,6 +5,7 @@ import java.util.Locale;
 import android.app.Activity;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -15,11 +16,17 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Fade;
+import android.transition.Scene;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 
@@ -155,14 +162,10 @@ public class MainActivity extends ActionBarActivity
 
     }
 
-     public void onSectionAttached(int number) {
+    //TODO: find a way to add transitions, and not break version numbers.
+    public void onSectionAttached(int number) {
         switch (number) {
             case 1:
-                //The first element is the Header, which has no corresponding layout.
-                //The app calls onSectionAttached(1) on startup, so reroute to the second case.
-                //onSectionAttached(2);
-                //mTitle = getString(R.string.KanesWrath);
-                //queryJsonString = getString(R.string.KanesWrathJSON);
                 mNavigationDrawerFragment.mDrawerLayout.closeDrawers();
                 break;
             case 2:
@@ -172,10 +175,12 @@ public class MainActivity extends ActionBarActivity
                 if (mNavigationDrawerFragment != null){
                     mNavigationDrawerFragment.updateHeader(NavigationDrawerFragment.GameTitle.KW);
                 }
+
                 break;
             case 3:
                 mTitle = getString(R.string.CandC3);
                 queryJsonString = getString(R.string.CandC3JSON);
+                //TransitionManager.go(new Scene(mViewPager));
 
                 mNavigationDrawerFragment.updateHeader(NavigationDrawerFragment.GameTitle.CnC3);
                 break;
