@@ -3,6 +3,7 @@ package com.mooo.ziggypop.candconline;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -51,17 +52,23 @@ public class NavigationDrawerFragment extends Fragment {
      */
     public ActionBarDrawerToggle mDrawerToggle;
 
-    private DrawerLayout mDrawerLayout;
+    public DrawerLayout mDrawerLayout;
     public ListView mDrawerListView;
     private View mFragmentContainerView;
 
-    private int mCurrentSelectedPosition = 0;
+    private int mCurrentSelectedPosition = 1; //skip the header picture
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
     private ArrayList<DrawerItem> gameNames;
     private ImageView imageHeaderView;
     private DrawerAdapter mAdapter;
+
+    private Bitmap kw_bitmap;
+    private Bitmap cnc3_bitmap;
+    private Bitmap generals_bitmap;
+    private Bitmap zh_bitmap;
+    private Bitmap ra3_bitmap;
 
 
     public NavigationDrawerFragment() {
@@ -81,8 +88,18 @@ public class NavigationDrawerFragment extends Fragment {
             mFromSavedInstanceState = true;
         }
 
+
+        kw_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kw_cropped);
+        cnc3_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cnc3_cropped);
+        generals_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.generals_crop);
+        zh_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.zh_box_art_crop);
+        ra3_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.red_alert_crop);
+
+
+
         // Select either the default item (0) or the last selected item.
         selectItem(mCurrentSelectedPosition);
+
     }
 
     @Override
@@ -121,7 +138,7 @@ public class NavigationDrawerFragment extends Fragment {
         imageHeaderView.setImageBitmap(BitmapFactory
                 .decodeResource(getResources(), R.drawable.kw_cropped));
         imageHeaderView.setAdjustViewBounds(true); //This fixes a padding issue
-        mDrawerListView.addHeaderView(imageHeaderView, null, false);
+        mDrawerListView.addHeaderView(imageHeaderView, null, true);
 
         mDrawerListView.setAdapter( mAdapter );
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
@@ -289,20 +306,15 @@ public class NavigationDrawerFragment extends Fragment {
 
     public void updateHeader(GameTitle gameTitle){
         switch (gameTitle){
-            case KW:    imageHeaderView.setImageBitmap(BitmapFactory
-                    .decodeResource(getResources(), R.drawable.kw_cropped));
+            case KW:    imageHeaderView.setImageBitmap(kw_bitmap);
                 break;
-            case CnC3:  imageHeaderView.setImageBitmap(BitmapFactory
-                    .decodeResource(getResources(), R.drawable.cnc3_cropped));
+            case CnC3:  imageHeaderView.setImageBitmap(cnc3_bitmap);
                 break;
-            case Generals: imageHeaderView.setImageBitmap(BitmapFactory
-                    .decodeResource(getResources(), R.drawable.generals_crop));
+            case Generals: imageHeaderView.setImageBitmap(generals_bitmap);
                 break;
-            case ZH:    imageHeaderView.setImageBitmap(BitmapFactory
-                    .decodeResource(getResources(), R.drawable.zh_box_art_crop));
+            case ZH:    imageHeaderView.setImageBitmap(zh_bitmap);
                 break;
-            case RA3:   imageHeaderView.setImageBitmap(BitmapFactory
-                    .decodeResource(getResources(), R.drawable.red_alert_crop));
+            case RA3:   imageHeaderView.setImageBitmap(ra3_bitmap);
                 break;
         }
         mAdapter.notifyDataSetChanged();

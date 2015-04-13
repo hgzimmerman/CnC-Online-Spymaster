@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 
@@ -154,21 +155,23 @@ public class MainActivity extends ActionBarActivity
 
     }
 
-    //TODO set the header picture to the respective game.
-    //TODO make clicking the header close the drawer.
      public void onSectionAttached(int number) {
         switch (number) {
             case 1:
                 //The first element is the Header, which has no corresponding layout.
                 //The app calls onSectionAttached(1) on startup, so reroute to the second case.
                 //onSectionAttached(2);
-                mTitle = getString(R.string.KanesWrath);
-                queryJsonString = getString(R.string.KanesWrathJSON);
+                //mTitle = getString(R.string.KanesWrath);
+                //queryJsonString = getString(R.string.KanesWrathJSON);
+                mNavigationDrawerFragment.mDrawerLayout.closeDrawers();
                 break;
             case 2:
                 mTitle = getString(R.string.KanesWrath);
                 queryJsonString = getString(R.string.KanesWrathJSON);
-                mNavigationDrawerFragment.updateHeader(NavigationDrawerFragment.GameTitle.KW);
+                // Avoids null pointer when starting application.
+                if (mNavigationDrawerFragment != null){
+                    mNavigationDrawerFragment.updateHeader(NavigationDrawerFragment.GameTitle.KW);
+                }
                 break;
             case 3:
                 mTitle = getString(R.string.CandC3);
