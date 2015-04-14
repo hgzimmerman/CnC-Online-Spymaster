@@ -174,6 +174,12 @@ public class MainActivity extends ActionBarActivity
                 // Avoids null pointer when starting application.
                 if (mNavigationDrawerFragment != null){
                     mNavigationDrawerFragment.updateHeader(NavigationDrawerFragment.GameTitle.KW);
+                    //mNavigationDrawerFragment.
+
+                    findViewById(R.id.top_toolbar).setBackgroundColor(
+                            getResources().getColor(R.color.kw_red));
+                    findViewById(R.id.sliding_tabs).setBackgroundColor(
+                            getResources().getColor(R.color.kw_red));
                 }
 
                 break;
@@ -183,24 +189,40 @@ public class MainActivity extends ActionBarActivity
                 //TransitionManager.go(new Scene(mViewPager));
 
                 mNavigationDrawerFragment.updateHeader(NavigationDrawerFragment.GameTitle.CnC3);
+                    findViewById(R.id.top_toolbar).setBackgroundColor(
+                            getResources().getColor(R.color.cnc3_green));
+                    findViewById(R.id.sliding_tabs).setBackgroundColor(
+                            getResources().getColor(R.color.cnc3_green));
                 break;
             case 4:
                 mTitle = getString(R.string.Generals);
                 queryJsonString = getString(R.string.GeneralsJSON);
 
                 mNavigationDrawerFragment.updateHeader(NavigationDrawerFragment.GameTitle.Generals);
+                    findViewById(R.id.top_toolbar).setBackgroundColor(
+                            getResources().getColor(R.color.generals_yellow));
+                    findViewById(R.id.sliding_tabs).setBackgroundColor(
+                            getResources().getColor(R.color.generals_yellow));
                 break;
             case 5:
                 mTitle = getString(R.string.ZeroHour);
                 queryJsonString = getString(R.string.ZeroHourJSON);
 
                 mNavigationDrawerFragment.updateHeader(NavigationDrawerFragment.GameTitle.ZH);
+                    findViewById(R.id.top_toolbar).setBackgroundColor(
+                            getResources().getColor(R.color.zh_orange));
+                    findViewById(R.id.sliding_tabs).setBackgroundColor(
+                            getResources().getColor(R.color.zh_orange));
                 break;
             case 6:
                 mTitle = getString(R.string.RedAlert3);
                 queryJsonString = getString(R.string.RedAlert3JSON);
 
                 mNavigationDrawerFragment.updateHeader(NavigationDrawerFragment.GameTitle.RA3);
+                    findViewById(R.id.top_toolbar).setBackgroundColor(
+                            getResources().getColor(R.color.ra3_red));
+                    findViewById(R.id.sliding_tabs).setBackgroundColor(
+                            getResources().getColor(R.color.ra3_red));
                 break;
         }
     }

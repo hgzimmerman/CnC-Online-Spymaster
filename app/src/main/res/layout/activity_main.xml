@@ -24,7 +24,7 @@
 
        <android.support.v7.widget.Toolbar
            android:id="@+id/top_toolbar"
-           android:background="@color/grey_blue"
+           android:background="@color/kw_red"
            android:layout_width="match_parent"
            android:layout_height="wrap_content">
 
@@ -45,7 +45,7 @@
             <com.mooo.ziggypop.candconline.SlidingTabLayout
                 android:id="@+id/sliding_tabs"
 
-                android:background="@color/grey_blue"
+                android:background="@color/kw_red"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

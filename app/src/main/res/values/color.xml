@@ -18,5 +18,11 @@
     <color name="normal_blue">#0089b5</color>
     <color name="offwhite">#DADAD9</color>
 
+    <color name="kw_red">#a62e2e</color>
+    <color name="cnc3_green">#62965b</color>
+    <color name="generals_yellow">#aaa25a</color>
+    <color name="zh_orange">#dca976</color>
+    <color name="ra3_red">#a23636</color>
+
 
 </resources>

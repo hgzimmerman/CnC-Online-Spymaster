@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -307,6 +309,10 @@ public class NavigationDrawerFragment extends Fragment {
     public void updateHeader(GameTitle gameTitle){
         switch (gameTitle){
             case KW:    imageHeaderView.setImageBitmap(kw_bitmap);
+                        //mDrawerListView.getChildAt(1).setBackgroundColor(
+                        //        getResources().getColor(R.color.dark_blue));
+                        mDrawerListView.getChildAt(1).setBackground(
+                                getResources().getDrawable(R.drawable.drawer_selector));
                 break;
             case CnC3:  imageHeaderView.setImageBitmap(cnc3_bitmap);
                 break;
