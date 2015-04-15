@@ -312,8 +312,8 @@ public class NavigationDrawerFragment extends Fragment {
             case KW:    imageHeaderView.setImageBitmap(kw_bitmap);
                         //mDrawerListView.getChildAt(1).setBackgroundColor(
                         //        getResources().getColor(R.color.dark_blue));
-                        mDrawerListView.getChildAt(1).setBackground(
-                                getResources().getDrawable(R.drawable.drawer_selector));
+                        //mDrawerListView.getChildAt(1).setBackground(
+                        //        getResources().getDrawable(R.drawable.drawer_selector));
                 break;
             case CnC3:  imageHeaderView.setImageBitmap(cnc3_bitmap);
                 break;
