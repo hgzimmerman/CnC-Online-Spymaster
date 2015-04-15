@@ -307,6 +307,9 @@ public class NavigationDrawerFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
     }
 
+    /*
+     * Sets the header in the NavDrawer to a picture based on the GameTitle.
+     */
     public void updateHeader(GameTitle gameTitle){
         switch (gameTitle){
             case KW:    imageHeaderView.setImageBitmap(kw_bitmap);
