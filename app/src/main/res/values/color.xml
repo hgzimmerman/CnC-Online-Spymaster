@@ -4,7 +4,6 @@
     <color name="card_shadow">#ffffffff</color>
     <color name="card_white">#8c666666</color>
 
-    <color name="menu_item_active_color">#f040AA90</color>
     <color name="menu_item_color">#00222222</color>
 
     <color name="dark_background">#313131</color>
@@ -18,10 +17,10 @@
     <color name="normal_blue">#0089b5</color>
     <color name="offwhite">#DADAD9</color>
 
-    <color name="kw_red">#a62e2e</color>
+    <color name="kw_red">#8f2726</color>
     <color name="cnc3_green">#62965b</color>
     <color name="generals_yellow">#aaa25a</color>
-    <color name="zh_orange">#dca976</color>
+    <color name="zh_orange">#a8794c</color>
     <color name="ra3_red">#a23636</color>
 
 
