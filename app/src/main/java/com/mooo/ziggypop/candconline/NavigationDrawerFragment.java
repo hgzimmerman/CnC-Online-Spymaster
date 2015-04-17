@@ -21,8 +21,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -58,13 +61,15 @@ public class NavigationDrawerFragment extends Fragment {
     public ListView mDrawerListView;
     private View mFragmentContainerView;
 
-    private int mCurrentSelectedPosition = 1; //skip the header picture
+    private int mCurrentSelectedPosition ; //skip the header picture
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
     private ArrayList<DrawerItem> gameNames;
     private ImageView imageHeaderView;
+    private View settingsView;
     private DrawerAdapter mAdapter;
+
 
     private Bitmap kw_bitmap;
     private Bitmap cnc3_bitmap;
@@ -90,12 +95,16 @@ public class NavigationDrawerFragment extends Fragment {
             mFromSavedInstanceState = true;
         }
 
+        Log.v("DEFAULT_GAME", sp.getString("default_game", "1"));
+        mCurrentSelectedPosition = Integer.parseInt(sp.getString("default_game", "1"));
+        mCurrentSelectedPosition = 1;
+
 
         kw_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kw_cropped);
-        cnc3_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cnc3_cropped);
-        generals_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.generals_crop);
-        zh_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.zh_box_art_crop);
-        ra3_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.red_alert_crop);
+        //cnc3_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cnc3_cropped);
+        //generals_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.generals_crop);
+        //zh_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.zh_box_art_crop);
+        //ra3_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.red_alert_crop);
 
 
 
@@ -141,6 +150,12 @@ public class NavigationDrawerFragment extends Fragment {
                 .decodeResource(getResources(), R.drawable.kw_cropped));
         imageHeaderView.setAdjustViewBounds(true); //This fixes a padding issue
         mDrawerListView.addHeaderView(imageHeaderView, null, true);
+        //Add settings footer
+        settingsView = inflater.inflate(R.layout.drawer_item_layout, mDrawerLayout);
+        TextView settingsText = (TextView) settingsView.findViewById(R.id.drawer_game_title);
+        settingsText.setText("Settings");
+        settingsText.setTextColor(getResources().getColor(R.color.offwhite)); //I shouldn't have to do this TODO: fix this
+        mDrawerListView.addFooterView(settingsView);
 
         mDrawerListView.setAdapter( mAdapter );
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
@@ -313,18 +328,22 @@ public class NavigationDrawerFragment extends Fragment {
     public void updateHeader(GameTitle gameTitle){
         switch (gameTitle){
             case KW:    imageHeaderView.setImageBitmap(kw_bitmap);
-                        //mDrawerListView.getChildAt(1).setBackgroundColor(
-                        //        getResources().getColor(R.color.dark_blue));
-                        //mDrawerListView.getChildAt(1).setBackground(
-                        //        getResources().getDrawable(R.drawable.drawer_selector));
                 break;
-            case CnC3:  imageHeaderView.setImageBitmap(cnc3_bitmap);
+            case CnC3:  imageHeaderView.setImageBitmap(
+                    BitmapFactory.decodeResource(getResources(),
+                            R.drawable.cnc3_cropped));
                 break;
-            case Generals: imageHeaderView.setImageBitmap(generals_bitmap);
+            case Generals: imageHeaderView.setImageBitmap(
+                    BitmapFactory.decodeResource(getResources(),
+                            R.drawable.generals_crop));
                 break;
-            case ZH:    imageHeaderView.setImageBitmap(zh_bitmap);
+            case ZH:    imageHeaderView.setImageBitmap(
+                    BitmapFactory.decodeResource(getResources(),
+                            R.drawable.zh_box_art_crop));
                 break;
-            case RA3:   imageHeaderView.setImageBitmap(ra3_bitmap);
+            case RA3:   imageHeaderView.setImageBitmap(
+                    BitmapFactory.decodeResource(getResources(),
+                            R.drawable.red_alert_crop));
                 break;
         }
         mAdapter.notifyDataSetChanged();

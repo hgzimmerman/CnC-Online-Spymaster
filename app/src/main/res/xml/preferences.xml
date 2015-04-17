@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:title="Default Game"
+        android:key="default_game"
+        android:summary="The game that will be shown on app startup"
+        android:entries="@array/games_list"
+        android:entryValues="@array/games_list_values"
+        android:defaultValue="1"
+        />
+    <CheckBoxPreference
+        android:title="checkbox"
+        android:defaultValue="false"
+        ></CheckBoxPreference>
+
+</PreferenceScreen>

@@ -3,6 +3,7 @@ package com.mooo.ziggypop.candconline;
 import java.util.Locale;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
@@ -145,6 +146,7 @@ public class MainActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
+
     /*
      * Navigation Bar setup
      */
@@ -224,6 +226,11 @@ public class MainActivity extends ActionBarActivity
                     findViewById(R.id.sliding_tabs).setBackgroundColor(
                             getResources().getColor(R.color.ra3_red));
                 break;
+            case 7: //settings
+                Intent intentSetPref = new Intent(this, SettingsActivity.class);
+                startActivityForResult(intentSetPref, 0);
+                break;
+
         }
     }
 

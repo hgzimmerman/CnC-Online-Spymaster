@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="games_list">
+        <item>@string/KanesWrath</item>
+        <item>@string/CandC3</item>
+        <item>@string/Generals</item>
+        <item>@string/ZeroHour</item>
+        <item>@string/RedAlert3</item>
+    </string-array>
+
+    <string-array name="games_list_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+
+</resources>
