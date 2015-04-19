@@ -97,7 +97,7 @@ public class NavigationDrawerFragment extends Fragment {
 
         Log.v("DEFAULT_GAME", sp.getString("default_game", "1"));
         mCurrentSelectedPosition = Integer.parseInt(sp.getString("default_game", "1"));
-        mCurrentSelectedPosition = 1;
+        //mCurrentSelectedPosition = 2;
 
 
         kw_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kw_cropped);

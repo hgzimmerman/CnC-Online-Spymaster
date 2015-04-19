@@ -39,6 +39,7 @@ public class MainActivity extends ActionBarActivity
 
     public NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
+    private NavigationDrawerFragment.GameTitle mGameTitle;
     //private ActionBar actionBar;
     private String queryJsonString = "";
     private JSONObject jsonCache;
@@ -167,64 +168,28 @@ public class MainActivity extends ActionBarActivity
     //TODO: find a way to add transitions, and not break version numbers.
     public void onSectionAttached(int number) {
         switch (number) {
-            case 1:
+            case 1: //Header Picture
                 mNavigationDrawerFragment.mDrawerLayout.closeDrawers();
                 break;
             case 2:
-                mTitle = getString(R.string.KanesWrath);
                 queryJsonString = getString(R.string.KanesWrathJSON);
-                // Avoids null pointer when starting application.
-                if (mNavigationDrawerFragment != null){
-                    mNavigationDrawerFragment.updateHeader(NavigationDrawerFragment.GameTitle.KW);
-                    //mNavigationDrawerFragment.
-
-                    findViewById(R.id.top_toolbar).setBackgroundColor(
-                            getResources().getColor(R.color.kw_red));
-                    findViewById(R.id.sliding_tabs).setBackgroundColor(
-                            getResources().getColor(R.color.kw_red));
-                }
-
+                mGameTitle = NavigationDrawerFragment.GameTitle.KW;
                 break;
             case 3:
-                mTitle = getString(R.string.CandC3);
                 queryJsonString = getString(R.string.CandC3JSON);
-                //TransitionManager.go(new Scene(mViewPager));
-
-                mNavigationDrawerFragment.updateHeader(NavigationDrawerFragment.GameTitle.CnC3);
-                    findViewById(R.id.top_toolbar).setBackgroundColor(
-                            getResources().getColor(R.color.cnc3_green));
-                    findViewById(R.id.sliding_tabs).setBackgroundColor(
-                            getResources().getColor(R.color.cnc3_green));
+                mGameTitle = NavigationDrawerFragment.GameTitle.CnC3;
                 break;
             case 4:
-                mTitle = getString(R.string.Generals);
                 queryJsonString = getString(R.string.GeneralsJSON);
-
-                mNavigationDrawerFragment.updateHeader(NavigationDrawerFragment.GameTitle.Generals);
-                    findViewById(R.id.top_toolbar).setBackgroundColor(
-                            getResources().getColor(R.color.generals_yellow));
-                    findViewById(R.id.sliding_tabs).setBackgroundColor(
-                            getResources().getColor(R.color.generals_yellow));
+                mGameTitle = NavigationDrawerFragment.GameTitle.Generals;
                 break;
             case 5:
-                mTitle = getString(R.string.ZeroHour);
                 queryJsonString = getString(R.string.ZeroHourJSON);
-
-                mNavigationDrawerFragment.updateHeader(NavigationDrawerFragment.GameTitle.ZH);
-                    findViewById(R.id.top_toolbar).setBackgroundColor(
-                            getResources().getColor(R.color.zh_orange));
-                    findViewById(R.id.sliding_tabs).setBackgroundColor(
-                            getResources().getColor(R.color.zh_orange));
+                mGameTitle = NavigationDrawerFragment.GameTitle.ZH;
                 break;
             case 6:
-                mTitle = getString(R.string.RedAlert3);
                 queryJsonString = getString(R.string.RedAlert3JSON);
-
-                mNavigationDrawerFragment.updateHeader(NavigationDrawerFragment.GameTitle.RA3);
-                    findViewById(R.id.top_toolbar).setBackgroundColor(
-                            getResources().getColor(R.color.ra3_red));
-                    findViewById(R.id.sliding_tabs).setBackgroundColor(
-                            getResources().getColor(R.color.ra3_red));
+                mGameTitle = NavigationDrawerFragment.GameTitle.RA3;
                 break;
             case 7: //settings
                 Intent intentSetPref = new Intent(this, SettingsActivity.class);
@@ -235,9 +200,46 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void restoreActionBar() {
-        //toolbar.setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setTitle(mTitle);
+        switch(mGameTitle){
+            case KW:
+                getSupportActionBar().setTitle(getString(R.string.KanesWrath));
+                findViewById(R.id.top_toolbar).setBackgroundColor(
+                getResources().getColor(R.color.kw_red));
+                findViewById(R.id.sliding_tabs).setBackgroundColor(
+                getResources().getColor(R.color.kw_red));
+                break;
+            case CnC3:
+                getSupportActionBar().setTitle(getString(R.string.CandC3));
+                findViewById(R.id.top_toolbar).setBackgroundColor(
+                getResources().getColor(R.color.cnc3_green));
+                findViewById(R.id.sliding_tabs).setBackgroundColor(
+                getResources().getColor(R.color.cnc3_green));
+                break;
+            case Generals:
+                getSupportActionBar().setTitle(getString(R.string.Generals));
+                findViewById(R.id.top_toolbar).setBackgroundColor(
+                getResources().getColor(R.color.generals_yellow));
+                findViewById(R.id.sliding_tabs).setBackgroundColor(
+                getResources().getColor(R.color.generals_yellow));
+                break;
+            case ZH:
+                getSupportActionBar().setTitle(getString(R.string.ZeroHour));
+                findViewById(R.id.top_toolbar).setBackgroundColor(
+                getResources().getColor(R.color.zh_orange));
+                findViewById(R.id.sliding_tabs).setBackgroundColor(
+                getResources().getColor(R.color.zh_orange));
+                break;
+            case RA3:
+                getSupportActionBar().setTitle(getString(R.string.RedAlert3));
+                findViewById(R.id.top_toolbar).setBackgroundColor(
+                getResources().getColor(R.color.ra3_red));
+                findViewById(R.id.sliding_tabs).setBackgroundColor(
+                getResources().getColor(R.color.ra3_red));
+                break;
+        }
+        mNavigationDrawerFragment.updateHeader(mGameTitle);
     }
+
 
 
     /**
