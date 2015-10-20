@@ -274,7 +274,6 @@ public class MainActivity extends ActionBarActivity
             args.putInt(Player.PlayersFragment.ARG_SECTION_NUMBER, position+1);
             fragment.setArguments(args);
             return fragment;
-
         }
 
         @Override
