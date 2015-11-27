@@ -101,7 +101,8 @@ public class JsonHandler {
             try {
                 JSONObject value = (JSONObject) usersObject.get(key);
                 returnArr.add(new Player(value.getString("nickname"),
-                        value.getString("username")));
+                        value.getString("id"),
+                        value.getString("pid")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -199,7 +200,7 @@ public class JsonHandler {
         @Override
         public JSONObject doInBackground(URL... params) {
             try {
-                URL url = new URL("http", "online.the3rdage.net", 29998, "index.html");
+                URL url = new URL("http", "server.cnc-online.net", 29998, "index.html");
                 Log.v("URL", url.toString());
                 InputStream is = null;
 
@@ -255,6 +256,7 @@ public class JsonHandler {
                 myActivity.findViewById(R.id.llProgBar).setVisibility(View.GONE);
             }
             updateViews(); //fill the pager with new content
+            mainActivity.resetUpdating();
         }
     }
 }

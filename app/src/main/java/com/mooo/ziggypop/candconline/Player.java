@@ -25,11 +25,13 @@ import java.util.ArrayList;
 public class Player {
 
     private String nickname;
-    private String username;
+    private String id;
+    private String pid;
 
-    public Player(String nickname, String username){
+    public Player(String nickname, String id, String pid){
         this.nickname = nickname;
-        this.username = username;
+        this.id = id;
+        this.pid = pid;
     }
 
     public String getNickname(){

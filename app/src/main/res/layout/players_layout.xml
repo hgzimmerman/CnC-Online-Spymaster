@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/outerLayout"
         android:orientation="vertical"
-        android:layout_width="300dp"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:padding="15dp"
         android:layout_gravity="center_horizontal"

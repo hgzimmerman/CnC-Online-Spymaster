@@ -3,6 +3,7 @@ package com.mooo.ziggypop.candconline;
 import java.util.Locale;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
@@ -24,11 +25,14 @@ import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import org.json.JSONObject;
@@ -47,6 +51,7 @@ public class MainActivity extends ActionBarActivity
     private Toolbar topToolbar;
     private SlidingTabLayout mSlidingTabLayout;
     private JsonHandler jsonHandler;
+    private Menu mymenu;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -112,6 +117,7 @@ public class MainActivity extends ActionBarActivity
             //getMenuInflater().inflate(R.menu.menu_main, menu);
             getMenuInflater().inflate(R.menu.refresh, menu); // find some src for this
             restoreActionBar();
+            mymenu = menu;
         }
         return true;
     }
@@ -133,7 +139,16 @@ public class MainActivity extends ActionBarActivity
             if(jsonHandler == null){
                 jsonHandler = new JsonHandler(this);
             } else {
+                // Do animation start
+                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                ImageView iv = (ImageView)inflater.inflate(R.layout.iv_refresh, null);
+                Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate_refresh);
+                rotation.setRepeatCount(Animation.INFINITE);
+                iv.startAnimation(rotation);
+                item.setActionView(iv);
+
                 jsonHandler.refreshAndUpdateViews();
+
             }
         } else {
             DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -145,6 +160,18 @@ public class MainActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void resetUpdating()
+    {
+        // Get our refresh item from the menu
+        MenuItem m = mymenu.findItem(R.id.refresh_button);
+        if(m.getActionView()!=null)
+        {
+            // Remove the animation.
+            m.getActionView().clearAnimation();
+            m.setActionView(null);
+        }
     }
 
 
