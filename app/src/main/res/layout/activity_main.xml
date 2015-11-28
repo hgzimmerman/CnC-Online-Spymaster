@@ -26,19 +26,18 @@
            android:id="@+id/top_toolbar"
            android:background="@color/kw_red"
            android:layout_width="match_parent"
-           android:layout_height="wrap_content">
-
-
+           android:layout_height="@dimen/abc_action_bar_default_height_material">
            </android.support.v7.widget.Toolbar>
 
-
-        <android.support.v7.widget.Toolbar
-        android:gravity="top"
-        android:id="@+id/toolbar"
-        android:layout_width="fill_parent"
-        app:contentInsetStart="0dp"
-        android:minHeight="40dp"
-        android:layout_height="wrap_content">
+       <!-- -3dp margin-bottom offset the fact that there is unneeded space beneith the toolbar to start with -->
+       <android.support.v7.widget.Toolbar
+            android:gravity="top"
+            android:id="@+id/toolbar"
+            android:layout_width="fill_parent"
+            app:contentInsetStart="0dp"
+            android:minHeight="40dp"
+            android:layout_marginBottom="-4.0dp"
+            android:layout_height="wrap_content">
 
 
 
@@ -46,7 +45,6 @@
                 android:id="@+id/sliding_tabs"
 
                 android:background="@color/kw_red"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

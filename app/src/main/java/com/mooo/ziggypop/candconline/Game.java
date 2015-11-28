@@ -158,7 +158,6 @@ public class Game {
                 });
             }
         }
-
     }
 
 
@@ -193,16 +192,21 @@ public class Game {
             if(!isAdded()){
                 mAdapter = new GamesAdapter(activity, R.layout.games_layout, games);
             }
-            Log.v("GamesInProgressFragment", "RUNNING");
-            mAdapter.clear();
-            games.addAll(data);
-            mAdapter.notifyDataSetChanged();
+            activity.runOnUiThread(new Runnable() {
+                public void run(){
+                    Log.v("GamesInProgressFragment", "RUNNING");
+                    mAdapter.clear();
+                    games.addAll(data);
+                    mAdapter.notifyDataSetChanged();
+                }
+
+
+
+            });
+
 
         }
 
     }
-
-
-
 
 }

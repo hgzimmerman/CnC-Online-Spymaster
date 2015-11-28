@@ -1,5 +1,6 @@
 package com.mooo.ziggypop.candconline;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import android.app.Activity;
@@ -33,6 +34,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import org.json.JSONObject;
@@ -52,6 +54,8 @@ public class MainActivity extends ActionBarActivity
     private SlidingTabLayout mSlidingTabLayout;
     private JsonHandler jsonHandler;
     private Menu mymenu;
+    public Player.PlayersAdapter playersArrayAdapter;
+    public ArrayList<Player> wordsArr1;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -66,12 +70,16 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        wordsArr1 = new ArrayList<>();
         super.onCreate(savedInstanceState);
         //request ability to show progressbar
         supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setSupportProgressBarIndeterminateVisibility(true);
         //Normal setup:
         setContentView(R.layout.activity_main);
+
+
+
 
         //get the toolbars
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -100,12 +108,21 @@ public class MainActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
 
+        //playersArrayAdapter = Player.PlayersAdapter(this, R.layout.players_layout, Player.wordsArr);
+
 
     }
     @Override
     public void onStart(){
         super.onStart();
         //jsonHandler = new JsonHandler(this);
+        //jsonHandler.refreshAndUpdateViews();
+    }
+
+    @Override
+    protected void onResume() {
+        if (mSectionsPagerAdapter.player == null){finish();}
+        super.onResume();
         jsonHandler.refreshAndUpdateViews();
     }
 
@@ -165,12 +182,13 @@ public class MainActivity extends ActionBarActivity
     public void resetUpdating()
     {
         // Get our refresh item from the menu
-        MenuItem m = mymenu.findItem(R.id.refresh_button);
-        if(m.getActionView()!=null)
-        {
-            // Remove the animation.
-            m.getActionView().clearAnimation();
-            m.setActionView(null);
+        if (mymenu!=null) {
+            MenuItem m = mymenu.findItem(R.id.refresh_button);
+            if (m.getActionView() != null) {
+                // Remove the animation.
+                m.getActionView().clearAnimation();
+                m.setActionView(null);
+            }
         }
     }
 

@@ -29,11 +29,18 @@ public class JsonHandler {
     public static final String TAG = "JSON";
 
 
+    private JsonGetter jsonGetter;
     private JSONObject jsonCache;
     private MainActivity mainActivity;
+
+    private Player.PlayersFragment playerFrag;
+
     public JsonHandler(MainActivity activity){
         mainActivity = activity;
     }
+
+
+
 
     public void updateViews(){
         if (jsonCache != null) {
@@ -41,20 +48,24 @@ public class JsonHandler {
 
                 Log.v(TAG, mainActivity.getQueryJsonString());
                 Log.v(TAG, mainActivity.toString());
+
+                /*===Get_Base_Game_Json===*/
                 JSONObject game = jsonCache.getJSONObject(mainActivity.getQueryJsonString());
-
-            /*===START_PLAYERS===*/
+                /*===START_PLAYERS===*/
                 ArrayList<Player> usersArray = getPlayers(game);
+                Log.v("NUM_OF_PLAYERS",usersArray.size()+"");
 
+                /*===START_LOBBIES===*/
                 JSONObject gameClasses = game.getJSONObject("games");
-            /*===START_LOBBIES===*/
                 ArrayList<Game> gamesInLobbyArrList = getGames(gameClasses, "staging");
                 ArrayList<Game> gamesInProgressArrList = getGames(gameClasses, "playing");
 
 
                 //Refresh the data for each view.
-                Player.PlayersFragment playerFrag = mainActivity.mSectionsPagerAdapter.player;
-                playerFrag.refreshData(usersArray);
+                playerFrag = mainActivity.mSectionsPagerAdapter.player;
+                if (!playerFrag.refreshData(usersArray, mainActivity)){
+
+                }
 
                 Game.GamesFragment gamesFrag = mainActivity.mSectionsPagerAdapter.lobby;
                 gamesFrag.refreshData(gamesInLobbyArrList);
@@ -69,13 +80,13 @@ public class JsonHandler {
                 e.printStackTrace();
             }
         }
-
-        }
+    }
 
 
     public void refreshAndUpdateViews(){
-
         new JsonGetter(mainActivity).execute();
+        updateViews();
+        //new JsonGetter(mainActivity).execute();
         //updateViews();
     }
 

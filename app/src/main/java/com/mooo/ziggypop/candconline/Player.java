@@ -2,7 +2,10 @@ package com.mooo.ziggypop.candconline;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.Gravity;
@@ -14,6 +17,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by ziggypop on 3/30/15.
@@ -47,6 +54,7 @@ public class Player {
         public ArrayList<Player> myPlayers;
         private boolean hasSetCount = false;
 
+
         public PlayersAdapter(Context context, int resource) {
             super(context, resource);
         }
@@ -57,7 +65,6 @@ public class Player {
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-
 
             View v = convertView;
 
@@ -102,9 +109,17 @@ public class Player {
         public static final String ARG_SECTION_NUMBER = "section_number";
 
 
-        private ArrayList<Player> wordsArr = new ArrayList<>();
-        private ArrayAdapter<Player> mAdapter;
+        public ArrayList<Player> wordsArr = new ArrayList<>();
+        private PlayersAdapter mAdapter;
         private boolean isAttached = false;
+        private Activity mActivity;
+
+
+        LayoutInflater inflater;
+        ViewGroup container;
+        Bundle savedInstanceState;
+        View rootView;
+
 
 
 
@@ -114,39 +129,53 @@ public class Player {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_list_view, container, false);
-
-
-
-            mAdapter = new PlayersAdapter(container.getContext(), R.layout.players_layout, wordsArr);
-
+            mAdapter = new PlayersAdapter(getActivity(), R.layout.players_layout, wordsArr);
             setListAdapter(mAdapter);
 
+            this.inflater=inflater;
+            this.container=container;
+            this.savedInstanceState = savedInstanceState;
 
+            rootView =inflater.inflate(R.layout.fragment_list_view,container,false);
+
+            setRetainInstance(true);//This prevents the GCing of the fragment.
             return rootView;
         }
 
-        public void refreshData(final ArrayList<Player> data){
-            getActivity().runOnUiThread(new Runnable() {
+        public boolean refreshData(final ArrayList<Player> data, final MainActivity activity){
+
+            if(!isAdded())
+                mAdapter = new PlayersAdapter(activity, R.layout.players_layout, wordsArr);
+
+            activity.runOnUiThread(new Runnable() {
                 public void run() {
                     Log.v("PLAYER_FRAGMENT", "RUNNING");
                     mAdapter.clear();
                     wordsArr.addAll(data);
                     mAdapter.notifyDataSetChanged();
+                    Log.e("Num_PLAYERS_ADAPTER", mAdapter.getCount() + "");
                 }
-
-
             });
+            return true;
+
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            Log.e("Players", "Resumed");
         }
 
         @Override
         public void onAttach(Activity activity){
             super.onAttach(activity);
-            Log.v("PLAYERS", "IS_ATTACHED");
-            isAttached = true;
+            Log.e("PLAYERS", "IS_ATTACHED");
+            Log.e("PLAYERS", activity.toString());
+            //refreshData(wordsArr,(MainActivity) activity);
+
+            //isAttached = true;
+            //mActivity = activity;
         }
-
-
 
 
     }
