@@ -22,6 +22,7 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent">
 
+       <!-- Toolbar that fills the normal role of an ActionBar -->
        <android.support.v7.widget.Toolbar
            android:id="@+id/top_toolbar"
            android:background="@color/kw_red"
@@ -29,6 +30,7 @@
            android:layout_height="@dimen/abc_action_bar_default_height_material">
            </android.support.v7.widget.Toolbar>
 
+       <!-- Toolbar for the sliding tabs -->
        <!-- -3dp margin-bottom offset the fact that there is unneeded space beneith the toolbar to start with -->
        <android.support.v7.widget.Toolbar
             android:gravity="top"

@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -70,7 +74,6 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        wordsArr1 = new ArrayList<>();
         super.onCreate(savedInstanceState);
         //request ability to show progressbar
         supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -93,6 +96,7 @@ public class MainActivity extends ActionBarActivity
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setOffscreenPageLimit(3);
 
 
         // Set up the SlidingTabLayout
@@ -101,12 +105,12 @@ public class MainActivity extends ActionBarActivity
         mSlidingTabLayout.setViewPager(mViewPager);
 
 
+
         // Set up nav-drawer
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
 
         //playersArrayAdapter = Player.PlayersAdapter(this, R.layout.players_layout, Player.wordsArr);
 
@@ -291,17 +295,31 @@ public class MainActivity extends ActionBarActivity
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
         // The three fragments to be adapted.
         Player.PlayersFragment player;
         Game.GamesFragment lobby;
         Game.GamesInProgressFragment inGame;
+
+
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
             player = new Player.PlayersFragment();
             lobby = new Game.GamesFragment();
             inGame = new Game.GamesInProgressFragment();
+        }
+
+
+        /**
+         * This prevents the Player view from not showing up after the activity is killed.
+         * I have very little idea how exactly this works, but it appears to do the job.
+         * Here is a link to S.O. for reference:
+         * http://stackoverflow.com/a/14849050/4979936
+         * */
+        @Override
+        public Parcelable saveState() {
+            return null;
         }
 
         @Override
@@ -318,6 +336,7 @@ public class MainActivity extends ActionBarActivity
             Bundle args = new Bundle();
             args.putInt(Player.PlayersFragment.ARG_SECTION_NUMBER, position+1);
             fragment.setArguments(args);
+
             return fragment;
         }
 
