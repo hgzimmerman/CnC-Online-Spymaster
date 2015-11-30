@@ -205,24 +205,8 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         onSectionAttached(position+1);
 
+        //Handle animation for the "scene" change
         View pager = findViewById(R.id.pager);
-        if (pager != null) {
-            Animation awayAnimation = AnimationUtils.loadAnimation(getApplicationContext(),
-                    R.anim.down_from_top);
-            pager.startAnimation(awayAnimation);
-            Log.e("animate","away animating");
-        }
-
-        // Update the tabs with new data.
-        // Note: This appears to run at startup.
-        if(jsonHandler == null){
-            jsonHandler = new JsonHandler(this);
-        }
-        else{
-            jsonHandler.updateViews();
-        }
-
-
         if (pager != null) {
             AnimationSet as = new AnimationSet(true);
             Animation awayAnimation = AnimationUtils.loadAnimation(getApplicationContext(),
@@ -235,6 +219,15 @@ public class MainActivity extends ActionBarActivity
             pager.startAnimation(as);
             Log.e("animate","Should be animating");
         }
+        // Update the tabs with new data.
+        // Note: This appears to run at startup.
+        if(jsonHandler == null){
+            jsonHandler = new JsonHandler(this);
+        }
+        else{
+            jsonHandler.updateViews();
+        }
+
     }
 
     //TODO: find a way to add transitions, and not break version numbers.
