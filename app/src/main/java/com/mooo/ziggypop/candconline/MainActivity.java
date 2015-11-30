@@ -156,7 +156,7 @@ public class MainActivity extends ActionBarActivity
             return true;
         }
         if (id  == R.id.refresh_button){
-            //stagger the initial update cycle - this is a hacky method of preventing a crash
+            // stagger the initial update cycle. - this is a hacky method of preventing a crash
             // resulting from "this" being null on app startup.
             if(jsonHandler == null){
                 jsonHandler = new JsonHandler(this);
@@ -198,8 +198,10 @@ public class MainActivity extends ActionBarActivity
     }
 
 
-    /*
+    /**
      * Navigation Bar setup
+     * Starts an animation for the "transition"
+     * Then the method updates the views using the jsonHandler.
      */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -214,7 +216,7 @@ public class MainActivity extends ActionBarActivity
             as.addAnimation(awayAnimation);
             Animation returnAnimation = AnimationUtils.loadAnimation(getApplicationContext(),
                     R.anim.up_from_bottom);
-            returnAnimation.setStartOffset(600);
+            returnAnimation.setStartOffset(550);
             as.addAnimation(returnAnimation);
             pager.startAnimation(as);
             Log.e("animate","Should be animating");
@@ -230,7 +232,11 @@ public class MainActivity extends ActionBarActivity
 
     }
 
-    //TODO: find a way to add transitions, and not break version numbers.
+    /**
+     * Updates the state of what game statistics to display
+     * based on the number passed in.
+     *
+     */
     public void onSectionAttached(int number) {
         switch (number) {
             case 1: //Header Picture
@@ -264,6 +270,9 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
+    /**
+     * Sets the background for the Toolbars after a game is selected.
+     */
     public void restoreActionBar() {
         switch(mGameTitle){
             case KW:

@@ -111,8 +111,6 @@ public class Player {
 
         public ArrayList<Player> wordsArr = new ArrayList<>();
         private PlayersAdapter mAdapter;
-        private boolean isAttached = false;
-        private Activity mActivity;
 
 
         LayoutInflater inflater;
@@ -153,29 +151,12 @@ public class Player {
                     mAdapter.clear();
                     wordsArr.addAll(data);
                     mAdapter.notifyDataSetChanged();
-                    Log.e("Num_PLAYERS_ADAPTER", mAdapter.getCount() + "");
                 }
             });
             return true;
-
         }
 
-        @Override
-        public void onResume() {
-            super.onResume();
-            Log.e("Players", "Resumed");
-        }
 
-        @Override
-        public void onAttach(Activity activity){
-            super.onAttach(activity);
-            Log.e("PLAYERS", "IS_ATTACHED");
-            Log.e("PLAYERS", activity.toString());
-            //refreshData(wordsArr,(MainActivity) activity);
-
-            //isAttached = true;
-            //mActivity = activity;
-        }
 
 
     }

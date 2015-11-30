@@ -4,5 +4,5 @@ android:shareInterpolator="@android:anim/accelerate_interpolator">
 <translate
     android:fromXDelta="0%" android:toXDelta="0%"
     android:fromYDelta="-100%" android:toYDelta="0%"
-    android:duration="450" />
+    android:duration="400" />
 </set>
