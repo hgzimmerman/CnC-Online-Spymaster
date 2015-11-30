@@ -1,11 +1,13 @@
 package com.mooo.ziggypop.candconline;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -263,8 +265,16 @@ public class JsonHandler {
                 myActivity.findViewById(R.id.pager).setVisibility(View.VISIBLE);
                 myActivity.findViewById(R.id.llProgBar).setVisibility(View.GONE);
             } else {
+                //Show the user persistent text about a connection error.
+                //I may want to remove this later since I can notify via Toast.
                 myActivity.findViewById(R.id.connection_error_text).setVisibility(View.VISIBLE);
                 myActivity.findViewById(R.id.llProgBar).setVisibility(View.GONE);
+                //TOAST
+                Context mContext = myActivity.getApplicationContext();
+                CharSequence errorText = "Connection error";
+                int duration = Toast.LENGTH_LONG;
+                Toast toast = Toast.makeText(mContext, errorText, duration);
+                toast.show();
             }
             updateViews(); //fill the pager with new content
             mainActivity.resetUpdating();

@@ -203,8 +203,9 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         onSectionAttached(position+1);
+
         // Update the tabs with new data.
-        // This appears to run at startup.
+        // Note: This appears to run at startup.
         if(jsonHandler == null){
             jsonHandler = new JsonHandler(this);
         }
