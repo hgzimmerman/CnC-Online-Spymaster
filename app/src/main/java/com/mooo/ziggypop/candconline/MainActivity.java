@@ -37,6 +37,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -204,6 +205,14 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         onSectionAttached(position+1);
 
+        View pager = findViewById(R.id.pager);
+        if (pager != null) {
+            Animation awayAnimation = AnimationUtils.loadAnimation(getApplicationContext(),
+                    R.anim.down_from_top);
+            pager.startAnimation(awayAnimation);
+            Log.e("animate","away animating");
+        }
+
         // Update the tabs with new data.
         // Note: This appears to run at startup.
         if(jsonHandler == null){
@@ -213,6 +222,19 @@ public class MainActivity extends ActionBarActivity
             jsonHandler.updateViews();
         }
 
+
+        if (pager != null) {
+            AnimationSet as = new AnimationSet(true);
+            Animation awayAnimation = AnimationUtils.loadAnimation(getApplicationContext(),
+                    R.anim.down_from_top);
+            as.addAnimation(awayAnimation);
+            Animation returnAnimation = AnimationUtils.loadAnimation(getApplicationContext(),
+                    R.anim.up_from_bottom);
+            returnAnimation.setStartOffset(600);
+            as.addAnimation(returnAnimation);
+            pager.startAnimation(as);
+            Log.e("animate","Should be animating");
+        }
     }
 
     //TODO: find a way to add transitions, and not break version numbers.
