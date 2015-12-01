@@ -1,11 +1,8 @@
 package com.mooo.ziggypop.candconline;
 
-import java.util.ArrayList;
+
 import java.util.Locale;
 
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -23,11 +20,6 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.Fade;
-import android.transition.Scene;
-import android.transition.Slide;
-import android.transition.Transition;
-import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -42,25 +34,20 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
-import org.json.JSONObject;
-
 
 public class MainActivity extends ActionBarActivity
     implements  NavigationDrawerFragment.NavigationDrawerCallbacks {
+    private static final String TAG = "MainActivity";
 
     public NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
     private NavigationDrawerFragment.GameTitle mGameTitle;
-    //private ActionBar actionBar;
-    private String queryJsonString = "";
-    private JSONObject jsonCache;
+    private String queryJsonString = "";// String used to choose what game to sample from the JSON
     private Toolbar toolbar;
     private Toolbar topToolbar;
     private SlidingTabLayout mSlidingTabLayout;
     private JsonHandler jsonHandler;
     private Menu mymenu;
-    public Player.PlayersAdapter playersArrayAdapter;
-    public ArrayList<Player> wordsArr1;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -206,20 +193,25 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         onSectionAttached(position+1);
-
         //Handle animation for the "scene" change
-        View pager = findViewById(R.id.pager);
+        final View pager = findViewById(R.id.pager);
         if (pager != null) {
-            AnimationSet as = new AnimationSet(true);
             Animation awayAnimation = AnimationUtils.loadAnimation(getApplicationContext(),
                     R.anim.down_from_top);
-            as.addAnimation(awayAnimation);
-            Animation returnAnimation = AnimationUtils.loadAnimation(getApplicationContext(),
-                    R.anim.up_from_bottom);
-            returnAnimation.setStartOffset(550);
-            as.addAnimation(returnAnimation);
-            pager.startAnimation(as);
-            Log.e("animate","Should be animating");
+            awayAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) { }
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    Animation returnAnimation = AnimationUtils.loadAnimation(getApplicationContext(),
+                            R.anim.up_from_bottom);
+                    pager.startAnimation(returnAnimation);
+                }
+                @Override
+                public void onAnimationRepeat(Animation animation) { }
+            });
+            pager.startAnimation(awayAnimation);
+            Log.v(TAG,"Animating transition between game titles");
         }
         // Update the tabs with new data.
         // Note: This appears to run at startup.
@@ -229,7 +221,6 @@ public class MainActivity extends ActionBarActivity
         else{
             jsonHandler.updateViews();
         }
-
     }
 
     /**
@@ -386,7 +377,7 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
-    /*
+    /**
      * Returns the string used to query individual games.
      * This string will be changed based upon the selection in the nav-drawer.
      */

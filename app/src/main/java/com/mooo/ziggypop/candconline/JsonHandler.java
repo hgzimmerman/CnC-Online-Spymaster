@@ -28,7 +28,7 @@ import java.util.Iterator;
 public class JsonHandler {
 
 
-    public static final String TAG = "JSON";
+    public static final String TAG = "JsonHandler";
 
 
     private JsonGetter jsonGetter;
@@ -48,14 +48,14 @@ public class JsonHandler {
         if (jsonCache != null) {
             try {
 
-                Log.v(TAG, mainActivity.getQueryJsonString());
-                Log.v(TAG, mainActivity.toString());
+                Log.v(TAG, "query String = " + mainActivity.getQueryJsonString());
+
 
                 /*===Get_Base_Game_Json===*/
                 JSONObject game = jsonCache.getJSONObject(mainActivity.getQueryJsonString());
                 /*===START_PLAYERS===*/
                 ArrayList<Player> usersArray = getPlayers(game);
-                Log.v("NUM_OF_PLAYERS",usersArray.size()+"");
+                Log.v(TAG, "NUM_OF_PLAYERS: " + usersArray.size());
 
                 /*===START_LOBBIES===*/
                 JSONObject gameClasses = game.getJSONObject("games");
@@ -65,9 +65,9 @@ public class JsonHandler {
 
                 //Refresh the data for each view.
                 playerFrag = mainActivity.mSectionsPagerAdapter.player;
-                if (!playerFrag.refreshData(usersArray, mainActivity)){
+                playerFrag.refreshData(usersArray, mainActivity);
 
-                }
+
 
                 Game.GamesFragment gamesFrag = mainActivity.mSectionsPagerAdapter.lobby;
                 gamesFrag.refreshData(gamesInLobbyArrList);
@@ -88,14 +88,12 @@ public class JsonHandler {
     public void refreshAndUpdateViews(){
         new JsonGetter(mainActivity).execute();
         updateViews();
-        //new JsonGetter(mainActivity).execute();
-        //updateViews();
     }
 
 
-    /*
+    /**
      * Helper method for onPostExecute()
-     * This gets and assembles the json data into an arraylist of Players
+     * This gets and assembles the json data into an ArrayList of Player objects.
      */
     public static ArrayList<Player> getPlayers(JSONObject gameObject){
         ArrayList<Player> returnArr = new ArrayList<>();
@@ -124,9 +122,9 @@ public class JsonHandler {
     }
 
 
-    /*
+    /**
      * Helper method for onPostExecute()
-     * This gets and assembles all of the json data into an arraylist of games.
+     * This gets and assembles all of the json data into an ArrayList of Game objects.
      */
     public static ArrayList<Game> getGames(JSONObject gameClasses, String typeOfGame) {
         ArrayList<Game> returnArr = new ArrayList<>();
@@ -151,7 +149,7 @@ public class JsonHandler {
                 map = map.substring(map.lastIndexOf('/')+1);
                 map = map.substring(map.lastIndexOf('\\')+1);
 
-                //Set up the lock.
+                //Set up the lock icon.
                 String lock = lobby.get("pw").toString();
                 boolean isLocked = false;
                 if (lock.equals("1")){ isLocked = true;}
@@ -166,9 +164,9 @@ public class JsonHandler {
     }
 
 
-    /*
+    /**
      * Given the top level JSON Object, find the player count of each game and return them
-     * in an arraylist.
+     * in an ArrayList.
      */
     public static ArrayList<Integer> getPlayersPerGame(JSONObject jsonAll, MainActivity myActivity){
         ArrayList<Integer> returnArr = new ArrayList<>();
@@ -214,7 +212,7 @@ public class JsonHandler {
         public JSONObject doInBackground(URL... params) {
             try {
                 URL url = new URL("http", "server.cnc-online.net", 29998, "index.html");
-                Log.v("URL", url.toString());
+                Log.v(TAG, "URL = "+url.toString());
                 InputStream is = null;
 
                 try{

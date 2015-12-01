@@ -46,14 +46,12 @@ public class Player {
     }
 
 
-    /*
+    /**
      * Adapter used with the PlayersFragment
      */
     public static class PlayersAdapter extends ArrayAdapter<Player> {
 
         public ArrayList<Player> myPlayers;
-        private boolean hasSetCount = false;
-
 
         public PlayersAdapter(Context context, int resource) {
             super(context, resource);
@@ -87,11 +85,8 @@ public class Player {
             LinearLayout ll = (LinearLayout) v.findViewById(R.id.outerLayout);
             ll.setGravity(Gravity.CENTER_HORIZONTAL);
 
-            hasSetCount = true;
-
 
             return v;
-
         }
     }
 
@@ -102,11 +97,12 @@ public class Player {
      * TODO when clicked, expand to show other player information (Id vs name)
      */
     public static class PlayersFragment extends ListFragment {
-        /**
+        /*
          * The fragment argument representing the section number for this
          * fragment.
          */
         public static final String ARG_SECTION_NUMBER = "section_number";
+        public static final String TAG = "PlayersFragment";
 
 
         public ArrayList<Player> wordsArr = new ArrayList<>();
@@ -140,24 +136,25 @@ public class Player {
             return rootView;
         }
 
-        public boolean refreshData(final ArrayList<Player> data, final MainActivity activity){
-
+        /**
+         * Refresh the adapter with new Player objects
+         * @param data An ArrayList of Player objects to display in the adapter.
+         * @param activity A reference to the main activity used to create a new PlayersAdapter
+         *                 if that adapter happens to be null.
+         */
+        public void refreshData(final ArrayList<Player> data, final MainActivity activity){
             if(!isAdded())
                 mAdapter = new PlayersAdapter(activity, R.layout.players_layout, wordsArr);
 
             activity.runOnUiThread(new Runnable() {
                 public void run() {
-                    Log.v("PLAYER_FRAGMENT", "RUNNING");
+                    Log.v(TAG, "Updating fragment adapter");
                     mAdapter.clear();
                     wordsArr.addAll(data);
                     mAdapter.notifyDataSetChanged();
                 }
             });
-            return true;
         }
-
-
-
 
     }
 
