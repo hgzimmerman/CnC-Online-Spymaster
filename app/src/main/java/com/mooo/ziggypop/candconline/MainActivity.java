@@ -24,6 +24,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -32,7 +33,8 @@ import android.widget.ImageView;
 
 
 public class MainActivity extends ActionBarActivity
-    implements  NavigationDrawerFragment.NavigationDrawerCallbacks, SwipeRefreshLayout.OnRefreshListener{
+    implements  NavigationDrawerFragment.NavigationDrawerCallbacks,
+        SwipeRefreshLayout.OnRefreshListener{
     private static final String TAG = "MainActivity";
 
     public NavigationDrawerFragment mNavigationDrawerFragment;
@@ -80,6 +82,19 @@ public class MainActivity extends ActionBarActivity
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOffscreenPageLimit(3);
+        //Prevent the SwipeRefreshLayout from activating when swiping horizontally on the ViewPager.
+        mViewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                setSafeToRefresh(false);
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        setSafeToRefresh(true);
+                        break;
+                }
+                return false;
+            }
+        });
 
 
         // Set up the SlidingTabLayout
@@ -87,20 +102,13 @@ public class MainActivity extends ActionBarActivity
         mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mViewPager);
 
-
-
         // Set up nav-drawer
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        //set up swipe refresh
-        //mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-        //mSwipeRefreshLayout.setOnRefreshListener(this);
-        //if(jsonHandler == null){
-        //    jsonHandler = new JsonHandler(this);
-        //}
+        //set up swipe down to refresh
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.post(new Runnable() {
