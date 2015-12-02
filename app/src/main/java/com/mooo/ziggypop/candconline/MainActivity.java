@@ -12,12 +12,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -26,17 +25,14 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 
 public class MainActivity extends ActionBarActivity
-    implements  NavigationDrawerFragment.NavigationDrawerCallbacks {
+    implements  NavigationDrawerFragment.NavigationDrawerCallbacks, SwipeRefreshLayout.OnRefreshListener{
     private static final String TAG = "MainActivity";
 
     public NavigationDrawerFragment mNavigationDrawerFragment;
@@ -48,7 +44,8 @@ public class MainActivity extends ActionBarActivity
     private SlidingTabLayout mSlidingTabLayout;
     private JsonHandler jsonHandler;
     private Menu mymenu;
-
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private boolean safeToRefresh =true;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -68,8 +65,6 @@ public class MainActivity extends ActionBarActivity
         setSupportProgressBarIndeterminateVisibility(true);
         //Normal setup:
         setContentView(R.layout.activity_main);
-
-
 
 
         //get the toolbars
@@ -100,17 +95,28 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        //playersArrayAdapter = Player.PlayersAdapter(this, R.layout.players_layout, Player.wordsArr);
-
+        //set up swipe refresh
+        //mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        //mSwipeRefreshLayout.setOnRefreshListener(this);
+        //if(jsonHandler == null){
+        //    jsonHandler = new JsonHandler(this);
+        //}
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+                jsonHandler.refreshAndUpdateViews();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
     }
-    @Override
-    public void onStart(){
-        super.onStart();
-        //jsonHandler = new JsonHandler(this);
-        //jsonHandler.refreshAndUpdateViews();
-    }
 
+    /**
+     * Updates the views when the app resumes.
+     */
     @Override
     protected void onResume() {
         if (mSectionsPagerAdapter.player == null){finish();}
@@ -171,8 +177,7 @@ public class MainActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void resetUpdating()
-    {
+    public void resetUpdating() {
         // Get our refresh item from the menu
         if (mymenu!=null) {
             MenuItem m = mymenu.findItem(R.id.refresh_button);
@@ -184,18 +189,18 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
-
     /**
      * Navigation Bar setup
      * Starts an animation for the "transition"
      * Then the method updates the views using the jsonHandler.
+     * @param position An int representing which item was chosen (starting at 0).
      */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         onSectionAttached(position+1);
         //Handle animation for the "scene" change
         final View pager = findViewById(R.id.pager);
-        if (pager != null) {
+        if (pager != null && position != 0) {
             Animation awayAnimation = AnimationUtils.loadAnimation(getApplicationContext(),
                     R.anim.down_from_top);
             awayAnimation.setAnimationListener(new Animation.AnimationListener() {
@@ -226,7 +231,7 @@ public class MainActivity extends ActionBarActivity
     /**
      * Updates the state of what game statistics to display
      * based on the number passed in.
-     *
+     * @param number An int representing which item was chosen (starting at 1)
      */
     public void onSectionAttached(int number) {
         switch (number) {
@@ -324,6 +329,9 @@ public class MainActivity extends ActionBarActivity
             player = new Player.PlayersFragment();
             lobby = new Game.GamesFragment();
             inGame = new Game.GamesInProgressFragment();
+
+
+
         }
 
 
@@ -352,7 +360,6 @@ public class MainActivity extends ActionBarActivity
             Bundle args = new Bundle();
             args.putInt(Player.PlayersFragment.ARG_SECTION_NUMBER, position+1);
             fragment.setArguments(args);
-
             return fragment;
         }
 
@@ -375,6 +382,10 @@ public class MainActivity extends ActionBarActivity
             }
             return null;
         }
+
+
+
+
     }
 
     /**
@@ -385,5 +396,17 @@ public class MainActivity extends ActionBarActivity
         return queryJsonString;
     }
 
+    public SectionsPagerAdapter getmSectionsPagerAdapter() {return mSectionsPagerAdapter;}
+    @Override
+    public void onRefresh() {
+        if (safeToRefresh) {
+            mSwipeRefreshLayout.setRefreshing(true);
+            jsonHandler.refreshAndUpdateViews();
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+    }
 
+    public void setSafeToRefresh(boolean isSafe){
+        mSwipeRefreshLayout.setEnabled(isSafe);
+    }
 }

@@ -12,8 +12,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -113,12 +115,13 @@ public class Player {
         ViewGroup container;
         Bundle savedInstanceState;
         View rootView;
-
+        private ListView listView;
 
 
 
         public PlayersFragment() {
         }
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -130,11 +133,40 @@ public class Player {
             this.container=container;
             this.savedInstanceState = savedInstanceState;
 
-            rootView =inflater.inflate(R.layout.fragment_list_view,container,false);
-
+            rootView =  inflater.inflate(R.layout.fragment_list_view,container,false);
             setRetainInstance(true);//This prevents the GCing of the fragment.
+
+            listView = (ListView) rootView.findViewById(android.R.id.list);
+
+            listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(AbsListView view, int scrollState) {
+                    // Do nothing.
+                }
+
+                @Override
+                public void onScroll(AbsListView view, int firstVisibleItem,
+                                     int visibleItemCount, int totalItemCount) {
+                    boolean enable = false;
+                    if(listView != null && listView.getChildCount() > 0){
+                        // check if the first item of the list is visible
+                        boolean firstItemVisible = listView.getFirstVisiblePosition() == 0;
+                        // check if the top of the first item is visible
+                        boolean topOfFirstItemVisible = listView.getChildAt(0).getTop() == 0;
+                        // enabling or disabling the refresh layout
+                        enable = firstItemVisible && topOfFirstItemVisible;
+                    } else if (listView == null) {
+                        enable = true;
+                    }
+                    MainActivity activity = (MainActivity) getActivity();
+                    activity.setSafeToRefresh(enable);
+                }
+            });
             return rootView;
+
         }
+
+
 
         /**
          * Refresh the adapter with new Player objects

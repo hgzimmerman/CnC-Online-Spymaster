@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -130,6 +132,8 @@ public class Game {
 
         private GamesAdapter mAdapter;
         private static ArrayList<Game> games = new ArrayList<>();
+        private ListView listView;
+
 
         public GamesFragment() {
         }
@@ -141,6 +145,34 @@ public class Game {
 
             mAdapter = new GamesAdapter(getActivity(), R.layout.games_layout, games);
             setListAdapter(mAdapter);
+
+            listView = (ListView) rootView.findViewById(android.R.id.list);
+
+            listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(AbsListView view, int scrollState) {
+                    // Do nothing.
+                }
+
+                @Override
+                public void onScroll(AbsListView view, int firstVisibleItem,
+                                     int visibleItemCount, int totalItemCount) {
+                    boolean enable = false;
+                    if(listView != null && listView.getChildCount() > 0){
+                        // check if the first item of the list is visible
+                        boolean firstItemVisible = listView.getFirstVisiblePosition() == 0;
+                        // check if the top of the first item is visible
+                        boolean topOfFirstItemVisible = listView.getChildAt(0).getTop() == 0;
+                        // enabling or disabling the refresh layout
+                        enable = firstItemVisible && topOfFirstItemVisible;
+                    }else {
+                        enable = true;
+                    }
+                    MainActivity activity = (MainActivity) getActivity();
+                    activity.setSafeToRefresh(enable);
+                }
+            });
+
 
             return rootView;
         }
@@ -166,6 +198,7 @@ public class Game {
 
         private GamesAdapter mAdapter;
         private static ArrayList<Game> games = new ArrayList<>();
+        private ListView listView;
 
         public GamesInProgressFragment() {
         }
@@ -177,6 +210,35 @@ public class Game {
 
             mAdapter = new GamesAdapter(getActivity(), R.layout.games_layout, games);
             setListAdapter(mAdapter);
+
+            listView = (ListView) rootView.findViewById(android.R.id.list);
+
+            listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(AbsListView view, int scrollState) {
+                    // Do nothing.
+                }
+
+                @Override
+                public void onScroll(AbsListView view, int firstVisibleItem,
+                                     int visibleItemCount, int totalItemCount) {
+                    boolean enable = false;
+                    if(listView != null && listView.getChildCount() > 0){
+                        // check if the first item of the list is visible
+                        boolean firstItemVisible = listView.getFirstVisiblePosition() == 0;
+                        // check if the top of the first item is visible
+                        boolean topOfFirstItemVisible = listView.getChildAt(0).getTop() == 0;
+                        // enabling or disabling the refresh layout
+                        enable = firstItemVisible && topOfFirstItemVisible;
+                    }else  {
+                        enable = true;
+                    }
+                    MainActivity activity = (MainActivity) getActivity();
+                    activity.setSafeToRefresh(enable);
+                }
+            });
+
+
 
             return rootView;
         }
