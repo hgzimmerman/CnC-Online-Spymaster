@@ -188,9 +188,9 @@ public class MainActivity extends ActionBarActivity
 
     public void resetUpdating() {
         // Get our refresh item from the menu
-        if (mymenu!=null) {
+        if (mymenu != null) {
             MenuItem m = mymenu.findItem(R.id.refresh_button);
-            if (m.getActionView() != null) {
+            if (m != null && m.getActionView() != null) {
                 // Remove the animation.
                 m.getActionView().clearAnimation();
                 m.setActionView(null);
