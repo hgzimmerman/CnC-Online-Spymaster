@@ -30,6 +30,10 @@ public class JsonHandler {
 
     public static final String TAG = "JsonHandler";
 
+    public static final String PROTOCOL = "http";
+    public static final String HOST = "server.cnc-online.net";
+    public static final int PORT = 29998;
+    public static final String FILE = "index.html";
 
     private JsonGetter jsonGetter;
     private JSONObject jsonCache;
@@ -211,7 +215,7 @@ public class JsonHandler {
         @Override
         public JSONObject doInBackground(URL... params) {
             try {
-                URL url = new URL("http", "server.cnc-online.net", 29998, "index.html");
+                URL url = new URL(PROTOCOL, HOST, PORT, FILE);
                 Log.v(TAG, "URL = "+url.toString());
                 InputStream is = null;
 
