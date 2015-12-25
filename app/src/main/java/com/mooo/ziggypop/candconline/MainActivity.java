@@ -46,7 +46,7 @@ public class MainActivity extends ActionBarActivity
     private SlidingTabLayout mSlidingTabLayout;
     private JsonHandler jsonHandler;
     private Menu mymenu;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    public SwipeRefreshLayout mSwipeRefreshLayout;
     private boolean safeToRefresh =true;
     private int currentNavDrawerIndex = 0;
     /**
@@ -138,8 +138,8 @@ public class MainActivity extends ActionBarActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         if(!mNavigationDrawerFragment.isDrawerOpen()) {
             // Inflate the menu; this adds items to the action bar if it is present.
-            //getMenuInflater().inflate(R.menu.menu_main, menu);
-            getMenuInflater().inflate(R.menu.refresh, menu); // find some src for this
+            // getMenuInflater().inflate(R.menu.menu_main, menu);
+            //getMenuInflater().inflate(R.menu.refresh, menu); // find some src for this
             restoreActionBar();
             mymenu = menu;
         }
@@ -418,11 +418,6 @@ public class MainActivity extends ActionBarActivity
             }
             return null;
         }
-
-
-
-
-
     }
 
     /**
@@ -437,9 +432,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onRefresh() {
         if (safeToRefresh) {
-            mSwipeRefreshLayout.setRefreshing(true);
             jsonHandler.refreshAndUpdateViews();
-            mSwipeRefreshLayout.setRefreshing(false);
         }
     }
 
