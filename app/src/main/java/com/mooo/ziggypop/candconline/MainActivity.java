@@ -317,6 +317,10 @@ public class MainActivity extends ActionBarActivity
                 getResources().getColor(R.color.kw_red));
                 findViewById(R.id.sliding_tabs).setBackgroundColor(
                 getResources().getColor(R.color.kw_red));
+                mSwipeRefreshLayout.setColorSchemeResources(
+                        R.color.kw_red
+                );
+                mSwipeRefreshLayout.setProgressBackgroundColor(R.color.light_grey);
                 break;
             case CnC3:
                 getSupportActionBar().setTitle(getString(R.string.CandC3));
@@ -324,6 +328,9 @@ public class MainActivity extends ActionBarActivity
                 getResources().getColor(R.color.cnc3_green));
                 findViewById(R.id.sliding_tabs).setBackgroundColor(
                 getResources().getColor(R.color.cnc3_green));
+                mSwipeRefreshLayout.setColorSchemeResources(
+                        R.color.cnc3_green
+                );
                 break;
             case Generals:
                 getSupportActionBar().setTitle(getString(R.string.Generals));
@@ -331,6 +338,9 @@ public class MainActivity extends ActionBarActivity
                 getResources().getColor(R.color.generals_yellow));
                 findViewById(R.id.sliding_tabs).setBackgroundColor(
                 getResources().getColor(R.color.generals_yellow));
+                mSwipeRefreshLayout.setColorSchemeResources(
+                        R.color.generals_yellow
+                );
                 break;
             case ZH:
                 getSupportActionBar().setTitle(getString(R.string.ZeroHour));
@@ -338,6 +348,9 @@ public class MainActivity extends ActionBarActivity
                 getResources().getColor(R.color.zh_orange));
                 findViewById(R.id.sliding_tabs).setBackgroundColor(
                 getResources().getColor(R.color.zh_orange));
+                mSwipeRefreshLayout.setColorSchemeResources(
+                        R.color.zh_orange
+                );
                 break;
             case RA3:
                 getSupportActionBar().setTitle(getString(R.string.RedAlert3));
@@ -345,6 +358,9 @@ public class MainActivity extends ActionBarActivity
                 getResources().getColor(R.color.ra3_red));
                 findViewById(R.id.sliding_tabs).setBackgroundColor(
                 getResources().getColor(R.color.ra3_red));
+                mSwipeRefreshLayout.setColorSchemeResources(
+                        R.color.ra3_red
+                );
                 break;
         }
         mNavigationDrawerFragment.updateHeader(mGameTitle);
@@ -430,6 +446,8 @@ public class MainActivity extends ActionBarActivity
     }
 
     public SectionsPagerAdapter getmSectionsPagerAdapter() {return mSectionsPagerAdapter;}
+
+
     @Override
     public void onRefresh() {
         if (safeToRefresh) {

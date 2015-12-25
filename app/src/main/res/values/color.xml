@@ -3,6 +3,7 @@
     <color name="second_grey">#ff999999</color>
     <color name="card_shadow">#ffffffff</color>
     <color name="card_white">#8c666666</color>
+    <color name="light_grey">#ffbbbbbb</color>
 
     <color name="menu_item_color">#00222222</color>
 
