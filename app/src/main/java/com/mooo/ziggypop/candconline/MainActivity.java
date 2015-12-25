@@ -115,11 +115,10 @@ public class MainActivity extends ActionBarActivity
         mSwipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
                 jsonHandler.refreshAndUpdateViews();
-                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
+        mSwipeRefreshLayout.setProgressBackgroundColor(R.color.light_grey);
 
     }
 
@@ -320,7 +319,6 @@ public class MainActivity extends ActionBarActivity
                 mSwipeRefreshLayout.setColorSchemeResources(
                         R.color.kw_red
                 );
-                mSwipeRefreshLayout.setProgressBackgroundColor(R.color.light_grey);
                 break;
             case CnC3:
                 getSupportActionBar().setTitle(getString(R.string.CandC3));

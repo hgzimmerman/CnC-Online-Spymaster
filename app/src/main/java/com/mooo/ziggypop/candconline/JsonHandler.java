@@ -253,7 +253,7 @@ public class JsonHandler {
 
         @Override
         protected void onPreExecute() {
-            myActivity.mSwipeRefreshLayout.setRefreshing(true);
+            //myActivity.mSwipeRefreshLayout.setRefreshing(true);
         }
 
         @Override
