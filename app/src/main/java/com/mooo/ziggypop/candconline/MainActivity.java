@@ -415,8 +415,9 @@ public class MainActivity extends ActionBarActivity
                     return getString(R.string.title_section2).toUpperCase(l);
                 case 2:
                     return getString(R.string.title_section3).toUpperCase(l);
+                default:
+                    return "error".toUpperCase(l);
             }
-            return null;
         }
     }
 

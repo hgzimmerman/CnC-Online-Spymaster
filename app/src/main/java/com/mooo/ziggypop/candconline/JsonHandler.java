@@ -254,10 +254,6 @@ public class JsonHandler {
         @Override
         protected void onPreExecute() {
             myActivity.mSwipeRefreshLayout.setRefreshing(true);
-            //Hide the pager content, show the loading circle
-            //myActivity.findViewById(R.id.llProgBar).setVisibility(View.VISIBLE);
-            //myActivity.findViewById(R.id.connection_error_text).setVisibility(View.GONE);
-            //myActivity.findViewById(R.id.pager).setVisibility(View.INVISIBLE);
         }
 
         @Override
@@ -266,13 +262,7 @@ public class JsonHandler {
             myActivity.mSwipeRefreshLayout.setRefreshing(false);
             if (result != null) {
                 //Show the pager content, hide the loading circle
-                //myActivity.findViewById(R.id.pager).setVisibility(View.VISIBLE);
-                //myActivity.findViewById(R.id.llProgBar).setVisibility(View.GONE);
             } else {
-                //Show the user persistent text about a connection error.
-                //I may want to remove this later since I can notify via Toast.
-                //myActivity.findViewById(R.id.connection_error_text).setVisibility(View.VISIBLE);
-                //myActivity.findViewById(R.id.llProgBar).setVisibility(View.GONE);
                 //TOAST
                 Context mContext = myActivity.getApplicationContext();
                 CharSequence errorText = "Connection error";
