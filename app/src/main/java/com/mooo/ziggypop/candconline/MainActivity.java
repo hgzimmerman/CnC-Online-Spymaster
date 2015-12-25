@@ -48,6 +48,7 @@ public class MainActivity extends ActionBarActivity
     private Menu mymenu;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private boolean safeToRefresh =true;
+    private int currentNavDrawerIndex = 0;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -205,35 +206,66 @@ public class MainActivity extends ActionBarActivity
      */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        onSectionAttached(position+1);
+        onSectionAttached(position);
         //Handle animation for the "scene" change
         final View pager = findViewById(R.id.pager);
-        if (pager != null && position != 0) {
-            Animation awayAnimation = AnimationUtils.loadAnimation(getApplicationContext(),
-                    R.anim.down_from_top);
-            awayAnimation.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) { }
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    Animation returnAnimation = AnimationUtils.loadAnimation(getApplicationContext(),
-                            R.anim.up_from_bottom);
-                    pager.startAnimation(returnAnimation);
-                }
-                @Override
-                public void onAnimationRepeat(Animation animation) { }
-            });
-            pager.startAnimation(awayAnimation);
-            Log.v(TAG,"Animating transition between game titles");
-        }
-        // Update the tabs with new data.
-        // Note: This appears to run at startup.
+        // if the pager exists, the selected drawer isn't the picture, and isn't the current drawer, animate the transition.
+        final Animation returnAnimation = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.up_from_bottom);
+
         if(jsonHandler == null){
             jsonHandler = new JsonHandler(this);
         }
-        else{
-            jsonHandler.updateViews();
+
+
+        if (position != 0 && position != currentNavDrawerIndex
+                && getmSectionsPagerAdapter()!= null && pager != null ) {
+            // handle the case where you animate on a transition away from a page with no items.
+            // If the away and return animations are played in these cases, the new page automatically
+            // populates with info, then slides away and slides back, when it should only return.
+            if (mViewPager.getCurrentItem() == 0
+                    && mSectionsPagerAdapter.player.getListView().getChildCount() == 0 ){
+                jsonHandler.updateViews();
+                pager.startAnimation(returnAnimation);
+                Log.v(TAG, "Animating return from a page with no data");
+            }
+            else if (mViewPager.getCurrentItem() == 1
+                    && mSectionsPagerAdapter.lobby.getListView().getChildCount() == 0 ){
+                jsonHandler.updateViews();
+                pager.startAnimation(returnAnimation);
+                Log.v(TAG, "Animating return from a page with no data");
+            }
+            else if (mViewPager.getCurrentItem() == 2
+                    && mSectionsPagerAdapter.inGame.getListView().getChildCount() == 0 ){
+                jsonHandler.updateViews();
+                pager.startAnimation(returnAnimation);
+                Log.v(TAG, "Animating return from a page with no data");
+            }
+            else { // Animate the pager sliding away and returning, this is the normal, expected behavior.
+                Animation awayAnimation = AnimationUtils.loadAnimation(getApplicationContext(),
+                        R.anim.down_from_top);
+                awayAnimation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) { }
+                    @Override
+                    // instead of using an AnimationSet, we update the views after the first animation ends.
+                    public void onAnimationEnd(Animation animation) {
+                        jsonHandler.updateViews();
+                        pager.startAnimation(returnAnimation); }
+                    @Override
+                    public void onAnimationRepeat(Animation animation) { }
+                });
+                pager.startAnimation(awayAnimation);
+                Log.v(TAG, "Animating transition between game titles");
+            }
         }
+
+
+        // Update the tabs with new data.
+        //
+        // Save which drawer was opened to prevent re-animating if you select the same one.
+        if (position !=0)
+            currentNavDrawerIndex = position;
     }
 
     /**
@@ -243,30 +275,30 @@ public class MainActivity extends ActionBarActivity
      */
     public void onSectionAttached(int number) {
         switch (number) {
-            case 1: //Header Picture
+            case 0: //Header Picture
                 mNavigationDrawerFragment.mDrawerLayout.closeDrawers();
                 break;
-            case 2:
+            case 1:
                 queryJsonString = getString(R.string.KanesWrathJSON);
                 mGameTitle = NavigationDrawerFragment.GameTitle.KW;
                 break;
-            case 3:
+            case 2:
                 queryJsonString = getString(R.string.CandC3JSON);
                 mGameTitle = NavigationDrawerFragment.GameTitle.CnC3;
                 break;
-            case 4:
+            case 3:
                 queryJsonString = getString(R.string.GeneralsJSON);
                 mGameTitle = NavigationDrawerFragment.GameTitle.Generals;
                 break;
-            case 5:
+            case 4:
                 queryJsonString = getString(R.string.ZeroHourJSON);
                 mGameTitle = NavigationDrawerFragment.GameTitle.ZH;
                 break;
-            case 6:
+            case 5:
                 queryJsonString = getString(R.string.RedAlert3JSON);
                 mGameTitle = NavigationDrawerFragment.GameTitle.RA3;
                 break;
-            case 7: //settings
+            case 6: //settings
                 Intent intentSetPref = new Intent(this, SettingsActivity.class);
                 startActivityForResult(intentSetPref, 0);
                 break;
@@ -337,11 +369,7 @@ public class MainActivity extends ActionBarActivity
             player = new Player.PlayersFragment();
             lobby = new Game.GamesFragment();
             inGame = new Game.GamesInProgressFragment();
-
-
-
         }
-
 
         /**
          * This prevents the Player view from not showing up after the activity is killed.
@@ -390,6 +418,7 @@ public class MainActivity extends ActionBarActivity
             }
             return null;
         }
+
 
 
 

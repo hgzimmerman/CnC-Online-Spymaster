@@ -43,7 +43,7 @@ public class JsonHandler {
 
 
 
-
+    // updates the fragments with (offline) data based on the query string (the game to be viewed)
     public void updateViews(){
         if (jsonCache != null) {
             try {
