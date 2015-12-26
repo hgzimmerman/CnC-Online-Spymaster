@@ -127,8 +127,9 @@ public class MainActivity extends ActionBarActivity
      */
     @Override
     protected void onResume() {
-        if (mSectionsPagerAdapter.player == null){finish();}
+        //if (mSectionsPagerAdapter.player == null){finish();}
         super.onResume();
+        mSwipeRefreshLayout.setRefreshing(true);
         jsonHandler.refreshAndUpdateViews();
     }
 
@@ -152,34 +153,8 @@ public class MainActivity extends ActionBarActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }
-        if (id  == R.id.refresh_button){
-            // stagger the initial update cycle. - this is a hacky method of preventing a crash
-            // resulting from "this" being null on app startup.
-            if(jsonHandler == null){
-                jsonHandler = new JsonHandler(this);
-            } else {
-                // Do animation start
-                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                ImageView iv = (ImageView)inflater.inflate(R.layout.iv_refresh, null);
-                Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate_refresh);
-                rotation.setRepeatCount(Animation.INFINITE);
-                iv.startAnimation(rotation);
-                item.setActionView(iv);
-
-                jsonHandler.refreshAndUpdateViews();
-
-            }
-        } else {
-            DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-            if( mDrawerLayout.isDrawerOpen(Gravity.START)){
-                mDrawerLayout.closeDrawer(Gravity.START);
-            } else {
-                mDrawerLayout.openDrawer(Gravity.START);
-            }
         }
 
         return super.onOptionsItemSelected(item);
