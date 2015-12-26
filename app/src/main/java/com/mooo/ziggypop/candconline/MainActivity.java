@@ -21,7 +21,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -32,16 +31,11 @@ public class MainActivity extends ActionBarActivity
     private static final String TAG = "MainActivity";
 
     public NavigationDrawerFragment mNavigationDrawerFragment;
-    private CharSequence mTitle;
     private NavigationDrawerFragment.GameTitle mGameTitle;
     private String queryJsonString = "";// String used to choose what game to sample from the JSON
-    private Toolbar toolbar;
-    private Toolbar topToolbar;
-    private SlidingTabLayout mSlidingTabLayout;
     private JsonHandler jsonHandler;
     private Menu mymenu;
     public SwipeRefreshLayout mSwipeRefreshLayout;
-    private boolean safeToRefresh =true;
     private int currentNavDrawerIndex = 0;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -57,16 +51,12 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //request ability to show progressbar
-        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        setSupportProgressBarIndeterminateVisibility(true);
+
         //Normal setup:
         setContentView(R.layout.activity_main);
 
-
         //get the toolbars
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        topToolbar = (Toolbar) findViewById(R.id.top_toolbar);
+        Toolbar topToolbar = (Toolbar) findViewById(R.id.top_toolbar);
         setSupportActionBar(topToolbar);
 
         // Create the adapter that will return a fragment for each of the three
@@ -91,9 +81,8 @@ public class MainActivity extends ActionBarActivity
             }
         });
 
-
         // Set up the SlidingTabLayout
-        mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mViewPager);
 
@@ -113,7 +102,6 @@ public class MainActivity extends ActionBarActivity
             }
         });
         mSwipeRefreshLayout.setProgressBackgroundColor(R.color.light_grey);
-
     }
 
     /**
@@ -121,7 +109,6 @@ public class MainActivity extends ActionBarActivity
      */
     @Override
     protected void onResume() {
-        //if (mSectionsPagerAdapter.player == null){finish();}
         super.onResume();
         mSwipeRefreshLayout.setRefreshing(true);
         jsonHandler.refreshAndUpdateViews();
@@ -132,8 +119,6 @@ public class MainActivity extends ActionBarActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         if(!mNavigationDrawerFragment.isDrawerOpen()) {
             // Inflate the menu; this adds items to the action bar if it is present.
-            // getMenuInflater().inflate(R.menu.menu_main, menu);
-            //getMenuInflater().inflate(R.menu.refresh, menu); // find some src for this
             restoreActionBar();
             mymenu = menu;
         }
@@ -146,8 +131,8 @@ public class MainActivity extends ActionBarActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings) { // this doesn't do anything.
+            Log.v(TAG, "Settings selected");
             return true;
         }
 
@@ -228,9 +213,6 @@ public class MainActivity extends ActionBarActivity
             }
         }
 
-
-        // Update the tabs with new data.
-        //
         // Save which drawer was opened to prevent re-animating if you select the same one.
         if (position !=0)
             currentNavDrawerIndex = position;
@@ -270,12 +252,12 @@ public class MainActivity extends ActionBarActivity
                 Intent intentSetPref = new Intent(this, SettingsActivity.class);
                 startActivityForResult(intentSetPref, 0);
                 break;
-
         }
     }
 
     /**
      * Sets the background for the Toolbars after a game is selected.
+     * Also sets the color of the refresh icon.
      */
     public void restoreActionBar() {
         switch(mGameTitle){
@@ -417,7 +399,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onRefresh() {
-        if (safeToRefresh) {
+        if (mSwipeRefreshLayout.isEnabled()) {
             jsonHandler.refreshAndUpdateViews();
         }
     }

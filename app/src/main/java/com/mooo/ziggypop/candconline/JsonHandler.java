@@ -215,30 +215,29 @@ public class JsonHandler {
                 URL url = new URL(PROTOCOL, HOST, PORT, FILE);
                 Log.v(TAG, "URL = "+url.toString());
                 InputStream is = null;
-
                 try{
                     is = url.openStream();
+                    try {
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                                is, "UTF-8"), 8);
+                        StringBuilder sb = new StringBuilder();
+                        String line;
+                        while((line = reader.readLine()) != null){
+                            sb.append(line).append("\n");
+                        }
+                        is.close();
+                        json = sb.toString();
+                    } catch (Exception e) {
+                        Log.e("Buffer Error", "Error converting result: " + e.toString());
+                    }
+                    try {
+                        jobj = new JSONObject(json);
+                    } catch (JSONException e){
+                        Log.e("JSON Parser", "Error parsing data: " + e.toString());
+                    }
+
                 } catch (IOException e){
                     Log.e("InputStream", "Could not open stream" );
-                }
-                try {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(
-                            is, "UTF-8"), 8);
-                    StringBuilder sb = new StringBuilder();
-                    String line;
-                    while((line = reader.readLine()) != null){
-                        sb.append(line + "\n");
-                    }
-                    is.close();
-                    json = sb.toString();
-                } catch (Exception e) {
-                    Log.e("Buffer Error", "Error converting result: " + e.toString());
-                }
-
-                try {
-                    jobj = new JSONObject(json);
-                } catch (JSONException e){
-                    Log.e("JSON Parser", "Error parsing data: " + e.toString());
                 }
 
             } catch (MalformedURLException e) {
@@ -250,7 +249,6 @@ public class JsonHandler {
 
         @Override
         protected void onPreExecute() {
-            //myActivity.mSwipeRefreshLayout.setRefreshing(true);
         }
 
         @Override
