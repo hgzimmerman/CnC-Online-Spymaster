@@ -1,12 +1,8 @@
 package com.mooo.ziggypop.candconline;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -24,6 +20,7 @@ import java.util.Iterator;
 
 /**
  * Created by ziggypop on 4/7/15.
+ * Handles gettnig data from the website and updating the set of fragments based on that data.
  */
 public class JsonHandler {
 
@@ -260,9 +257,7 @@ public class JsonHandler {
         public void onPostExecute(JSONObject result) {
             jsonCache = result; // update the cache with new data
             myActivity.mSwipeRefreshLayout.setRefreshing(false);
-            if (result != null) {
-                //Show the pager content, hide the loading circle
-            } else {
+            if (result == null) {
                 //TOAST
                 Context mContext = myActivity.getApplicationContext();
                 CharSequence errorText = "Connection error";

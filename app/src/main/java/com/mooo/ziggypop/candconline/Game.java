@@ -15,10 +15,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ziggypop on 3/28/15.
+ * Deals with the fragments that display info about games in lobbies and in progress.
  */
 public class Game {
     private String gameTitle;

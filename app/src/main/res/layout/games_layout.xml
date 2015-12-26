@@ -41,7 +41,8 @@ android:descendantFocusability="beforeDescendants">
                     android:layout_width="wrap_content"
                     android:layout_height="15dp"
                     android:src="@drawable/lock64"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible"
+                    android:contentDescription="@string/the_game_is_locked" />
 
                 <TextView
                     android:id="@+id/slots"
@@ -66,7 +67,7 @@ android:descendantFocusability="beforeDescendants">
             android:layout_height="wrap_content">
             <TextView
                 android:textSize="18sp"
-                android:text="Map: "
+                android:text="@string/map"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -89,7 +90,7 @@ android:descendantFocusability="beforeDescendants">
 
 
         <TextView
-            android:text="Players:"
+            android:text="@string/players"
             android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

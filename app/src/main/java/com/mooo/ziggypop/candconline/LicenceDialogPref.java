@@ -8,6 +8,7 @@ import android.view.View;
 
 /**
  * Created by ziggypop on 4/19/15.
+ * Shows the licence.
  */
 public class LicenceDialogPref extends DialogPreference {
 

@@ -3,12 +3,9 @@ package com.mooo.ziggypop.candconline;
 
 import java.util.Locale;
 
-import android.content.Context;
+
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
@@ -20,8 +17,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -29,7 +24,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 
 
 public class MainActivity extends ActionBarActivity
