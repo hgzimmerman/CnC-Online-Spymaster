@@ -33,11 +33,8 @@ public class JsonHandler {
     public static final int PORT = 29998;
     public static final String FILE = "index.html";
 
-    private JsonGetter jsonGetter;
     private JSONObject jsonCache;
     private MainActivity mainActivity;
-
-    private Player.PlayersFragment playerFrag;
 
     public JsonHandler(MainActivity activity){
         mainActivity = activity;
@@ -66,10 +63,8 @@ public class JsonHandler {
 
 
                 //Refresh the data for each view.
-                playerFrag = mainActivity.mSectionsPagerAdapter.player;
+                Player.PlayersFragment playerFrag = mainActivity.mSectionsPagerAdapter.player;
                 playerFrag.refreshData(usersArray, mainActivity);
-
-
 
                 Game.GamesFragment gamesFrag = mainActivity.mSectionsPagerAdapter.lobby;
                 gamesFrag.refreshData(gamesInLobbyArrList);
@@ -100,26 +95,27 @@ public class JsonHandler {
     public static ArrayList<Player> getPlayers(JSONObject gameObject){
         ArrayList<Player> returnArr = new ArrayList<>();
 
-        JSONObject usersObject = null;
+        JSONObject usersObject;
         try {
             usersObject = gameObject.getJSONObject("users");
+
+            Iterator<String> iterator = usersObject.keys();
+            while (iterator.hasNext()) {
+                String key = iterator.next();
+                try {
+                    JSONObject value = (JSONObject) usersObject.get(key);
+                    returnArr.add(new Player(value.getString("nickname"),
+                            value.getString("id"),
+                            value.getString("pid")));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         } catch(JSONException e){
             e.printStackTrace();
         }
 
 
-        Iterator<String> iterator = usersObject.keys();
-        while (iterator.hasNext()) {
-            String key = iterator.next();
-            try {
-                JSONObject value = (JSONObject) usersObject.get(key);
-                returnArr.add(new Player(value.getString("nickname"),
-                        value.getString("id"),
-                        value.getString("pid")));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
         return returnArr;
     }
 
