@@ -3,6 +3,7 @@ package com.mooo.ziggypop.candconline;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -249,12 +250,14 @@ public class JsonHandler {
 
         @Override
         protected void onPreExecute() {
+            myActivity.findViewById(R.id.pager).setVisibility(View.GONE);
         }
 
         @Override
         public void onPostExecute(JSONObject result) {
             jsonCache = result; // update the cache with new data
             myActivity.mSwipeRefreshLayout.setRefreshing(false);
+            myActivity.findViewById(R.id.pager).setVisibility(View.VISIBLE);
             if (result == null) {
                 //TOAST
                 Context mContext = myActivity.getApplicationContext();

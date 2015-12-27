@@ -45,7 +45,6 @@
 
             <com.mooo.ziggypop.candconline.SlidingTabLayout
                 android:id="@+id/sliding_tabs"
-
                 android:background="@color/kw_red"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

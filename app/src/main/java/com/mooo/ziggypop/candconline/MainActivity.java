@@ -110,8 +110,8 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onResume() {
         super.onResume();
-        mSwipeRefreshLayout.setRefreshing(true);
-        jsonHandler.refreshAndUpdateViews();
+        //mSwipeRefreshLayout.setRefreshing(true);
+        //jsonHandler.refreshAndUpdateViews();
     }
 
 
@@ -169,8 +169,6 @@ public class MainActivity extends ActionBarActivity
         if(jsonHandler == null){
             jsonHandler = new JsonHandler(this);
         }
-
-
         if (position != 0 && position != currentNavDrawerIndex
                 && getmSectionsPagerAdapter()!= null && pager != null ) {
             // handle the case where you animate on a transition away from a page with no items.
