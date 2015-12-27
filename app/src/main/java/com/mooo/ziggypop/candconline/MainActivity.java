@@ -139,17 +139,7 @@ public class MainActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void resetUpdating() {
-        // Get our refresh item from the menu
-        if (mymenu != null) {
-            MenuItem m = mymenu.findItem(R.id.refresh_button);
-            if (m != null && m.getActionView() != null) {
-                // Remove the animation.
-                m.getActionView().clearAnimation();
-                m.setActionView(null);
-            }
-        }
-    }
+
 
     /**
      * Navigation Bar setup

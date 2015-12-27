@@ -215,7 +215,7 @@ public class JsonHandler {
             try {
                 URL url = new URL(PROTOCOL, HOST, PORT, FILE);
                 Log.v(TAG, "URL = "+url.toString());
-                InputStream is = null;
+                InputStream is;
                 try{
                     is = url.openStream();
                     try {
@@ -251,6 +251,7 @@ public class JsonHandler {
         @Override
         protected void onPreExecute() {
             myActivity.findViewById(R.id.pager).setVisibility(View.GONE);
+            myActivity.mSwipeRefreshLayout.setRefreshing(true);
         }
 
         @Override
@@ -267,7 +268,6 @@ public class JsonHandler {
                 toast.show();
             }
             updateViews(); //fill the pager with new content
-            mainActivity.resetUpdating();
         }
     }
 }
