@@ -169,7 +169,7 @@ public class Game {
                         enable = true;
                     }
                     MainActivity activity = (MainActivity) getActivity();
-                    activity.setSafeToRefresh(enable);
+                    activity.setSafeToRefresh(enable, 1);
                 }
             });
 
@@ -234,7 +234,7 @@ public class Game {
                         enable = true;
                     }
                     MainActivity activity = (MainActivity) getActivity();
-                    activity.setSafeToRefresh(enable);
+                    activity.setSafeToRefresh(enable, 2);
                 }
             });
 

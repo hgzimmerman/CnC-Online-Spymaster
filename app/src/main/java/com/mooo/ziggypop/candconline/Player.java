@@ -89,11 +89,11 @@ public class Player {
 
 
 
-    /*
+    /**
      * TODO when clicked, expand to show other player information (Id vs name)
      */
     public static class PlayersFragment extends ListFragment {
-        /*
+        /**
          * The fragment argument representing the section number for this
          * fragment.
          */
@@ -153,7 +153,7 @@ public class Player {
                         enable = true;
                     }
                     MainActivity activity = (MainActivity) getActivity();
-                    activity.setSafeToRefresh(enable);
+                    activity.setSafeToRefresh(enable, 0);
                 }
             });
             return rootView;

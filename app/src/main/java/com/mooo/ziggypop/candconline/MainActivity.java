@@ -5,7 +5,9 @@ import java.util.Locale;
 
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Parcelable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
@@ -71,10 +73,13 @@ public class MainActivity extends ActionBarActivity
         mViewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                setSafeToRefresh(false);
+                setSafeToRefresh(false, -1);
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_UP:
-                        setSafeToRefresh(true);
+                        setSafeToRefresh(true, -1);
+                        break;
+                    case MotionEvent.ACTION_MOVE: // When the user scrolls side to side
+                        setSafeToRefresh(false, -1);
                         break;
                 }
                 return false;
@@ -85,6 +90,8 @@ public class MainActivity extends ActionBarActivity
         SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mViewPager);
+
+
 
         // Set up nav-drawer
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -98,8 +105,7 @@ public class MainActivity extends ActionBarActivity
         mSwipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
-                jsonHandler.refreshAndUpdateViews();
-            }
+                jsonHandler.refreshAndUpdateViews();}
         });
         mSwipeRefreshLayout.setProgressBackgroundColor(R.color.light_grey);
     }
@@ -348,7 +354,9 @@ public class MainActivity extends ActionBarActivity
             }
             Bundle args = new Bundle();
             args.putInt(Player.PlayersFragment.ARG_SECTION_NUMBER, position+1);
-            fragment.setArguments(args);
+            if (fragment.getArguments() == null) {
+                fragment.setArguments(args);
+            }
             return fragment;
         }
 
@@ -392,7 +400,21 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
-    public void setSafeToRefresh(boolean isSafe){
-        mSwipeRefreshLayout.setEnabled(isSafe);
+    /**
+     * Filters requests from the fragments in order to enable the refresh ability.
+     * For some reason, all fragments check onScroll when you switch them.
+     * So this method filters the requests to avoid the refreshlayout being set to true when it
+     * should be false.
+     *
+     * @param isSafe bool indicating that it is ok to refresh true == yes, false == no
+     * @param fragmentId The fragment index. -1 is generic, 0 is players, 1 is lobby, 2 is in progress.
+     */
+    public void setSafeToRefresh(boolean isSafe, int fragmentId){
+        if (isSafe && (fragmentId == mViewPager.getCurrentItem() || fragmentId == -1)) {
+            mSwipeRefreshLayout.setEnabled(true);
+        } else {
+            mSwipeRefreshLayout.setEnabled(false);
+        }
+
     }
 }
