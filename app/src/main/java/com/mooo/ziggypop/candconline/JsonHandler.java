@@ -49,7 +49,6 @@ public class JsonHandler {
 
                 Log.v(TAG, "query String = " + mainActivity.getQueryJsonString());
 
-
                 /*===Get_Base_Game_Json===*/
                 JSONObject game = jsonCache.getJSONObject(mainActivity.getQueryJsonString());
                 /*===START_PLAYERS===*/
@@ -115,7 +114,6 @@ public class JsonHandler {
             e.printStackTrace();
         }
 
-
         return returnArr;
     }
 
@@ -129,7 +127,6 @@ public class JsonHandler {
 
         try {
             JSONArray lobbies = gameClasses.getJSONArray(typeOfGame);
-            //Log.v(TAG, lobbies.toString());
             for (int i = 0; i < lobbies.length(); i++) {
                 JSONObject lobby = lobbies.getJSONObject(i);
                 String title = lobby.get("title").toString();
@@ -238,9 +235,8 @@ public class JsonHandler {
                 }
 
             } catch (MalformedURLException e) {
-                Log.e("????", "Malformed URL");
+                Log.e("TAG", "Malformed URL");
             }
-            //Log.v("JSON", jobj.toString());
             return jobj;
         }
 
