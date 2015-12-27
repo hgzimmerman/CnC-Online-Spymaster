@@ -128,7 +128,7 @@ public class Player {
             this.savedInstanceState = savedInstanceState;
 
             rootView =  inflater.inflate(R.layout.fragment_list_view,container,false);
-            setRetainInstance(true);//This prevents the GCing of the fragment.
+            setRetainInstance(true);//This prevents the GC-ing of the fragment.
 
             listView = (ListView) rootView.findViewById(android.R.id.list);
 

@@ -5,9 +5,7 @@ import java.util.Locale;
 
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
@@ -36,7 +34,6 @@ public class MainActivity extends ActionBarActivity
     private NavigationDrawerFragment.GameTitle mGameTitle;
     private String queryJsonString = "";// String used to choose what game to sample from the JSON
     private JsonHandler jsonHandler;
-    private Menu mymenu;
     public SwipeRefreshLayout mSwipeRefreshLayout;
     private int currentNavDrawerIndex = 0;
     /**
@@ -126,7 +123,7 @@ public class MainActivity extends ActionBarActivity
         if(!mNavigationDrawerFragment.isDrawerOpen()) {
             // Inflate the menu; this adds items to the action bar if it is present.
             restoreActionBar();
-            mymenu = menu;
+            //mymenu = menu;
         }
         return true;
     }
@@ -166,7 +163,7 @@ public class MainActivity extends ActionBarActivity
             jsonHandler = new JsonHandler(this);
         }
         if (position != 0 && position != currentNavDrawerIndex
-                && getmSectionsPagerAdapter()!= null && pager != null ) {
+                && getSectionsPagerAdapter()!= null && pager != null ) {
             // handle the case where you animate on a transition away from a page with no items.
             // If the away and return animations are played in these cases, the new page automatically
             // populates with info, then slides away and slides back, when it should only return.
@@ -390,7 +387,7 @@ public class MainActivity extends ActionBarActivity
         return queryJsonString;
     }
 
-    public SectionsPagerAdapter getmSectionsPagerAdapter() {return mSectionsPagerAdapter;}
+    public SectionsPagerAdapter getSectionsPagerAdapter() {return mSectionsPagerAdapter;}
 
 
     @Override
@@ -403,7 +400,7 @@ public class MainActivity extends ActionBarActivity
     /**
      * Filters requests from the fragments in order to enable the refresh ability.
      * For some reason, all fragments check onScroll when you switch them.
-     * So this method filters the requests to avoid the refreshlayout being set to true when it
+     * So this method filters the requests to avoid the refreshLayout being set to true when it
      * should be false.
      *
      * @param isSafe bool indicating that it is ok to refresh true == yes, false == no

@@ -21,7 +21,7 @@ import java.util.Iterator;
 
 /**
  * Created by ziggypop on 4/7/15.
- * Handles gettnig data from the website and updating the set of fragments based on that data.
+ * Handles getting data from the website and updating the set of fragments based on that data.
  */
 public class JsonHandler {
 
@@ -193,7 +193,7 @@ public class JsonHandler {
     public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
 
 
-         JSONObject jobj = null;
+         JSONObject jObj = null;
          String json = "";
 
         MainActivity myActivity;
@@ -225,7 +225,7 @@ public class JsonHandler {
                         Log.e("Buffer Error", "Error converting result: " + e.toString());
                     }
                     try {
-                        jobj = new JSONObject(json);
+                        jObj = new JSONObject(json);
                     } catch (JSONException e){
                         Log.e("JSON Parser", "Error parsing data: " + e.toString());
                     }
@@ -237,7 +237,7 @@ public class JsonHandler {
             } catch (MalformedURLException e) {
                 Log.e("TAG", "Malformed URL");
             }
-            return jobj;
+            return jObj;
         }
 
         @Override

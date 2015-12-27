@@ -105,7 +105,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
     /**
      * Set the custom {@link TabColorizer} to be used.
      *
-     * If you only require simple custmisation then you can use
+     * If you only require simple customisation then you can use
      * {@link #setSelectedIndicatorColors(int...)} to achieve
      * similar effects.
      */
