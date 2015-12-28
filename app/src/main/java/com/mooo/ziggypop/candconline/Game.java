@@ -129,6 +129,7 @@ public class Game {
 
 
     public static class GamesFragment extends ListFragment {
+        private static final String TAG = "GamesInLobbyFragment";
 
         private GamesAdapter mAdapter;
         private static ArrayList<Game> games = new ArrayList<>();
@@ -150,9 +151,7 @@ public class Game {
 
             listView.setOnScrollListener(new AbsListView.OnScrollListener() {
                 @Override
-                public void onScrollStateChanged(AbsListView view, int scrollState) {
-                    // Do nothing.
-                }
+                public void onScrollStateChanged(AbsListView view, int scrollState) { }
 
                 @Override
                 public void onScroll(AbsListView view, int firstVisibleItem,
@@ -181,7 +180,7 @@ public class Game {
             if (isAdded()) {
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
-                        Log.v("GAMES_IN_LOBBY", "RUNNING");
+                        Log.v("TAG", "Refreshing");
                         mAdapter.clear();
                         games.addAll(data);
                         mAdapter.notifyDataSetChanged();
@@ -195,6 +194,7 @@ public class Game {
 
 
     public static class GamesInProgressFragment extends ListFragment {
+        private static final String TAG = "GamesInProgressFragment";
 
         private GamesAdapter mAdapter;
         private static ArrayList<Game> games = new ArrayList<>();
@@ -230,7 +230,7 @@ public class Game {
                         boolean topOfFirstItemVisible = listView.getChildAt(0).getTop() == 0;
                         // enabling or disabling the refresh layout
                         enable = firstItemVisible && topOfFirstItemVisible;
-                    }else  {
+                    } else {
                         enable = true;
                     }
                     MainActivity activity = (MainActivity) getActivity();
@@ -256,7 +256,7 @@ public class Game {
             }
             activity.runOnUiThread(new Runnable() {
                 public void run(){
-                    Log.v("GamesInProgressFragment", "RUNNING");
+                    Log.v(TAG, "refreshing");
                     mAdapter.clear();
                     games.addAll(data);
                     mAdapter.notifyDataSetChanged();

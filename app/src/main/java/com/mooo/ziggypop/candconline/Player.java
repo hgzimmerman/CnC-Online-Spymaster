@@ -174,7 +174,7 @@ public class Player {
 
             activity.runOnUiThread(new Runnable() {
                 public void run() {
-                    Log.v(TAG, "Updating fragment adapter");
+                    Log.v(TAG, "Refreshing");
                     mAdapter.clear();
                     wordsArr.addAll(data);
                     mAdapter.notifyDataSetChanged();
