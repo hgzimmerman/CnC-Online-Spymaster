@@ -51,14 +51,28 @@ public class SettingsActivity extends AppCompatActivity{
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
 
-        mToolBar.setBackgroundResource(R.color.grey_blue);
-
+        int current_game = getIntent().getExtras().getInt("current_game");
+        switch (current_game) {
+            case 1:
+                mToolBar.setBackgroundResource(R.color.kw_red);
+                break;
+            case 2:
+                mToolBar.setBackgroundResource(R.color.cnc3_green);
+                break;
+            case 3:
+                mToolBar.setBackgroundResource(R.color.generals_yellow);
+                break;
+            case 4:
+                mToolBar.setBackgroundResource(R.color.zh_orange);
+                break;
+            case 5:
+                mToolBar.setBackgroundResource(R.color.ra3_red);
+                break;
+        }
 
 
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new SettingsFragment()).commit();
-
-
 
     }
 

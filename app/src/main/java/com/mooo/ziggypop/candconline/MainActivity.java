@@ -242,6 +242,7 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 6: //settings
                 Intent intentSetPref = new Intent(this, SettingsActivity.class);
+                intentSetPref.putExtra("current_game", currentNavDrawerIndex);
                 startActivityForResult(intentSetPref, 0);
                 break;
         }
