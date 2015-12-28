@@ -66,4 +66,6 @@
     <string name="players">Players:</string>
     <string name="the_game_is_locked">The game is locked</string>
 
+    <string name="ok">OK</string>
+
 </resources>

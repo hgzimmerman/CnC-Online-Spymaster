@@ -10,14 +10,10 @@
         android:defaultValue="1"
         />
 
-    <com.mooo.ziggypop.candconline.LicenceDialogPref
+
+    <Preference
+        android:key="dialog_preference"
         android:title="@string/licence"
-        android:positiveButtonText="Ok"
-        android:negativeButtonText="close"
-        android:dialogMessage="@string/BSD"
-
-
-
         />
 
 </PreferenceScreen>
