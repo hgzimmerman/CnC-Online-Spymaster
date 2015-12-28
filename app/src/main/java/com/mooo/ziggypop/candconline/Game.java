@@ -157,7 +157,7 @@ public class Game {
                 @Override
                 public void onScroll(AbsListView view, int firstVisibleItem,
                                      int visibleItemCount, int totalItemCount) {
-                    boolean enable = false;
+                    boolean enable;
                     if(listView != null && listView.getChildCount() > 0){
                         // check if the first item of the list is visible
                         boolean firstItemVisible = listView.getFirstVisiblePosition() == 0;
@@ -222,7 +222,7 @@ public class Game {
                 @Override
                 public void onScroll(AbsListView view, int firstVisibleItem,
                                      int visibleItemCount, int totalItemCount) {
-                    boolean enable = false;
+                    boolean enable;
                     if(listView != null && listView.getChildCount() > 0){
                         // check if the first item of the list is visible
                         boolean firstItemVisible = listView.getFirstVisiblePosition() == 0;

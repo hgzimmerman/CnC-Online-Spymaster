@@ -12,6 +12,7 @@ import android.util.Log;
 
 /**
  * Created by ziggypop on 4/17/15.
+ * Contains settings
  */
 public class SettingsActivity extends PreferenceActivity {
 

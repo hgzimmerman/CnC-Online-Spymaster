@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -251,9 +252,11 @@ public class MainActivity extends ActionBarActivity
      * Also sets the color of the refresh icon.
      */
     public void restoreActionBar() {
+        ActionBar aBar = getSupportActionBar();
+        assert aBar != null;
         switch(mGameTitle){
             case KW:
-                getSupportActionBar().setTitle(getString(R.string.KanesWrath));
+                aBar.setTitle(getString(R.string.KanesWrath));
                 findViewById(R.id.top_toolbar).setBackgroundColor(
                 getResources().getColor(R.color.kw_red));
                 findViewById(R.id.sliding_tabs).setBackgroundColor(
@@ -263,7 +266,7 @@ public class MainActivity extends ActionBarActivity
                 );
                 break;
             case CnC3:
-                getSupportActionBar().setTitle(getString(R.string.CandC3));
+                aBar.setTitle(getString(R.string.CandC3));
                 findViewById(R.id.top_toolbar).setBackgroundColor(
                 getResources().getColor(R.color.cnc3_green));
                 findViewById(R.id.sliding_tabs).setBackgroundColor(
@@ -273,7 +276,7 @@ public class MainActivity extends ActionBarActivity
                 );
                 break;
             case Generals:
-                getSupportActionBar().setTitle(getString(R.string.Generals));
+                aBar.setTitle(getString(R.string.Generals));
                 findViewById(R.id.top_toolbar).setBackgroundColor(
                 getResources().getColor(R.color.generals_yellow));
                 findViewById(R.id.sliding_tabs).setBackgroundColor(
@@ -283,7 +286,7 @@ public class MainActivity extends ActionBarActivity
                 );
                 break;
             case ZH:
-                getSupportActionBar().setTitle(getString(R.string.ZeroHour));
+                aBar.setTitle(getString(R.string.ZeroHour));
                 findViewById(R.id.top_toolbar).setBackgroundColor(
                 getResources().getColor(R.color.zh_orange));
                 findViewById(R.id.sliding_tabs).setBackgroundColor(
@@ -293,7 +296,7 @@ public class MainActivity extends ActionBarActivity
                 );
                 break;
             case RA3:
-                getSupportActionBar().setTitle(getString(R.string.RedAlert3));
+                aBar.setTitle(getString(R.string.RedAlert3));
                 findViewById(R.id.top_toolbar).setBackgroundColor(
                 getResources().getColor(R.color.ra3_red));
                 findViewById(R.id.sliding_tabs).setBackgroundColor(

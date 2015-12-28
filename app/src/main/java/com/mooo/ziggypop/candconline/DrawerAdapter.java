@@ -46,7 +46,8 @@ public class DrawerAdapter extends ArrayAdapter<DrawerItem> {
             TextView playerCount = (TextView) v.findViewById(R.id.drawer_player_count);
 
             title.setText(p.getGameTitle());
-            playerCount.setText("("+p.getPlayerCount()+")");
+            String playerCountText = "("+p.getPlayerCount()+")";
+            playerCount.setText(playerCountText);
 
         }
 

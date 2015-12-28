@@ -69,11 +69,8 @@ public class NavigationDrawerFragment extends Fragment {
     private DrawerAdapter mAdapter;
 
 
-    private Bitmap kw_bitmap;
-    private Bitmap cnc3_bitmap;
-    private Bitmap generals_bitmap;
-    private Bitmap zh_bitmap;
-    private Bitmap ra3_bitmap;
+    private Bitmap game_bitmap;
+
 
 
     public NavigationDrawerFragment() {
@@ -98,13 +95,7 @@ public class NavigationDrawerFragment extends Fragment {
         //mCurrentSelectedPosition = 2;
 
 
-        kw_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kw_cropped);
-        //cnc3_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cnc3_cropped);
-        //generals_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.generals_crop);
-        //zh_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.zh_box_art_crop);
-        //ra3_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.red_alert_crop);
-
-
+        game_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kw_cropped);
 
         // Select either the default item (0) or the last selected item.
         selectItem(mCurrentSelectedPosition);
@@ -288,7 +279,7 @@ public class NavigationDrawerFragment extends Fragment {
      * 'context', rather than just what's in the current screen.
      */
     private void showGlobalContextActionBar() {
-        ActionBar actionBar = getActionBar();
+        //ActionBar actionBar = getActionBar();
         //actionBar.setDisplayShowTitleEnabled(true);
         //actionBar.setTitle(R.string.app_name);
     }
@@ -308,7 +299,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
 
-    /*
+    /**
      * Updates the names for the nav drawer to reflect the numbers of players currently online.
      */
     public void updateNames(ArrayList<Integer> numbers){
@@ -320,12 +311,12 @@ public class NavigationDrawerFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
     }
 
-    /*
+    /**
      * Sets the header in the NavDrawer to a picture based on the GameTitle.
      */
     public void updateHeader(GameTitle gameTitle){
         switch (gameTitle){
-            case KW:    imageHeaderView.setImageBitmap(kw_bitmap);
+            case KW:    imageHeaderView.setImageBitmap(game_bitmap);
                 break;
             case CnC3:  imageHeaderView.setImageBitmap(
                     BitmapFactory.decodeResource(getResources(),

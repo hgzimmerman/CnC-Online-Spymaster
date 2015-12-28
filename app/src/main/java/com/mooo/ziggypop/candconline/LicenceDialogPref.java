@@ -2,7 +2,6 @@ package com.mooo.ziggypop.candconline;
 
 import android.content.Context;
 import android.preference.DialogPreference;
-import android.preference.ListPreference;
 import android.util.AttributeSet;
 import android.view.View;
 
