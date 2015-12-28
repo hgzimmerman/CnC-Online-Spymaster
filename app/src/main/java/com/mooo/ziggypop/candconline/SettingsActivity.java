@@ -1,5 +1,6 @@
 package com.mooo.ziggypop.candconline;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,31 +10,56 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 /**
  * Created by ziggypop on 4/17/15.
  * Contains settings
  */
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends AppCompatActivity{
+
+
+
 
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.settings_layout);
-  //      Toolbar toolbar = (Toolbar) findViewById(R.id.settings_toolbar);
 
-        /*
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        */
+        setContentView(R.layout.settings_layout);
 
-        getFragmentManager().beginTransaction().replace(android.R.id.content,
-                new SettingsFragment()).commit();
+        Toolbar mToolBar = (Toolbar) findViewById(R.id.settings_toolbar);
+        mToolBar.setTitle("Settings");
+        mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        setSupportActionBar(mToolBar);
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+
+
+        mToolBar.setBackgroundResource(R.color.grey_blue);
+
+
+
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new SettingsFragment()).commit();
+
+
+
     }
 
 
