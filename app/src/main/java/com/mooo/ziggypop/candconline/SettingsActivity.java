@@ -1,27 +1,13 @@
 package com.mooo.ziggypop.candconline;
 
-import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 /**
  * Created by ziggypop on 4/17/15.
@@ -51,6 +37,7 @@ public class SettingsActivity extends AppCompatActivity{
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
 
+        // set the color of the toolbar based on the current game.
         int current_game = getIntent().getExtras().getInt("current_game");
         switch (current_game) {
             case 1:
@@ -70,7 +57,7 @@ public class SettingsActivity extends AppCompatActivity{
                 break;
         }
 
-
+        //swap in the settings fragment
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new SettingsFragment()).commit();
 
