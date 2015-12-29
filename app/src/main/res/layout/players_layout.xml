@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardCornerRadius="4dp">
+
     <LinearLayout
         android:id="@+id/outerLayout"
         android:orientation="horizontal"
@@ -22,9 +23,6 @@
         android:padding="12dp"
         android:layout_gravity="center_horizontal"
         >
-
-
-
 
         <TextView
             android:id="@+id/text"
@@ -35,7 +33,6 @@
             android:layout_weight="10"/>
 
         <View
-
             android:background="@drawable/notify_circle"
             android:layout_width="30dp"
             android:layout_height="30dp"/>

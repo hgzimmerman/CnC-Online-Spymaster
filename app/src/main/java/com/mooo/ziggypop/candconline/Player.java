@@ -2,8 +2,10 @@ package com.mooo.ziggypop.candconline;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -67,19 +70,50 @@ public class Player {
                 LayoutInflater vi;
                 vi = LayoutInflater.from(getContext());
                 v = vi.inflate(R.layout.players_layout, null);
+
+
+
             }
 
-            Player player = getItem(position);
-            String nickname = player.getNickname();
 
 
-
+            final Player player = getItem(position);
+            String nickname = player.nickname;
             TextView textView = (TextView) v.findViewById(R.id.text);
-
             textView.setText(nickname);
 
-            LinearLayout ll = (LinearLayout) v.findViewById(R.id.outerLayout);
-            ll.setGravity(Gravity.CENTER_HORIZONTAL);
+            final LayoutInflater vi = LayoutInflater.from(getContext());
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                    View dialogView = vi.inflate(R.layout.player_alert_dialog, null);
+                    TextView playerNickname = (TextView) dialogView.findViewById(R.id.players_name);
+                    playerNickname.setText(player.nickname);
+                    TextView playerID = (TextView) dialogView.findViewById(R.id.players_id);
+                    playerID.setText(player.id);
+                    TextView playerPID = (TextView) dialogView.findViewById(R.id.players_pid);
+                    playerPID.setText(player.pid);
+
+
+                    builder.setView(dialogView);
+                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            // register the changes
+                        }
+                    }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    });
+                    builder.show();
+                }
+            });
+
+
+
+
 
 
             return v;
