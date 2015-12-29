@@ -74,5 +74,6 @@
     <string name="recieve_notifications">Recieve Notifications</string>
     <string name="friends">Friends</string>
     <string name="cancel">Cancel</string>
+    <string name="player_is_you">Player is You</string>
 
 </resources>

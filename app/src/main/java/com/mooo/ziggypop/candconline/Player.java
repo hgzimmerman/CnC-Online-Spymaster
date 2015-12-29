@@ -71,10 +71,7 @@ public class Player {
                 vi = LayoutInflater.from(getContext());
                 v = vi.inflate(R.layout.players_layout, null);
 
-
-
             }
-
 
 
             final Player player = getItem(position);
