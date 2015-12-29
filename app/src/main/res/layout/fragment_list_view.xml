@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:divider="@null"
-        android:dividerHeight="8dp"
+        android:dividerHeight="4dp"
         android:listSelector="@android:color/transparent"
         android:cacheColorHint="@android:color/transparent"
         android:headerDividersEnabled="true"
