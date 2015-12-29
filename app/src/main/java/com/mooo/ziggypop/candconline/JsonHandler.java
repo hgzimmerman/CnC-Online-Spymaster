@@ -254,9 +254,7 @@ public class JsonHandler {
             if (result == null) {
                 //TOAST
                 Context mContext = myActivity.getApplicationContext();
-                CharSequence errorText = "Connection error";
-                int duration = Toast.LENGTH_LONG;
-                Toast toast = Toast.makeText(mContext, errorText, duration);
+                Toast toast = Toast.makeText(mContext, "Connection error.", Toast.LENGTH_LONG);
                 toast.show();
             }
             updateViews(); //fill the pager with new content

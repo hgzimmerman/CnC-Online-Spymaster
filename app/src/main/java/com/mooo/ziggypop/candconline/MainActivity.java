@@ -37,6 +37,7 @@ public class MainActivity extends ActionBarActivity
     private JsonHandler jsonHandler;
     public SwipeRefreshLayout mSwipeRefreshLayout;
     private int currentNavDrawerIndex = 0;
+    public Toolbar topToolbar;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -56,7 +57,7 @@ public class MainActivity extends ActionBarActivity
         setContentView(R.layout.activity_main);
 
         //get the toolbars
-        Toolbar topToolbar = (Toolbar) findViewById(R.id.top_toolbar);
+        topToolbar = (Toolbar) findViewById(R.id.top_toolbar);
         setSupportActionBar(topToolbar);
 
         // Create the adapter that will return a fragment for each of the three

@@ -9,8 +9,8 @@
 
     <LinearLayout
         android:id="@+id/outerLayout"
-        android:orientation="vertical"
-        android:layout_width="380dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
         android:layout_gravity="center_horizontal"
@@ -19,8 +19,15 @@
 
         <TextView
             android:id="@+id/text"
+            android:layout_gravity="start"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <CheckBox
+            android:layout_gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
 
 
     </LinearLayout>

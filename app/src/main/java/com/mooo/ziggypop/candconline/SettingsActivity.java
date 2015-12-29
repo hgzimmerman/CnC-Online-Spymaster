@@ -15,17 +15,13 @@ import android.view.View;
  */
 public class SettingsActivity extends AppCompatActivity{
 
-
-
-
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.settings_layout);
 
         Toolbar mToolBar = (Toolbar) findViewById(R.id.settings_toolbar);
-        mToolBar.setTitle("Settings");
+        mToolBar.setTitle(R.string.settings);
         mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

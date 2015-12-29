@@ -7,7 +7,7 @@ android:paddingLeft="15dp"
 android:paddingRight="15dp"
 android:descendantFocusability="beforeDescendants">
     <LinearLayout
-        android:orientation="vertical" android:layout_width="380dp"
+        android:orientation="vertical" android:layout_width="match_parent"
         android:padding="15dp"
 
         android:layout_gravity="center_horizontal"
