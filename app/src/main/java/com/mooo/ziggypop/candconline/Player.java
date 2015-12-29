@@ -3,6 +3,7 @@ package com.mooo.ziggypop.candconline;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AlertDialog;
@@ -31,18 +32,40 @@ import java.util.ArrayList;
 public class Player {
 
     private String nickname;
-    private String id;
-    private String pid;
+    private int id;
+    private int pid;
+    private boolean isFriend;
+    private boolean isRecieveNotifications;
+    private boolean isYourself;
 
-    public Player(String nickname, String id, String pid){
+    public Player(String nickname, int id, int pid){
         this.nickname = nickname;
         this.id = id;
         this.pid = pid;
+        this.isFriend = false;
+        this.isRecieveNotifications = false;
+        this.isYourself = false;
     }
+
+    public Player(String nickname, int id, int pid, boolean isFriend,
+                  boolean isRecieveNotifications, boolean isYourself) {
+        this.nickname = nickname;
+        this.id = id;
+        this.pid = pid;
+        this.isFriend = isFriend;
+        this.isRecieveNotifications = isRecieveNotifications;
+        this.isYourself = isYourself;
+    }
+
 
     public String getNickname(){
         return nickname;
     }
+    public int getID(){return id;}
+    public int getPID(){return pid;}
+    public boolean getIsFriend(){return isFriend;}
+    public boolean getIsRecieveNotifications(){return isRecieveNotifications;}
+    public boolean getIsYourself(){return isYourself;}
 
 
     /**
@@ -89,9 +112,9 @@ public class Player {
                     TextView playerNickname = (TextView) dialogView.findViewById(R.id.players_name);
                     playerNickname.setText(player.nickname);
                     TextView playerID = (TextView) dialogView.findViewById(R.id.players_id);
-                    playerID.setText(player.id);
+                    playerID.setText(player.id + "");
                     TextView playerPID = (TextView) dialogView.findViewById(R.id.players_pid);
-                    playerPID.setText(player.pid);
+                    playerPID.setText(player.pid + "");
 
 
                     builder.setView(dialogView);
@@ -190,8 +213,6 @@ public class Player {
             return rootView;
 
         }
-
-
 
         /**
          * Refresh the adapter with new Player objects

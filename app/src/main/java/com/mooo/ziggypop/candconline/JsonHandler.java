@@ -104,8 +104,8 @@ public class JsonHandler {
                 try {
                     JSONObject value = (JSONObject) usersObject.get(key);
                     returnArr.add(new Player(value.getString("nickname"),
-                            value.getString("id"),
-                            value.getString("pid")));
+                            Integer.parseInt(value.getString("id")),
+                            Integer.parseInt(value.getString("pid"))));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
