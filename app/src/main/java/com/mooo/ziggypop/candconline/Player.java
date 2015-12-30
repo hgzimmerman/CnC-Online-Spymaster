@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -109,12 +110,25 @@ public class Player implements Comparable{
 
             }
 
-
+            //Set up the Player's card
             final Player player = getItem(position);
             String nickname = player.nickname;
             TextView textView = (TextView) v.findViewById(R.id.text);
             textView.setText(nickname);
+            if (player.isFriend){
+                View friendMark =  v.findViewById(R.id.friend_marker);
+                friendMark.setVisibility(View.VISIBLE);            }
+            if (player.isRecieveNotifications){
+                View notificationMark =  v.findViewById(R.id.notify_marker);
+                notificationMark.setVisibility(View.VISIBLE);
+            }
+            if (player.isYourself){
+                View yourselfMarker =  v.findViewById(R.id.yourself_marker);
+                yourselfMarker.setVisibility(View.VISIBLE);
+            }
 
+
+            //Create the dialog
             final LayoutInflater vi = LayoutInflater.from(getContext());
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -128,6 +142,18 @@ public class Player implements Comparable{
                     playerID.setText(player.id + "");
                     TextView playerPID = (TextView) dialogView.findViewById(R.id.players_pid);
                     playerPID.setText(player.pid + "");
+                    if (player.isFriend){
+                        CheckBox friendsCheckbox = (CheckBox) dialogView.findViewById(R.id.friends_checkbox);
+                        friendsCheckbox.setChecked(true);
+                    }
+                    if (player.isRecieveNotifications){
+                        CheckBox notificationsCheckbox = (CheckBox) dialogView.findViewById(R.id.notifications_checkbox);
+                        notificationsCheckbox.setChecked(true);
+                    }
+                    if (player.isYourself){
+                        CheckBox yourselfCheckbox = (CheckBox) dialogView.findViewById(R.id.is_you_checkbox);
+                        yourselfCheckbox.setChecked(true);
+                    }
 
 
                     builder.setView(dialogView);
@@ -143,10 +169,6 @@ public class Player implements Comparable{
                     builder.show();
                 }
             });
-
-
-
-
 
 
             return v;
