@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
 /**
@@ -29,7 +30,7 @@ import java.util.ArrayList;
  * Wraps Adapter and Fragment Subclasses
  *
  */
-public class Player {
+public class Player implements Comparable{
 
     private String nickname;
     private int id;
@@ -66,6 +67,18 @@ public class Player {
     public boolean getIsFriend(){return isFriend;}
     public boolean getIsRecieveNotifications(){return isRecieveNotifications;}
     public boolean getIsYourself(){return isYourself;}
+
+
+    /**
+     * Sorts the players by their case-insensitive nicknames.
+     * @param another
+     * @return
+     */
+    @Override
+    public int compareTo(Object another) {
+        Player rightPlayer = (Player) another;
+        return this.nickname.compareToIgnoreCase(rightPlayer.nickname);
+    }
 
 
     /**
