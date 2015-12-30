@@ -69,6 +69,16 @@ public class Player implements Comparable{
     public boolean getIsRecieveNotifications(){return isRecieveNotifications;}
     public boolean getIsYourself(){return isYourself;}
 
+    public void setIsFriend(boolean isFriend){
+        this.isFriend = isFriend;
+    }
+    public void setIsRecieveNotifications(boolean isRecieve){
+        this.isRecieveNotifications = isRecieve;
+    }
+    public void setIsYourself(boolean isYourself){
+        this.isYourself = isYourself;
+    }
+
 
     /**
      * Sorts the players by their case-insensitive nicknames.
@@ -102,6 +112,8 @@ public class Player implements Comparable{
 
             View v = convertView;
 
+            //TODO: known bug: the notification circles will appear farther down on the listview.
+            // Try fiddiling around with this block here to see if I can prevent the notification states persisting
             if (v == null) {
 
                 LayoutInflater vi;
@@ -132,7 +144,7 @@ public class Player implements Comparable{
             final LayoutInflater vi = LayoutInflater.from(getContext());
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(final View view) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                     View dialogView = vi.inflate(R.layout.player_alert_dialog, null);
@@ -142,25 +154,56 @@ public class Player implements Comparable{
                     playerID.setText(player.id + "");
                     TextView playerPID = (TextView) dialogView.findViewById(R.id.players_pid);
                     playerPID.setText(player.pid + "");
+
+                    final CheckBox friendsCheckbox = (CheckBox) dialogView.findViewById(R.id.friends_checkbox);
                     if (player.isFriend){
-                        CheckBox friendsCheckbox = (CheckBox) dialogView.findViewById(R.id.friends_checkbox);
                         friendsCheckbox.setChecked(true);
                     }
+                    final CheckBox notificationsCheckbox = (CheckBox) dialogView.findViewById(R.id.notifications_checkbox);
                     if (player.isRecieveNotifications){
-                        CheckBox notificationsCheckbox = (CheckBox) dialogView.findViewById(R.id.notifications_checkbox);
                         notificationsCheckbox.setChecked(true);
                     }
+                    final CheckBox yourselfCheckbox = (CheckBox) dialogView.findViewById(R.id.is_you_checkbox);
                     if (player.isYourself){
-                        CheckBox yourselfCheckbox = (CheckBox) dialogView.findViewById(R.id.is_you_checkbox);
                         yourselfCheckbox.setChecked(true);
                     }
-
 
                     builder.setView(dialogView);
                     builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
-                            // register the changes
+                            // construct a new player object to be commited to the DB
+                            Player replacementPlayer = new Player(player.nickname, player.id, player.pid);
+                            // alter the new playeer and update ui to reflect its state
+                            View friendMarker = view.findViewById(R.id.friend_marker);
+                            if (friendsCheckbox.isChecked()){
+                                replacementPlayer.setIsFriend(true);
+                                friendMarker.setVisibility(View.VISIBLE);
+                            } else {
+                                replacementPlayer.setIsFriend(false);
+                                friendMarker.setVisibility(View.INVISIBLE);
+                            }
+                            View notificationMarker = view.findViewById(R.id.notify_marker);
+                            if (notificationsCheckbox.isChecked()){
+                                replacementPlayer.setIsRecieveNotifications(true);
+                                notificationMarker.setVisibility(View.VISIBLE);
+                            } else {
+                                replacementPlayer.setIsRecieveNotifications(false);
+                                notificationMarker.setVisibility(View.INVISIBLE);
+                            }
+                            View yourselfMarker = view.findViewById(R.id.yourself_marker);
+                            if (yourselfCheckbox.isChecked()){
+                                replacementPlayer.setIsYourself(true);
+                                yourselfMarker.setVisibility(View.VISIBLE);
+                            } else {
+                                replacementPlayer.setIsYourself(false);
+                                yourselfMarker.setVisibility(View.INVISIBLE);
+                            }
+                            // Commit the new player to the DB.
+                            // getDB.addPlayer(replacementPlayer);
+
+
+
                         }
                     }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
