@@ -38,6 +38,7 @@ public class MainActivity extends ActionBarActivity
     public SwipeRefreshLayout mSwipeRefreshLayout;
     private int currentNavDrawerIndex = 0;
     public Toolbar topToolbar;
+    public PlayerDatabaseHandler dbHandler;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -52,6 +53,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbHandler = new PlayerDatabaseHandler(getApplicationContext());
 
         //Normal setup:
         setContentView(R.layout.activity_main);

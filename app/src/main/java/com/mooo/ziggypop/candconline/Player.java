@@ -110,13 +110,13 @@ public class Player implements Comparable{
 
         public PlayersAdapter(Context context, int resource) {
             super(context, resource);
-            db = new PlayerDatabaseHandler(getContext());
+            db = new PlayerDatabaseHandler(context);
         }
 
         public PlayersAdapter(Context context, int resource, ArrayList<Player> players) {
             super(context, resource, players);
             myPlayers = players;
-            db = new PlayerDatabaseHandler(getContext());
+            db = new PlayerDatabaseHandler(context);
         }
 
         public void setPlayerList( ArrayList<Player> list ){
@@ -130,7 +130,7 @@ public class Player implements Comparable{
             final ViewHolder holder;
 
             //TODO: known bug: the notification circles will appear farther down on the listview.
-            // Try fiddiling around with this block here to see if I can prevent the notification states persisting
+            // Try fiddling around with this block here to see if I can prevent the notification states persisting
             if (convertView == null) {
 
                 LayoutInflater vi = LayoutInflater.from(getContext());
@@ -138,8 +138,11 @@ public class Player implements Comparable{
                 holder = new ViewHolder();
                 holder.nickname = (TextView) convertView.findViewById(R.id.text);
                 holder.friendMarker = convertView.findViewById(R.id.friend_marker);
+                holder.friendMarker.setVisibility(View.INVISIBLE);
                 holder.notificationMarker = convertView.findViewById(R.id.notify_marker);
+                holder.notificationMarker.setVisibility(View.INVISIBLE);
                 holder.yourselfMarker = convertView.findViewById(R.id.yourself_marker);
+                holder.yourselfMarker.setVisibility(View.INVISIBLE);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -148,7 +151,6 @@ public class Player implements Comparable{
 
             //Set up the Player's card
             final Player player = getItem(position);
-
 
             holder.nickname.setText(player.nickname);
             if (player.isFriend){
@@ -217,7 +219,7 @@ public class Player implements Comparable{
                                 replacementPlayer.setIsYourself(false);
                                 holder.yourselfMarker.setVisibility(View.INVISIBLE);
                             }
-                            notifyDataSetChanged();
+                            //notifyDataSetChanged();
 
                             // Commit the new player to the DB.
 

@@ -12,11 +12,12 @@ import java.util.List;
 
 /**
  * Created by ziggypop on 12/29/15.
+ * Handles the Database
  */
 public class PlayerDatabaseHandler extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
 
     // Database Name
     private static final String DATABASE_NAME = "playerDB";
@@ -64,8 +65,8 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
 
 
 
-    public List<Player> getAllPlayers() {
-        List<Player> playerList = new ArrayList<Player>();
+    public ArrayList<Player> getAllPlayers() {
+        ArrayList<Player> playerList = new ArrayList<Player>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_PLAYERS
                 + " ORDER BY id DESC";
@@ -73,24 +74,24 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
+        int idIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_ID);
+        int pidIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_PID);
+        int nicknameIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_NICKNAME);
+        int friendIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_IS_FRIEND);
+        int notificationIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_NOTIFICATIONS);
+        int yourselfIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_IS_YOURSELF);
+
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
+
                 Player player = new Player(
-                        cursor.getString(2),
-                        cursor.getInt(1),
-                        cursor.getInt(0),
-                        (cursor.getInt(3) == 1),
-                        (cursor.getInt(4) == 1),
-                        (cursor.getInt(5) == 1)
-                        );
-                /*
-                player.setId(Integer.parseInt(cursor.getString(0)));
-                player.setTitle(cursor.getString(1));
-                player.setLink(cursor.getString(2));
-                player.setRSSLink(cursor.getString(3));
-                player.setDescription(cursor.getString(4));
-                */
+                        cursor.getString(nicknameIndex),
+                        cursor.getInt(idIndex),
+                        cursor.getInt(pidIndex),
+                        (cursor.getInt(friendIndex) == 1),
+                        (cursor.getInt(notificationIndex) == 1),
+                        (cursor.getInt(yourselfIndex) == 1));
                 // Adding contact to list
                 playerList.add(player);
             } while (cursor.moveToNext());
@@ -105,6 +106,7 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
 
     public void addPlayer(Player player) {
         SQLiteDatabase db = this.getWritableDatabase();
+        Log.v("adding Player", "is open?: "+db.isOpen());
 
         ContentValues values = new ContentValues();
         values.put(KEY_PLAYER_ID, player.getID());
@@ -113,7 +115,6 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_PLAYER_IS_FRIEND, (player.getIsFriend())? 1 : 0);
         values.put(KEY_PLAYER_NOTIFICATIONS, (player.getIsRecieveNotifications())? 1 : 0);
         values.put(KEY_PLAYER_IS_YOURSELF, (player.getIsYourself())? 1 :0);
-
 
 
         // Check if row already existed in database
@@ -130,15 +131,18 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
 
     public Player getPlayer(Player oldPlayer) {
         SQLiteDatabase db = this.getReadableDatabase();
+        Log.v("getting Player", "is open?: "+db.isOpen());
+
 
         Cursor cursor = db.query(TABLE_PLAYERS, new String[] { KEY_PLAYER_ID, KEY_PLAYER_PID,
                         KEY_PLAYER_NICKNAME, KEY_PLAYER_IS_FRIEND,
                 KEY_PLAYER_NOTIFICATIONS ,KEY_PLAYER_IS_YOURSELF }, KEY_PLAYER_ID + "=?",
                 new String[] { String.valueOf(oldPlayer.getID()) }, null, null, null, null);
 
-        if (cursor != null && cursor.getCount() > 0) {
-             cursor.moveToFirst();
-
+        if (cursor != null
+                && db.isOpen()
+                && cursor.getCount() > 0) {
+            cursor.moveToFirst();
 
             int idIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_ID);
             int pidIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_PID);
@@ -189,14 +193,33 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
     }
 
 
+    public ArrayList<Player> augmentPlayers(ArrayList<Player> players){
+        ArrayList<Player> newPlayers = new ArrayList<Player>();
+        ArrayList<Player> dbPlayers =  getAllPlayers();
+        for (Player player : players ){
+            boolean isAdded = false;
+            for (Player dbPlayer: dbPlayers){
+                if (player.getID() == dbPlayer.getID()){
+                    Log.v("Found Player", dbPlayer.getNickname());
+                    newPlayers.add(dbPlayer);
+                    isAdded = true;
+                }
+            }
+            if (!isAdded){
+                newPlayers.add(player);
+            }
+        }
+
+
+        return newPlayers;
+    }
 
 
     public boolean isPlayerExists(SQLiteDatabase db, int id) {
 
         Cursor cursor = db.rawQuery("SELECT 1 FROM " + TABLE_PLAYERS
                 + " WHERE " + KEY_PLAYER_ID + " = '" + id + "'", new String[] {});
-        boolean exists = (cursor.getCount() > 0);
-        return exists;
+        return (cursor.getCount() > 0);
     }
 
 

@@ -112,7 +112,8 @@ public class JsonHandler {
                     Player newPlayer = new Player(value.getString("nickname"),
                             Integer.parseInt(value.getString("id")),
                             Integer.parseInt(value.getString("pid")));
-                    newPlayer = db.getPlayer(newPlayer);
+
+                    //newPlayer = db.getPlayer(newPlayer);
 
                     returnArr.add(newPlayer);
                 } catch (JSONException e) {
@@ -122,6 +123,7 @@ public class JsonHandler {
         } catch(JSONException e){
             e.printStackTrace();
         }
+        returnArr = db.augmentPlayers(returnArr);
 
         Collections.sort(returnArr);
         return returnArr;
