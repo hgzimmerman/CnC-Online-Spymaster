@@ -34,6 +34,7 @@
 
         <View
             android:id="@+id/notify_marker"
+            android:visibility="invisible"
             android:background="@drawable/notify_circle"
             android:layout_width="30dp"
             android:layout_height="30dp"/>
@@ -44,6 +45,7 @@
 
         <View
             android:id="@+id/friend_marker"
+            android:visibility="invisible"
             android:background="@drawable/friend_circle"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -56,6 +58,7 @@
 
         <View
             android:id="@+id/yourself_marker"
+            android:visibility="invisible"
             android:background="@drawable/yourself_circle"
             android:layout_width="30dp"
             android:layout_height="30dp"

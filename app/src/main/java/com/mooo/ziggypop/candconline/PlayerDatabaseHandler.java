@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 public class PlayerDatabaseHandler extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 8;
 
     // Database Name
     private static final String DATABASE_NAME = "playerDB";
@@ -45,7 +46,7 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
                 + KEY_PLAYER_PID + " INTEGER,"
                 + KEY_PLAYER_NICKNAME + " TEXT,"
                 + KEY_PLAYER_IS_FRIEND + " INTEGER,"
-                + KEY_PLAYER_NOTIFICATIONS + " INTEGER"
+                + KEY_PLAYER_NOTIFICATIONS + " INTEGER,"
                 + KEY_PLAYER_IS_YOURSELF + " INTEGER"
                 + ")";
         db.execSQL(CREATE_RSS_TABLE);
@@ -127,29 +128,39 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
-    public Player getPlayer(int id) {
+    public Player getPlayer(Player oldPlayer) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_PLAYERS, new String[] { KEY_PLAYER_ID, KEY_PLAYER_PID,
                         KEY_PLAYER_NICKNAME, KEY_PLAYER_IS_FRIEND,
-                KEY_PLAYER_NOTIFICATIONS, KEY_PLAYER_IS_YOURSELF }, KEY_PLAYER_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
+                KEY_PLAYER_NOTIFICATIONS ,KEY_PLAYER_IS_YOURSELF }, KEY_PLAYER_ID + "=?",
+                new String[] { String.valueOf(oldPlayer.getID()) }, null, null, null, null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+             cursor.moveToFirst();
 
 
-        Player player = new Player(
-                cursor.getString(2),
-                cursor.getInt(1),
-                cursor.getInt(0),
-                (cursor.getInt(3) == 1),
-                (cursor.getInt(4) == 1),
-                (cursor.getInt(5) == 1)
-        );
+            int idIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_ID);
+            int pidIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_PID);
+            int nicknameIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_NICKNAME);
+            int friendIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_IS_FRIEND);
+            int notificationIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_NOTIFICATIONS);
+            int yourselfIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_IS_YOURSELF);
 
-        cursor.close();
-        db.close();
-        return player;
+            Player player = new Player(
+                    cursor.getString(nicknameIndex),
+                    cursor.getInt(idIndex),
+                    cursor.getInt(pidIndex),
+                    (cursor.getInt(friendIndex) == 1),
+                    (cursor.getInt(notificationIndex) == 1),
+                    (cursor.getInt(yourselfIndex) == 1));
+            cursor.close();
+            db.close();
+            return player;
+        } else {
+            db.close();
+            return oldPlayer;
+        }
     }
 
     public void deletePlayer(Player player) {
@@ -183,7 +194,7 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
     public boolean isPlayerExists(SQLiteDatabase db, int id) {
 
         Cursor cursor = db.rawQuery("SELECT 1 FROM " + TABLE_PLAYERS
-                + " WHERE rss_link = '" + id + "'", new String[] {});
+                + " WHERE " + KEY_PLAYER_ID + " = '" + id + "'", new String[] {});
         boolean exists = (cursor.getCount() > 0);
         return exists;
     }

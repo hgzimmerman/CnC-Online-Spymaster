@@ -1,6 +1,8 @@
 package com.mooo.ziggypop.candconline;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Interpolator;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -36,9 +38,12 @@ public class JsonHandler {
 
     private JSONObject jsonCache;
     private MainActivity mainActivity;
+    private static PlayerDatabaseHandler db;
+
 
     public JsonHandler(MainActivity activity){
         mainActivity = activity;
+        db = new PlayerDatabaseHandler(mainActivity.getApplicationContext());
     }
 
 
@@ -104,9 +109,12 @@ public class JsonHandler {
                 String key = iterator.next();
                 try {
                     JSONObject value = (JSONObject) usersObject.get(key);
-                    returnArr.add(new Player(value.getString("nickname"),
+                    Player newPlayer = new Player(value.getString("nickname"),
                             Integer.parseInt(value.getString("id")),
-                            Integer.parseInt(value.getString("pid"))));
+                            Integer.parseInt(value.getString("pid")));
+                    newPlayer = db.getPlayer(newPlayer);
+
+                    returnArr.add(newPlayer);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

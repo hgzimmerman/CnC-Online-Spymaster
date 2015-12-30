@@ -4,6 +4,7 @@ package com.mooo.ziggypop.candconline;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AlertDialog;
@@ -40,6 +41,8 @@ public class Player implements Comparable{
     private boolean isRecieveNotifications;
     private boolean isYourself;
 
+
+
     public Player(String nickname, int id, int pid){
         this.nickname = nickname;
         this.id = id;
@@ -47,6 +50,7 @@ public class Player implements Comparable{
         this.isFriend = false;
         this.isRecieveNotifications = false;
         this.isYourself = false;
+
     }
 
     public Player(String nickname, int id, int pid, boolean isFriend,
@@ -58,6 +62,9 @@ public class Player implements Comparable{
         this.isRecieveNotifications = isRecieveNotifications;
         this.isYourself = isYourself;
     }
+
+
+
 
 
     public String getNickname(){
@@ -98,51 +105,65 @@ public class Player implements Comparable{
     public static class PlayersAdapter extends ArrayAdapter<Player> {
 
         public ArrayList<Player> myPlayers;
+        private static PlayerDatabaseHandler db;
+
 
         public PlayersAdapter(Context context, int resource) {
             super(context, resource);
+            db = new PlayerDatabaseHandler(getContext());
         }
 
         public PlayersAdapter(Context context, int resource, ArrayList<Player> players) {
             super(context, resource, players);
             myPlayers = players;
+            db = new PlayerDatabaseHandler(getContext());
+        }
+
+        public void setPlayerList( ArrayList<Player> list ){
+            this.myPlayers = list;
+            notifyDataSetChanged();
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            View v = convertView;
+
+            final ViewHolder holder;
 
             //TODO: known bug: the notification circles will appear farther down on the listview.
             // Try fiddiling around with this block here to see if I can prevent the notification states persisting
-            if (v == null) {
+            if (convertView == null) {
 
-                LayoutInflater vi;
-                vi = LayoutInflater.from(getContext());
-                v = vi.inflate(R.layout.players_layout, null);
-
+                LayoutInflater vi = LayoutInflater.from(getContext());
+                convertView = vi.inflate(R.layout.players_layout, null);
+                holder = new ViewHolder();
+                holder.nickname = (TextView) convertView.findViewById(R.id.text);
+                holder.friendMarker = convertView.findViewById(R.id.friend_marker);
+                holder.notificationMarker = convertView.findViewById(R.id.notify_marker);
+                holder.yourselfMarker = convertView.findViewById(R.id.yourself_marker);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
             }
+
 
             //Set up the Player's card
             final Player player = getItem(position);
-            String nickname = player.nickname;
-            TextView textView = (TextView) v.findViewById(R.id.text);
-            textView.setText(nickname);
+
+
+            holder.nickname.setText(player.nickname);
             if (player.isFriend){
-                View friendMark =  v.findViewById(R.id.friend_marker);
-                friendMark.setVisibility(View.VISIBLE);            }
+                holder.friendMarker.setVisibility(View.VISIBLE);
+            }
             if (player.isRecieveNotifications){
-                View notificationMark =  v.findViewById(R.id.notify_marker);
-                notificationMark.setVisibility(View.VISIBLE);
+                holder.notificationMarker.setVisibility(View.VISIBLE);
             }
             if (player.isYourself){
-                View yourselfMarker =  v.findViewById(R.id.yourself_marker);
-                yourselfMarker.setVisibility(View.VISIBLE);
+                holder.yourselfMarker.setVisibility(View.VISIBLE);
             }
-
 
             //Create the dialog
             final LayoutInflater vi = LayoutInflater.from(getContext());
-            v.setOnClickListener(new View.OnClickListener() {
+            convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View view) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -154,7 +175,6 @@ public class Player implements Comparable{
                     playerID.setText(player.id + "");
                     TextView playerPID = (TextView) dialogView.findViewById(R.id.players_pid);
                     playerPID.setText(player.pid + "");
-
                     final CheckBox friendsCheckbox = (CheckBox) dialogView.findViewById(R.id.friends_checkbox);
                     if (player.isFriend){
                         friendsCheckbox.setChecked(true);
@@ -174,48 +194,60 @@ public class Player implements Comparable{
                         public void onClick(DialogInterface dialog, int id) {
                             // construct a new player object to be commited to the DB
                             Player replacementPlayer = new Player(player.nickname, player.id, player.pid);
-                            // alter the new playeer and update ui to reflect its state
-                            View friendMarker = view.findViewById(R.id.friend_marker);
-                            if (friendsCheckbox.isChecked()){
+                            // alter the new player and update ui to reflect its state
+
+                            if (friendsCheckbox.isChecked()) {
                                 replacementPlayer.setIsFriend(true);
-                                friendMarker.setVisibility(View.VISIBLE);
+                                holder.friendMarker.setVisibility(View.VISIBLE);
                             } else {
                                 replacementPlayer.setIsFriend(false);
-                                friendMarker.setVisibility(View.INVISIBLE);
+                                holder.friendMarker.setVisibility(View.INVISIBLE);
                             }
-                            View notificationMarker = view.findViewById(R.id.notify_marker);
-                            if (notificationsCheckbox.isChecked()){
+                            if (notificationsCheckbox.isChecked()) {
                                 replacementPlayer.setIsRecieveNotifications(true);
-                                notificationMarker.setVisibility(View.VISIBLE);
+                                holder.notificationMarker.setVisibility(View.VISIBLE);
                             } else {
                                 replacementPlayer.setIsRecieveNotifications(false);
-                                notificationMarker.setVisibility(View.INVISIBLE);
+                                holder.notificationMarker.setVisibility(View.INVISIBLE);
                             }
-                            View yourselfMarker = view.findViewById(R.id.yourself_marker);
-                            if (yourselfCheckbox.isChecked()){
+                            if (yourselfCheckbox.isChecked()) {
                                 replacementPlayer.setIsYourself(true);
-                                yourselfMarker.setVisibility(View.VISIBLE);
+                                holder.yourselfMarker.setVisibility(View.VISIBLE);
                             } else {
                                 replacementPlayer.setIsYourself(false);
-                                yourselfMarker.setVisibility(View.INVISIBLE);
+                                holder.yourselfMarker.setVisibility(View.INVISIBLE);
                             }
+                            notifyDataSetChanged();
+
                             // Commit the new player to the DB.
-                            // getDB.addPlayer(replacementPlayer);
 
+                            db.addPlayer(replacementPlayer);
 
+                            if (!friendsCheckbox.isChecked() && !notificationsCheckbox.isChecked() && !yourselfCheckbox.isChecked()){
+                                db.deletePlayer(replacementPlayer);
+                            }
 
                         }
+
                     }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            // do nothing
                         }
                     });
                     builder.show();
                 }
             });
 
-
-            return v;
+            return convertView;
         }
+
+        private static class ViewHolder {
+            TextView nickname;
+            View friendMarker;
+            View notificationMarker;
+            View yourselfMarker;
+        }
+
     }
 
 

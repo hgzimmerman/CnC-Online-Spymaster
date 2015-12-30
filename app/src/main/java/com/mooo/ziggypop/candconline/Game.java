@@ -180,7 +180,7 @@ public class Game {
             if (isAdded()) {
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
-                        Log.v("TAG", "Refreshing");
+                        Log.v(TAG, "Refreshing");
                         mAdapter.clear();
                         games.addAll(data);
                         mAdapter.notifyDataSetChanged();
