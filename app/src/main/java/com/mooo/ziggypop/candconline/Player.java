@@ -1,6 +1,7 @@
 package com.mooo.ziggypop.candconline;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
@@ -279,6 +280,7 @@ public class Player implements Comparable{
         Bundle savedInstanceState;
         View rootView;
         private ListView listView;
+        boolean isMainActivity;
 
 
 
@@ -289,6 +291,11 @@ public class Player implements Comparable{
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+            super.onCreateView(inflater,container,savedInstanceState);
+            // Set a flag to determine if the parent view is the mainActivity so onScroll can interact properly
+            // Todo: find a more elegant solution to this.
+            isMainActivity = (getActivity().findViewById(R.id.activity_main) != null);
+
             mAdapter = new PlayersAdapter(getActivity(), R.layout.players_layout, wordsArr);
             setListAdapter(mAdapter);
 
@@ -321,8 +328,12 @@ public class Player implements Comparable{
                     } else if (listView == null) {
                         enable = true;
                     }
-                    MainActivity activity = (MainActivity) getActivity();
-                    activity.setSafeToRefresh(enable, 0);
+
+                    if ( isMainActivity) { //if the parent activity is the main activity
+                        MainActivity activity = (MainActivity) getActivity();
+                        activity.setSafeToRefresh(enable, 0);
+                    }
+
                 }
             });
             return rootView;
@@ -335,7 +346,7 @@ public class Player implements Comparable{
          * @param activity A reference to the main activity used to create a new PlayersAdapter
          *                 if that adapter happens to be null.
          */
-        public void refreshData(final ArrayList<Player> data, final MainActivity activity){
+        public void refreshData(final ArrayList<Player> data, final Activity activity ){
             if(!isAdded())
                 mAdapter = new PlayersAdapter(activity, R.layout.players_layout, wordsArr);
 

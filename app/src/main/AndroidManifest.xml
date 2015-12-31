@@ -24,6 +24,9 @@
             android:theme="@style/prefTheme"
             android:parentActivityName=".MainActivity"
             />
+        <activity android:name=".PlayerDatabaseViewerActivity"
+            android:parentActivityName=".SettingsActivity"
+            />
 
 
     </application>
