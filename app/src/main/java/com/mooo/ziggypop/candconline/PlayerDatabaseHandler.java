@@ -106,7 +106,6 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
 
     public void addPlayer(Player player) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Log.v("adding Player", "is open?: "+db.isOpen());
 
         ContentValues values = new ContentValues();
         values.put(KEY_PLAYER_ID, player.getID());
@@ -131,8 +130,6 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
 
     public Player getPlayer(Player oldPlayer) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Log.v("getting Player", "is open?: "+db.isOpen());
-
 
         Cursor cursor = db.query(TABLE_PLAYERS, new String[] { KEY_PLAYER_ID, KEY_PLAYER_PID,
                         KEY_PLAYER_NICKNAME, KEY_PLAYER_IS_FRIEND,
@@ -200,7 +197,6 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
             boolean isAdded = false;
             for (Player dbPlayer: dbPlayers){
                 if (player.getID() == dbPlayer.getID()){
-                    Log.v("Found Player", dbPlayer.getNickname());
                     newPlayers.add(dbPlayer);
                     isAdded = true;
                 }

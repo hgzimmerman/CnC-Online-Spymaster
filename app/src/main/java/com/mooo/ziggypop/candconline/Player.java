@@ -143,29 +143,25 @@ public class Player implements Comparable{
                 holder.notificationMarker.setVisibility(View.INVISIBLE);
                 holder.yourselfMarker = convertView.findViewById(R.id.yourself_marker);
                 holder.yourselfMarker.setVisibility(View.INVISIBLE);
+                holder.holderView = convertView.findViewById(R.id.players_layout);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
+                //When the View is being recycled later, set these to be invisible by default, they can be repopulated by the code below.
+                holder.notificationMarker.setVisibility(View.INVISIBLE);
+                holder.friendMarker.setVisibility(View.INVISIBLE);
+                holder.yourselfMarker.setVisibility(View.INVISIBLE);
             }
 
 
             //Set up the Player's card
             final Player player = getItem(position);
 
-            holder.nickname.setText(player.nickname);
-            if (player.isFriend){
-                holder.friendMarker.setVisibility(View.VISIBLE);
-            }
-            if (player.isRecieveNotifications){
-                holder.notificationMarker.setVisibility(View.VISIBLE);
-            }
-            if (player.isYourself){
-                holder.yourselfMarker.setVisibility(View.VISIBLE);
-            }
+
 
             //Create the dialog
             final LayoutInflater vi = LayoutInflater.from(getContext());
-            convertView.setOnClickListener(new View.OnClickListener() {
+            holder.holderView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View view) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -177,6 +173,7 @@ public class Player implements Comparable{
                     playerID.setText(player.id + "");
                     TextView playerPID = (TextView) dialogView.findViewById(R.id.players_pid);
                     playerPID.setText(player.pid + "");
+
                     final CheckBox friendsCheckbox = (CheckBox) dialogView.findViewById(R.id.friends_checkbox);
                     if (player.isFriend){
                         friendsCheckbox.setChecked(true);
@@ -195,38 +192,35 @@ public class Player implements Comparable{
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
                             // construct a new player object to be commited to the DB
-                            Player replacementPlayer = new Player(player.nickname, player.id, player.pid);
                             // alter the new player and update ui to reflect its state
-
                             if (friendsCheckbox.isChecked()) {
-                                replacementPlayer.setIsFriend(true);
+                                player.setIsFriend(true);
                                 holder.friendMarker.setVisibility(View.VISIBLE);
                             } else {
-                                replacementPlayer.setIsFriend(false);
+                                player.setIsFriend(false);
                                 holder.friendMarker.setVisibility(View.INVISIBLE);
                             }
                             if (notificationsCheckbox.isChecked()) {
-                                replacementPlayer.setIsRecieveNotifications(true);
+                                player.setIsRecieveNotifications(true);
                                 holder.notificationMarker.setVisibility(View.VISIBLE);
                             } else {
-                                replacementPlayer.setIsRecieveNotifications(false);
+                                player.setIsRecieveNotifications(false);
                                 holder.notificationMarker.setVisibility(View.INVISIBLE);
                             }
                             if (yourselfCheckbox.isChecked()) {
-                                replacementPlayer.setIsYourself(true);
+                                player.setIsYourself(true);
                                 holder.yourselfMarker.setVisibility(View.VISIBLE);
                             } else {
-                                replacementPlayer.setIsYourself(false);
+                                player.setIsYourself(false);
                                 holder.yourselfMarker.setVisibility(View.INVISIBLE);
                             }
                             //notifyDataSetChanged();
 
                             // Commit the new player to the DB.
-
-                            db.addPlayer(replacementPlayer);
-
                             if (!friendsCheckbox.isChecked() && !notificationsCheckbox.isChecked() && !yourselfCheckbox.isChecked()){
-                                db.deletePlayer(replacementPlayer);
+                                db.deletePlayer(player);
+                            } else {
+                                db.addPlayer(player);
                             }
 
                         }
@@ -240,6 +234,18 @@ public class Player implements Comparable{
                 }
             });
 
+
+            holder.nickname.setText(player.nickname);
+            if (player.isFriend){
+                holder.friendMarker.setVisibility(View.VISIBLE);
+            }
+            if (player.isRecieveNotifications){
+                holder.notificationMarker.setVisibility(View.VISIBLE);
+            }
+            if (player.isYourself){
+                holder.yourselfMarker.setVisibility(View.VISIBLE);
+            }
+
             return convertView;
         }
 
@@ -248,16 +254,13 @@ public class Player implements Comparable{
             View friendMarker;
             View notificationMarker;
             View yourselfMarker;
+            View holderView;
         }
 
     }
 
 
 
-
-    /**
-     * TODO when clicked, expand to show other player information (Id vs name)
-     */
     public static class PlayersFragment extends ListFragment {
         /**
          * The fragment argument representing the section number for this
