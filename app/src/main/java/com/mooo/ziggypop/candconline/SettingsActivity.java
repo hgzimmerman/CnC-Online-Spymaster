@@ -66,6 +66,7 @@ public class SettingsActivity extends AppCompatActivity{
             addPreferencesFromResource(R.xml.preferences);
 
 
+            // Show the Licence
             Preference licencePreference = getPreferenceScreen().findPreference("licence_preference");
             licencePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
@@ -81,6 +82,8 @@ public class SettingsActivity extends AppCompatActivity{
                     return true;
                 }
             });
+
+            // Reset the DB.
             Preference resetDBPref = getPreferenceScreen().findPreference("reset_db_pref");
             resetDBPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
@@ -95,22 +98,17 @@ public class SettingsActivity extends AppCompatActivity{
                             // delete the database.
                             PlayerDatabaseHandler db = new PlayerDatabaseHandler(getActivity().getApplicationContext());
                             db.resetDB(db.getReadableDatabase());
-
                         }
                     });
                     builder.setNegativeButton(getActivity().getText(R.string.cancel), new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) { } // do nothing, do not delete the DB
+                        public void onClick(DialogInterface dialog, int which) { } // do nothing, do not delete the DB.
                     });
                     AlertDialog dialog = builder.create();
                     dialog.show();
                     return true;
                 }
             });
-
-
         }
-
-
     }
 }

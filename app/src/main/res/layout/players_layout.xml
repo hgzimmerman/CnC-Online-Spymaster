@@ -33,6 +33,20 @@
             android:layout_height="wrap_content"
             android:layout_weight="10"/>
 
+
+        <View
+            android:id="@+id/yourself_marker"
+            android:visibility="invisible"
+            android:background="@drawable/yourself_circle"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"/>
+
         <View
             android:id="@+id/notify_marker"
             android:visibility="invisible"
@@ -52,18 +66,7 @@
             android:layout_height="30dp"
             />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight=".5"/>
 
-        <View
-            android:id="@+id/yourself_marker"
-            android:visibility="invisible"
-            android:background="@drawable/yourself_circle"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            />
 
 
 
