@@ -14,8 +14,12 @@
 
 
     <Preference
-        android:key="dialog_preference"
+        android:key="licence_preference"
         android:title="@string/licence"
+        />
+    <Preference
+        android:key="reset_db_pref"
+        android:title="Reset Player Database"
         />
 
 </PreferenceScreen>

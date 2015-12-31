@@ -66,17 +66,40 @@ public class SettingsActivity extends AppCompatActivity{
             addPreferencesFromResource(R.xml.preferences);
 
 
-            Preference dialogPref = getPreferenceScreen().findPreference("dialog_preference");
-            dialogPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            Preference licencePreference = getPreferenceScreen().findPreference("licence_preference");
+            licencePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle(R.string.licence);
                     builder.setMessage(R.string.BSD);
                     builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // User clicked OK button
+                        public void onClick(DialogInterface dialog, int id) { } // do nothing.
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                    return true;
+                }
+            });
+            Preference resetDBPref = getPreferenceScreen().findPreference("reset_db_pref");
+            resetDBPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Reset Player Database");
+                    builder.setMessage(getActivity().getString(R.string.reset_db_disclaimer));
+                    builder.setPositiveButton(getActivity().getText(R.string.ok),
+                            new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // delete the database.
+                            PlayerDatabaseHandler db = new PlayerDatabaseHandler(getActivity().getApplicationContext());
+                            //db.resetDB();
                         }
+                    });
+                    builder.setNegativeButton(getActivity().getText(R.string.cancel), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) { } // do nothing, do not delete the DB
                     });
                     AlertDialog dialog = builder.create();
                     dialog.show();
