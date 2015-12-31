@@ -94,7 +94,8 @@ public class SettingsActivity extends AppCompatActivity{
                         public void onClick(DialogInterface dialog, int which) {
                             // delete the database.
                             PlayerDatabaseHandler db = new PlayerDatabaseHandler(getActivity().getApplicationContext());
-                            //db.resetDB();
+                            db.resetDB(db.getReadableDatabase());
+
                         }
                     });
                     builder.setNegativeButton(getActivity().getText(R.string.cancel), new DialogInterface.OnClickListener() {

@@ -63,6 +63,13 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void resetDB(SQLiteDatabase db){
+        // Drop older table if existed
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLAYERS);
+        // Create tables again
+        onCreate(db);
+    }
+
 
 
     public ArrayList<Player> getAllPlayers() {
