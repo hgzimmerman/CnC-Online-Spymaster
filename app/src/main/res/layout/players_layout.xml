@@ -34,36 +34,39 @@
             android:layout_weight="10"/>
 
 
-        <View
+        <ImageView
             android:id="@+id/yourself_marker"
             android:visibility="invisible"
-            android:background="@drawable/yourself_circle"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:src="@mipmap/ic_action_user"
+            android:tint="@color/cnc3_green"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
             />
 
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight=".5"/>
+            android:layout_weight=".1"/>
 
-        <View
+        <ImageView
             android:id="@+id/notify_marker"
             android:visibility="invisible"
-            android:background="@drawable/notify_circle"
-            android:layout_width="30dp"
-            android:layout_height="30dp"/>
+            android:src="@mipmap/ic_action_bell"
+            android:tint="@color/normal_blue"
+            android:layout_width="50dp"
+            android:layout_height="40dp"/>
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight=".5"/>
+            android:layout_weight=".1"/>
 
-        <View
+        <ImageView
             android:id="@+id/friend_marker"
             android:visibility="invisible"
-            android:background="@drawable/friend_circle"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:src="@mipmap/ic_action_heart"
+            android:tint="@color/kw_red"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
             />
 
 

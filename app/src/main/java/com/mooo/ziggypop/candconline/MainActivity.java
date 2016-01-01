@@ -30,6 +30,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity
@@ -157,11 +158,12 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_help:
                 AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
                 helpBuilder.setTitle(R.string.help);
-                helpBuilder.setMessage("This message should explain what the player layout does");
+                View dialogView = getLayoutInflater().inflate(R.layout.main_help_alert_dialog, null);
                 helpBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) { } // do nothing
                 });
+                helpBuilder.setView(dialogView);
                 AlertDialog helpDialog = helpBuilder.create();
                 helpDialog.show();
 

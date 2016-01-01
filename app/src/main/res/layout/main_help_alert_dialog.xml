@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="3dip"
+    android:paddingEnd="1dip"
+    android:paddingLeft="3dip"
+    android:paddingRight="1dip"
+    >
+
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="14dip"
+    android:paddingEnd="10dip"
+    android:paddingLeft="14dip"
+    android:paddingRight="10dip"
+    android:orientation="vertical">
+
+        <TextView android:id="@+id/message1"
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clicking on a player will bring up a dialog. Clicking on any of checkboxes will save the player locally to the phone."
+            android:padding="10dip" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/ic_action_heart"
+                android:tint="@color/kw_red"/>
+            <TextView
+                android:paddingLeft="20dp"
+                android:paddingStart="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="This icon represents friends. This is useful for recognizing players as you scroll through the list of players."
+                />
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        >
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/ic_action_bell"
+            android:tint="@color/normal_blue"/>
+        <TextView
+            android:paddingLeft="20dp"
+            android:paddingStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This icon means that, if enabled, the app will notify you if this player is online."
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/ic_action_user"
+            android:tint="@color/cnc3_green"/>
+        <TextView
+            android:paddingLeft="20dp"
+            android:paddingStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This icon represents yourself. You can configure the app to only send notifications if you are also online."
+            />
+    </LinearLayout>
+
+    <TextView
+        style="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="To access players that you have saved while they are offline, you can visit Settings > Manage Players."
+        android:padding="5dip" />
+</LinearLayout>
+
+
+
+</LinearLayout>

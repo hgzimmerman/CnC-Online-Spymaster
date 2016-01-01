@@ -6,7 +6,11 @@ android:shape="oval"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content">
 
-<solid
-    android:color ="@color/kw_red" />
+    <solid
+        android:color ="@color/kw_red" />
+
+
 
 </shape>
+
+
