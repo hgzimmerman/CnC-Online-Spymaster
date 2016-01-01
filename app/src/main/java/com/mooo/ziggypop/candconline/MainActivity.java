@@ -4,6 +4,7 @@ package com.mooo.ziggypop.candconline;
 import java.util.Locale;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Parcelable;
@@ -16,10 +17,12 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -138,8 +141,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         if(!mNavigationDrawerFragment.isDrawerOpen()) {
             // Inflate the menu; this adds items to the action bar if it is present.
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu_main, menu);
             restoreActionBar();
-            //myMenu = menu;
         }
         return true;
     }
@@ -149,13 +153,26 @@ public class MainActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) { // this doesn't do anything.
-            Log.v(TAG, "Settings selected");
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_help:
+                AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
+                helpBuilder.setTitle(R.string.help);
+                helpBuilder.setMessage("This message should explain what the player layout does");
+                helpBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) { } // do nothing
+                });
+                AlertDialog helpDialog = helpBuilder.create();
+                helpDialog.show();
+
+                return true;
+            case R.id.action_graph:
+                Log.v(TAG, "Graph selected");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
 
-        return super.onOptionsItemSelected(item);
     }
 
 

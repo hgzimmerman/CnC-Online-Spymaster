@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <item name="menu_main_help" type="id" />
+
+
+
     <item name="menu_help" type="id" />
     <item name="menu_reset_db" type="id" />
 
