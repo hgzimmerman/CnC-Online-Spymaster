@@ -74,6 +74,8 @@ public class SettingsActivity extends AppCompatActivity{
                     new SettingsFragment()).commit();
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -90,6 +92,12 @@ public class SettingsActivity extends AppCompatActivity{
 
 
     public static class SettingsFragment extends PreferenceFragmentCompat{
+
+
+        @Override
+        public void onCreatePreferences(Bundle bundle, String s) {
+            addPreferencesFromResource(R.xml.preferences);
+        }
 
         public void onCreate(Bundle savedInstanceState) {
             getActivity().setTheme(R.style.AppTheme);
@@ -156,8 +164,6 @@ public class SettingsActivity extends AppCompatActivity{
             });
 
 
-
-
             // Manage DB friends
             Preference manageFriends = getPreferenceScreen().findPreference(getString(R.string.manage_friends_pref));
             manageFriends.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -170,14 +176,6 @@ public class SettingsActivity extends AppCompatActivity{
                     return true;
                 }
             });
-
-
-
-        }
-
-        @Override
-        public void onCreatePreferences(Bundle bundle, String s) {
-            addPreferencesFromResource(R.xml.preferences);
         }
     }
 
