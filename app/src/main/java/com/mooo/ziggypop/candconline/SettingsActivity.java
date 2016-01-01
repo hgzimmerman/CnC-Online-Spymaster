@@ -25,13 +25,15 @@ public class SettingsActivity extends AppCompatActivity{
 
     public static final String TAG = "SettingsActivity";
     static public int current_game;
+    Toolbar mToolBar;
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.settings_layout);
 
-        Toolbar mToolBar = (Toolbar) findViewById(R.id.settings_toolbar);
+        mToolBar = (Toolbar) findViewById(R.id.settings_toolbar);
         mToolBar.setTitle(R.string.settings);
         mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -44,53 +46,35 @@ public class SettingsActivity extends AppCompatActivity{
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
 
-        Window window = getWindow();
-        // clear FLAG_TRANSLUCENT_STATUS flag:
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
-        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        }
+
 
         if (getIntent().getExtras() != null ) {
             // set the color of the toolbar based on the current game.
             current_game = getIntent().getExtras().getInt("current_game");
             switch (current_game) {
                 case 1:
-                    mToolBar.setBackgroundResource(R.color.kw_red);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                        window.setStatusBarColor(getResources().getColor(R.color.kw_red));
+                    setBarColors(R.color.kw_red);
                     break;
                 case 2:
-                    mToolBar.setBackgroundResource(R.color.cnc3_green);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                        window.setStatusBarColor(getResources().getColor(R.color.cnc3_green));
+                    setBarColors(R.color.cnc3_green);
                     break;
                 case 3:
-                    mToolBar.setBackgroundResource(R.color.generals_yellow);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                        window.setStatusBarColor(getResources().getColor(R.color.generals_yellow));
+                    setBarColors(R.color.generals_yellow);
                     break;
                 case 4:
-                    mToolBar.setBackgroundResource(R.color.zh_orange);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                        window.setStatusBarColor(getResources().getColor(R.color.zh_orange));
+                    setBarColors(R.color.zh_orange);
                     break;
                 case 5:
-                    mToolBar.setBackgroundResource(R.color.ra3_red);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                        window.setStatusBarColor(getResources().getColor(R.color.ra3_red));
+                    setBarColors(R.color.ra3_red);
                     break;
             }
+
         }
 
 
         //swap in the settings fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new SettingsFragment()).commit();
-
     }
 
 
@@ -200,5 +184,21 @@ public class SettingsActivity extends AppCompatActivity{
         public void onCreatePreferences(Bundle bundle, String s) {
             addPreferencesFromResource(R.xml.preferences);
         }
+    }
+
+    private void setBarColors(int colorResourceId){
+        // Set the action bar.
+        mToolBar.setBackgroundResource(colorResourceId);
+        //Set the status bar.
+        Window window = getWindow();
+        // clear FLAG_TRANSLUCENT_STATUS flag:
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            window.setStatusBarColor(getResources().getColor(colorResourceId));
     }
 }

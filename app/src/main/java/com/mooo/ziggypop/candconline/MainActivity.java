@@ -5,6 +5,7 @@ import java.util.Locale;
 
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.ListFragment;
@@ -22,6 +23,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -257,60 +260,52 @@ public class MainActivity extends ActionBarActivity
      */
     public void restoreActionBar() {
         ActionBar aBar = getSupportActionBar();
+
         assert aBar != null;
         switch(mGameTitle){
             case KW:
                 aBar.setTitle(getString(R.string.KanesWrath));
-                findViewById(R.id.top_toolbar).setBackgroundColor(
-                getResources().getColor(R.color.kw_red));
-                findViewById(R.id.sliding_tabs).setBackgroundColor(
-                getResources().getColor(R.color.kw_red));
-                mSwipeRefreshLayout.setColorSchemeResources(
-                        R.color.kw_red
-                );
+                setBarColors(R.color.kw_red);
                 break;
             case CnC3:
                 aBar.setTitle(getString(R.string.CandC3));
-                findViewById(R.id.top_toolbar).setBackgroundColor(
-                getResources().getColor(R.color.cnc3_green));
-                findViewById(R.id.sliding_tabs).setBackgroundColor(
-                getResources().getColor(R.color.cnc3_green));
-                mSwipeRefreshLayout.setColorSchemeResources(
-                        R.color.cnc3_green
-                );
+                setBarColors(R.color.cnc3_green);
                 break;
             case Generals:
                 aBar.setTitle(getString(R.string.Generals));
-                findViewById(R.id.top_toolbar).setBackgroundColor(
-                getResources().getColor(R.color.generals_yellow));
-                findViewById(R.id.sliding_tabs).setBackgroundColor(
-                getResources().getColor(R.color.generals_yellow));
-                mSwipeRefreshLayout.setColorSchemeResources(
-                        R.color.generals_yellow
-                );
+                setBarColors(R.color.generals_yellow);
                 break;
             case ZH:
                 aBar.setTitle(getString(R.string.ZeroHour));
-                findViewById(R.id.top_toolbar).setBackgroundColor(
-                getResources().getColor(R.color.zh_orange));
-                findViewById(R.id.sliding_tabs).setBackgroundColor(
-                getResources().getColor(R.color.zh_orange));
-                mSwipeRefreshLayout.setColorSchemeResources(
-                        R.color.zh_orange
-                );
+                setBarColors(R.color.zh_orange);
                 break;
             case RA3:
                 aBar.setTitle(getString(R.string.RedAlert3));
-                findViewById(R.id.top_toolbar).setBackgroundColor(
-                getResources().getColor(R.color.ra3_red));
-                findViewById(R.id.sliding_tabs).setBackgroundColor(
-                getResources().getColor(R.color.ra3_red));
-                mSwipeRefreshLayout.setColorSchemeResources(
-                        R.color.ra3_red
-                );
+                setBarColors(R.color.ra3_red);
                 break;
         }
         mNavigationDrawerFragment.updateHeader(mGameTitle);
+    }
+
+    /**
+     * Sets the color of the status bar and action bar.
+     * Helper method for restoreActionBar()
+     * @param colorResourceId The color id that the bars will be set to.
+     */
+    private void setBarColors(int colorResourceId){
+        Window window = getWindow();
+        // clear FLAG_TRANSLUCENT_STATUS flag:
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+        findViewById(R.id.top_toolbar).setBackgroundColor(getResources().getColor(colorResourceId));
+        findViewById(R.id.sliding_tabs).setBackgroundColor( getResources().getColor(colorResourceId));
+        mSwipeRefreshLayout.setColorSchemeResources(colorResourceId);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            window.setStatusBarColor(getResources().getColor(colorResourceId));
     }
 
 
