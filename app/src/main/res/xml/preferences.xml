@@ -16,7 +16,7 @@
 
 
     <Preference
-        android:key="licence_preference"
+        android:key="@string/licence_pref"
         android:title="@string/licence"
         />
 
@@ -25,14 +25,14 @@
 
 
         <android.support.v7.preference.SwitchPreferenceCompat
-            android:key="@string/receive_notifications"
+            android:key="@string/receive_notifications_pref"
             android:title="@string/receive_notifications"
             android:summary="Start a background service that sends notifications when players are online. Warning, this will drain your battery more than usual."
             android:defaultValue="false"
             />
 
         <android.support.v7.preference.SwitchPreferenceCompat
-            android:key="notify_if_online"
+            android:key="@string/notify_if_online_pref"
             android:title="Notify Only if You are Online"
             android:summary="Only send notifications if the player you marked as yourself is online."
             android:enabled="false"
@@ -40,7 +40,7 @@
             />
 
         <com.mooo.ziggypop.candconline.TimeIntervalPreference
-            android:key="time_interval_pref"
+            android:key="@string/time_interval_pref"
             android:title="Notifications Interval"
             android:summary="Time in interval between updates. Warning, the shorter the interval, the more this will drain your battery"
             android:defaultValue="10"
@@ -51,14 +51,14 @@
     <PreferenceCategory
         android:title="Player Management">
         <Preference
-            android:key="manage_friends"
+            android:key="@string/manage_friends_pref"
             android:title="Manage Players"
             android:summary="Update or remove preferences for players already in the database."
             />
         <Preference
-            android:key="reset_db_pref"
-            android:title="Reset Player Database"
-            android:summary="Reset the local database that holds player data."
+            android:key="@string/reset_db_pref"
+            android:title="@string/reset_player_db"
+            android:summary="@string/reset_db_summary"
             />
 
     </PreferenceCategory>

@@ -98,7 +98,7 @@ public class SettingsActivity extends AppCompatActivity{
 
 
             // Show the Licence
-            Preference licencePreference = getPreferenceScreen().findPreference("licence_preference");
+            Preference licencePreference = getPreferenceScreen().findPreference(getString(R.string.licence_pref));
             licencePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -114,10 +114,11 @@ public class SettingsActivity extends AppCompatActivity{
                 }
             });
 
-            final Preference notifyIfOnline = getPreferenceScreen().findPreference("notify_if_online");
+            // get pref early so receiveNotifications can interact with it and change its state.
+            final Preference notifyIfOnline = getPreferenceScreen().findPreference(getString(R.string.notify_if_online_pref));
 
             // Receive notifications
-            Preference receiveNotifications = getPreferenceScreen().findPreference(getString(R.string.receive_notifications));
+            Preference receiveNotifications = getPreferenceScreen().findPreference(getString(R.string.receive_notifications_pref));
             receiveNotifications.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -142,7 +143,7 @@ public class SettingsActivity extends AppCompatActivity{
 
             //Notification interval
             TimeIntervalPreference notifyIntervalPref =
-                    (TimeIntervalPreference) getPreferenceScreen().findPreference("time_interval_pref");
+                    (TimeIntervalPreference) getPreferenceScreen().findPreference(getString(R.string.time_interval_pref));
             notifyIntervalPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -156,12 +157,11 @@ public class SettingsActivity extends AppCompatActivity{
 
 
             // Manage DB friends
-            Preference manageFriends = getPreferenceScreen().findPreference("manage_friends");
+            Preference manageFriends = getPreferenceScreen().findPreference(getString(R.string.manage_friends_pref));
             manageFriends.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     // launch an activity to show all players in the database (regardless of their online status)
-                    Log.v(TAG, "clicked manageFriends");
                     Intent intent = new Intent(getContext().getApplicationContext(), PlayerDatabaseViewerActivity.class);
                     intent.putExtra("current_game", current_game);
                     getActivity().startActivity(intent);
@@ -170,12 +170,12 @@ public class SettingsActivity extends AppCompatActivity{
             });
 
             // Reset the DB.
-            Preference resetDBPref = getPreferenceScreen().findPreference("reset_db_pref");
+            Preference resetDBPref = getPreferenceScreen().findPreference(getString(R.string.reset_db_pref));
             resetDBPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Reset Player Database");
+                    builder.setTitle(getString(R.string.reset_player_db));
                     builder.setMessage(getActivity().getString(R.string.reset_db_disclaimer));
                     builder.setPositiveButton(getActivity().getText(R.string.ok),
                             new DialogInterface.OnClickListener() {

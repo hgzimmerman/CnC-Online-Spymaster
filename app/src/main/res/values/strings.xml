@@ -80,5 +80,18 @@
 
         Are you sure you want to continue?
         "</string>
+    <string name="reset_db_summary">Reset the local database that holds player data.</string>
+
+    <!--Strings for tagging and retrieving preferences-->
+    <string name="licence_pref">license_preference</string>
+    <string name="notify_if_online_pref">notify_if_online</string>
+    <string name="receive_notifications_pref">receive_notifications</string>
+    <string name="time_interval_pref">time_interval</string>
+    <string name="manage_friends_pref">manage_friends</string>
+    <string name="reset_db_pref">reset_db</string>
+    <string name="reset_player_db">Reset Player Database</string>
+    <!-- END Strings for tagging and retrieving preferences-->
+
+
 
 </resources>

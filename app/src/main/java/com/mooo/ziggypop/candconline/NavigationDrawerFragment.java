@@ -143,7 +143,7 @@ public class NavigationDrawerFragment extends Fragment {
         //Add settings footer
         settingsView = inflater.inflate(R.layout.drawer_item_layout, mDrawerLayout);
         TextView settingsText = (TextView) settingsView.findViewById(R.id.drawer_game_title);
-        settingsText.setText("Settings");
+        settingsText.setText(getText(R.string.settings));
         mDrawerListView.addFooterView(settingsView);
 
         mDrawerListView.setAdapter( mAdapter );
