@@ -43,7 +43,7 @@
             android:key="time_interval_pref"
             android:title="Notifications Interval"
             android:summary="Time in interval between updates. Warning, the shorter the interval, the more this will drain your battery"
-            android:defaultValue="5"
+            android:defaultValue="10"
             app:entries="@array/service_ping_interval_entries"
             app:entryValues="@array/service_ping_interval_values" />
     </PreferenceCategory>

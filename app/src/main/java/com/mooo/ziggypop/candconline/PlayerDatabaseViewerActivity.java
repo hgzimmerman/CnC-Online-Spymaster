@@ -19,6 +19,7 @@ import java.util.Collections;
 
 /**
  * Created by ziggypop on 12/31/15.
+ * Activity to show all players that have been added to the database.
  */
 public class PlayerDatabaseViewerActivity extends AppCompatActivity{
     public static final String TAG = "DatabaseViewerActivity";

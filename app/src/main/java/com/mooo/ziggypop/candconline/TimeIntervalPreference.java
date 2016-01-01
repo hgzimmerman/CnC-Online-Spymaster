@@ -9,6 +9,10 @@ import android.widget.TextView;
 
 /**
  * Created by ziggypop on 12/31/15.
+ * Credit goes to:
+ * http://www.hidroh.com/2015/11/30/building-custom-preferences-v7/
+ *
+ *
  */
 public class TimeIntervalPreference extends SpinnerPreference{
 

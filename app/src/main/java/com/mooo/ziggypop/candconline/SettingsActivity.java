@@ -2,17 +2,14 @@ package com.mooo.ziggypop.candconline;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -129,6 +126,16 @@ public class SettingsActivity extends AppCompatActivity{
 
 
             //Notification interval
+            TimeIntervalPreference notifyIntervalPref =
+                    (TimeIntervalPreference) getPreferenceScreen().findPreference("time_interval_pref");
+            notifyIntervalPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    //Todo: save the interval.
+                    int interval = (int) newValue;
+                    return true;
+                }
+            });
 
 
 

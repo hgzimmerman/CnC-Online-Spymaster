@@ -2,6 +2,12 @@ package com.mooo.ziggypop.candconline;
 
 /**
  * Created by ziggypop on 12/31/15.
+ * Credit to:
+ * http://www.hidroh.com/2015/11/30/building-custom-preferences-v7/
+ * and
+ * https://github.com/hidroh/materialistic/blob/master/app/src/main/java/io/github/hidroh/materialistic/preference/SpinnerPreference.java
+ * For the implementation details.
+ *
  */
 
 import android.content.Context;
@@ -136,6 +142,7 @@ public abstract class SpinnerPreference extends Preference {
             }
 
         });
+        spinner.setSelection(mSelection);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
