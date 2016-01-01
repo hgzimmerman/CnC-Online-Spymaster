@@ -1,8 +1,7 @@
 package com.mooo.ziggypop.candconline;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.graphics.Interpolator;
+
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;

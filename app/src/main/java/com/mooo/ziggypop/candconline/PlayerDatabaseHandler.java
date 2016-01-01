@@ -5,10 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ziggypop on 12/29/15.
@@ -73,7 +71,7 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
 
 
     public ArrayList<Player> getAllPlayers() {
-        ArrayList<Player> playerList = new ArrayList<Player>();
+        ArrayList<Player> playerList = new ArrayList<>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_PLAYERS
                 + " ORDER BY id DESC";
@@ -198,7 +196,7 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
 
 
     public ArrayList<Player> augmentPlayers(ArrayList<Player> players){
-        ArrayList<Player> newPlayers = new ArrayList<Player>();
+        ArrayList<Player> newPlayers = new ArrayList<>();
         ArrayList<Player> dbPlayers =  getAllPlayers();
         for (Player player : players ){
             boolean isAdded = false;
