@@ -112,6 +112,14 @@ public class MainActivity extends ActionBarActivity
                 jsonHandler.refreshAndUpdateViews();}
         });
         mSwipeRefreshLayout.setProgressBackgroundColor(R.color.light_grey);
+
+        // Handle intent from settings, set the nav drawer and selected game to the one presented in settings
+        // Todo: look into intent filters
+        if (getIntent().getExtras() != null) {
+            int currentGame = getIntent().getExtras().getInt("current_game");
+            onSectionAttached(currentGame);
+            mNavigationDrawerFragment.mDrawerListView.setItemChecked(currentGame, true);
+        }
     }
 
     /**
