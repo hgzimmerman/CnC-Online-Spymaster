@@ -95,7 +95,6 @@ public class SettingsActivity extends AppCompatActivity{
             getActivity().setTheme(R.style.AppTheme);
             super.onCreate(savedInstanceState);
 
-
             // Show the Licence
             Preference licencePreference = getPreferenceScreen().findPreference(getString(R.string.licence_pref));
             licencePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -103,7 +102,11 @@ public class SettingsActivity extends AppCompatActivity{
                 public boolean onPreferenceClick(Preference preference) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle(R.string.licence);
-                    builder.setMessage(R.string.BSD);
+                    String divider = "\n\n=====================\n";
+                    String licenseString = getString(R.string.BSD)
+                            + divider + getString(R.string.AndroidAssetStudio)
+                            + divider + getString(R.string.AndroidIcons);
+                    builder.setMessage(licenseString);
                     builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) { } // do nothing.
                     });
