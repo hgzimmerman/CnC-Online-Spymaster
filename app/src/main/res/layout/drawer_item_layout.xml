@@ -19,6 +19,7 @@
 
     <TextView
         android:id="@+id/drawer_game_title"
+        android:textColor="@color/offwhite"
         android:textSize="20sp"
         android:layout_weight="4"
         android:layout_width="0dp"

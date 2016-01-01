@@ -12,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -145,7 +144,6 @@ public class NavigationDrawerFragment extends Fragment {
         settingsView = inflater.inflate(R.layout.drawer_item_layout, mDrawerLayout);
         TextView settingsText = (TextView) settingsView.findViewById(R.id.drawer_game_title);
         settingsText.setText("Settings");
-        settingsText.setTextColor(getResources().getColor(R.color.offwhite)); //I shouldn't have to do this TODO: fix this
         mDrawerListView.addFooterView(settingsView);
 
         mDrawerListView.setAdapter( mAdapter );
@@ -298,7 +296,7 @@ public class NavigationDrawerFragment extends Fragment {
     /**
      * Callbacks interface that all activities using this fragment must implement.
      */
-    public static interface NavigationDrawerCallbacks {
+    public interface NavigationDrawerCallbacks {
         /**
          * Called when an item in the navigation drawer is selected.
          */
