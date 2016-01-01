@@ -168,35 +168,6 @@ public class SettingsActivity extends AppCompatActivity{
                 }
             });
 
-            // Reset the DB.
-            Preference resetDBPref = getPreferenceScreen().findPreference(getString(R.string.reset_db_pref));
-            resetDBPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle(getString(R.string.reset_player_db));
-                    builder.setMessage(getActivity().getString(R.string.reset_db_disclaimer));
-                    builder.setPositiveButton(getActivity().getText(R.string.ok),
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // delete the database.
-                                    PlayerDatabaseHandler db = new PlayerDatabaseHandler(getActivity().getApplicationContext());
-                                    db.resetDB(db.getReadableDatabase());
-                                }
-                            });
-                    builder.setNegativeButton(getActivity().getText(R.string.cancel), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) { } // do nothing, do not delete the DB.
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                    return true;
-                }
-            });
-
-
-
 
 
         }

@@ -5,20 +5,7 @@
 
 
 
-    <ListPreference
-        android:title="Default Game"
-        android:key="default_game"
-        android:summary="The game that will be shown on app startup."
-        android:entries="@array/games_list"
-        android:entryValues="@array/games_list_values"
-        android:defaultValue="1"
-        />
 
-
-    <Preference
-        android:key="@string/licence_pref"
-        android:title="@string/licence"
-        />
 
     <PreferenceCategory
         android:title="Notifications">
@@ -49,16 +36,27 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Player Management">
+        android:title="Miscellaneous">
+
+        <ListPreference
+            android:title="Default Game"
+            android:key="default_game"
+            android:summary="The game that will be shown on app startup."
+            android:entries="@array/games_list"
+            android:entryValues="@array/games_list_values"
+            android:defaultValue="1"
+            />
+
         <Preference
             android:key="@string/manage_friends_pref"
             android:title="Manage Players"
             android:summary="Update or remove preferences for players already in the database."
             />
+
+
         <Preference
-            android:key="@string/reset_db_pref"
-            android:title="@string/reset_player_db"
-            android:summary="@string/reset_db_summary"
+            android:key="@string/licence_pref"
+            android:title="@string/licence"
             />
 
     </PreferenceCategory>

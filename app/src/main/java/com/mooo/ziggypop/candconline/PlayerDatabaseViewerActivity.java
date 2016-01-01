@@ -1,12 +1,18 @@
 package com.mooo.ziggypop.candconline;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,12 +24,16 @@ import java.util.Collections;
  * Created by ziggypop on 12/31/15.
  * Activity to show all players that have been added to the database.
  */
-public class PlayerDatabaseViewerActivity extends AppCompatActivity{
+public class PlayerDatabaseViewerActivity extends AppCompatActivity
+        implements SwipeRefreshLayout.OnRefreshListener{
+
     public static final String TAG = "DatabaseViewerActivity";
 
     PlayerDatabaseHandler dbHandler;
     int current_game;
     Toolbar toolbar;
+    Player.PlayersFragment playerFragment;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
 
 
@@ -36,8 +46,12 @@ public class PlayerDatabaseViewerActivity extends AppCompatActivity{
 
         toolbar = (Toolbar) findViewById(R.id.db_toolbar);
         toolbar.setTitle("Manage Database");
-        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        Drawable backButon = ContextCompat.getDrawable(getApplicationContext(), R.mipmap.my_abc_ic_ab_back_mtrl_am_alpha);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            backButon.setTint(getColor(R.color.black));
+        toolbar.setNavigationIcon(backButon);
         setSupportActionBar(toolbar);
+        //noinspection ConstantConditions
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
 
@@ -61,9 +75,7 @@ public class PlayerDatabaseViewerActivity extends AppCompatActivity{
         }
 
 
-
-
-        Player.PlayersFragment playerFragment = new Player.PlayersFragment();
+        playerFragment = new Player.PlayersFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.db_players_fragment, playerFragment);
         ft.commit();
@@ -73,6 +85,18 @@ public class PlayerDatabaseViewerActivity extends AppCompatActivity{
         Collections.sort(players);
         Log.v(TAG, players.get(0).getNickname());
         playerFragment.refreshData(players, this);
+
+        //set up swipe down to refresh
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.db_swipe_refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                //do nothing
+                }
+        });
+        mSwipeRefreshLayout.setProgressBackgroundColor(R.color.light_grey);
+
     }
 
 
@@ -86,10 +110,59 @@ public class PlayerDatabaseViewerActivity extends AppCompatActivity{
                 intent.putExtra("current_game", current_game);
                 startActivity(intent);
                 return true;
+            case R.id.menu_help:
+                AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
+                helpBuilder.setTitle(R.string.help);
+                helpBuilder.setMessage(getString(R.string.player_db_help_message));
+                helpBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) { } // do nothing
+                });
+                AlertDialog helpDialog = helpBuilder.create();
+                helpDialog.show();
+
+                return true;
+            case R.id.menu_reset_db:
+                // show dialog to destroy db
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(getString(R.string.reset_player_db));
+                builder.setMessage(getString(R.string.reset_db_disclaimer));
+                builder.setPositiveButton(getText(R.string.ok),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // delete the database.
+                                PlayerDatabaseHandler db = new PlayerDatabaseHandler(getApplicationContext());
+                                db.resetDB(db.getReadableDatabase());
+                                // update the view
+                                playerFragment.refreshData(dbHandler.getAllPlayers(), getParent());
+                            }
+                        });
+                builder.setNegativeButton(getText(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) { } // do nothing, do not delete the DB.
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(Menu.NONE, R.id.menu_help, Menu.NONE, R.string.help);
+        menu.add(Menu.NONE, R.id.menu_reset_db, Menu.NONE, R.string.reset_player_db);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /**
+     * Sets the color of the Actionbar and status bar.
+     * @param colorResourceId The Id of the color to which the bars will be set.
+     */
     private void setBarColors(int colorResourceId){
         // Set the action bar.
         toolbar.setBackgroundResource(colorResourceId);
@@ -106,4 +179,12 @@ public class PlayerDatabaseViewerActivity extends AppCompatActivity{
             window.setStatusBarColor(getResources().getColor(colorResourceId));
     }
 
+
+    @Override
+    public void onRefresh() {
+        ArrayList<Player> players = dbHandler.getAllPlayers();
+        Collections.sort(players);
+        playerFragment.refreshData(players, this);
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
 }
