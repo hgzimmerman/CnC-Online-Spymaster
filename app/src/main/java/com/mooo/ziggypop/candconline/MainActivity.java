@@ -17,6 +17,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -29,9 +30,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 
-public class MainActivity extends ActionBarActivity
+public class MainActivity extends AppCompatActivity
     implements  NavigationDrawerFragment.NavigationDrawerCallbacks,
         SwipeRefreshLayout.OnRefreshListener{
+
     private static final String TAG = "MainActivity";
 
     public NavigationDrawerFragment mNavigationDrawerFragment;
