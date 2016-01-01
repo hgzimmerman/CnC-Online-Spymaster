@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -35,7 +36,7 @@ public class Player implements Comparable{
     private int id;
     private int pid;
     private boolean isFriend;
-    private boolean isRecieveNotifications;
+    private boolean isReceiveNotifications;
     private boolean isYourself;
 
 
@@ -45,7 +46,7 @@ public class Player implements Comparable{
         this.id = id;
         this.pid = pid;
         this.isFriend = false;
-        this.isRecieveNotifications = false;
+        this.isReceiveNotifications = false;
         this.isYourself = false;
 
     }
@@ -56,7 +57,7 @@ public class Player implements Comparable{
         this.id = id;
         this.pid = pid;
         this.isFriend = isFriend;
-        this.isRecieveNotifications = isRecieveNotifications;
+        this.isReceiveNotifications = isRecieveNotifications;
         this.isYourself = isYourself;
     }
 
@@ -70,14 +71,14 @@ public class Player implements Comparable{
     public int getID(){return id;}
     public int getPID(){return pid;}
     public boolean getIsFriend(){return isFriend;}
-    public boolean getIsRecieveNotifications(){return isRecieveNotifications;}
+    public boolean getIsRecieveNotifications(){return isReceiveNotifications;}
     public boolean getIsYourself(){return isYourself;}
 
     public void setIsFriend(boolean isFriend){
         this.isFriend = isFriend;
     }
     public void setIsRecieveNotifications(boolean isRecieve){
-        this.isRecieveNotifications = isRecieve;
+        this.isReceiveNotifications = isRecieve;
     }
     public void setIsYourself(boolean isYourself){
         this.isYourself = isYourself;
@@ -86,11 +87,11 @@ public class Player implements Comparable{
 
     /**
      * Sorts the players by their case-insensitive nicknames.
-     * @param another
-     * @return
+     * @param another The other player to be compared against.
+     * @return An int representing the comparison result.
      */
     @Override
-    public int compareTo(Object another) {
+    public int compareTo(@NonNull Object another) {
         Player rightPlayer = (Player) another;
         return this.nickname.compareToIgnoreCase(rightPlayer.nickname);
     }
@@ -176,7 +177,7 @@ public class Player implements Comparable{
                         friendsCheckbox.setChecked(true);
                     }
                     final CheckBox notificationsCheckbox = (CheckBox) dialogView.findViewById(R.id.notifications_checkbox);
-                    if (player.isRecieveNotifications){
+                    if (player.isReceiveNotifications){
                         notificationsCheckbox.setChecked(true);
                     }
                     final CheckBox yourselfCheckbox = (CheckBox) dialogView.findViewById(R.id.is_you_checkbox);
@@ -188,7 +189,7 @@ public class Player implements Comparable{
                     builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
-                            // construct a new player object to be commited to the DB
+                            // construct a new player object to be committed to the DB
                             // alter the new player and update ui to reflect its state
                             if (friendsCheckbox.isChecked()) {
                                 player.setIsFriend(true);
@@ -236,7 +237,7 @@ public class Player implements Comparable{
             if (player.isFriend){
                 holder.friendMarker.setVisibility(View.VISIBLE);
             }
-            if (player.isRecieveNotifications){
+            if (player.isReceiveNotifications){
                 holder.notificationMarker.setVisibility(View.VISIBLE);
             }
             if (player.isYourself){

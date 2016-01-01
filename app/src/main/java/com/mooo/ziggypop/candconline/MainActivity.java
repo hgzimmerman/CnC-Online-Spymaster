@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity
         if(!mNavigationDrawerFragment.isDrawerOpen()) {
             // Inflate the menu; this adds items to the action bar if it is present.
             restoreActionBar();
-            //mymenu = menu;
+            //myMenu = menu;
         }
         return true;
     }
