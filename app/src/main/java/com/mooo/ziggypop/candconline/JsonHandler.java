@@ -20,6 +20,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by ziggypop on 4/7/15.
@@ -36,19 +37,20 @@ public class JsonHandler {
     public static final String FILE = "index.html";
 
     private JSONObject jsonCache;
-    private MainActivity mainActivity;
+    //private MainActivity mainActivity;
+    Context context;
     private static PlayerDatabaseHandler db;
 
 
-    public JsonHandler(MainActivity activity){
-        mainActivity = activity;
-        db = new PlayerDatabaseHandler(mainActivity.getApplicationContext());
+    public JsonHandler(Context context){
+        this.context = context;
+        db = new PlayerDatabaseHandler(context);
     }
 
 
 
     // updates the fragments with (offline) data based on the query string (the game to be viewed)
-    public void updateViews(){
+    public void updateViews(MainActivity mainActivity){
         if (jsonCache != null) {
             try {
 
@@ -86,9 +88,9 @@ public class JsonHandler {
     }
 
 
-    public void refreshAndUpdateViews(){
-        new JsonGetter(mainActivity).execute();
-        updateViews();
+    public void refreshAndUpdateViews(MainActivity mainActivity){
+        new MainActivityJsonGetter(mainActivity).execute();
+        //updateViews();
     }
 
 
@@ -125,6 +127,33 @@ public class JsonHandler {
         returnArr = db.augmentPlayers(returnArr);
 
         Collections.sort(returnArr);
+        return returnArr;
+    }
+
+    private ArrayList<Player> getIntersectionOfPlayersAllGames(JSONObject gameObject) {
+        ArrayList<Player> returnArr = new ArrayList<>();
+
+        JSONObject playersObject;
+        try {
+            List<JSONObject> gameJSONs = new ArrayList<>();
+            gameJSONs.add(jsonCache.getJSONObject(context.getString(R.string.KanesWrathJSON)));
+            gameJSONs.add(jsonCache.getJSONObject(context.getString(R.string.CandC3JSON)));
+            gameJSONs.add(jsonCache.getJSONObject(context.getString(R.string.GeneralsJSON)));
+            gameJSONs.add(jsonCache.getJSONObject(context.getString(R.string.ZeroHourJSON)));
+            gameJSONs.add(jsonCache.getJSONObject(context.getString(R.string.RedAlert3JSON)));
+
+            List<Player> allOnlinePlayers = new ArrayList<>();
+            for ( JSONObject gameJSON: gameJSONs) {
+                allOnlinePlayers.addAll(getPlayers(gameJSON));
+            }
+            returnArr = db.getIntersectionOfPlayers(allOnlinePlayers);
+
+        } catch (JSONException e ){
+            // do nothing
+        }
+
+
+
         return returnArr;
     }
 
@@ -201,7 +230,7 @@ public class JsonHandler {
         return returnArr;
     }
 
-    public class JsonGetter extends AsyncTask<URL, Integer, JSONObject> {
+    public class MainActivityJsonGetter extends AsyncTask<URL, Integer, JSONObject> {
 
 
          JSONObject jObj = null;
@@ -209,7 +238,7 @@ public class JsonHandler {
 
         MainActivity myActivity;
 
-        public JsonGetter(MainActivity activity){
+        public MainActivityJsonGetter(MainActivity activity){
             myActivity = activity;
         }
 
@@ -268,7 +297,76 @@ public class JsonHandler {
                 Toast toast = Toast.makeText(mContext, "Connection error.", Toast.LENGTH_LONG);
                 toast.show();
             }
-            updateViews(); //fill the pager with new content
+            updateViews(myActivity); //fill the pager with new content
         }
     }
+
+    public class ServiceJsonGetter extends AsyncTask<URL, Integer, JSONObject> {
+
+
+        JSONObject jObj = null;
+        String json = "";
+
+        public ServiceJsonGetter(){
+        }
+
+
+        @Override
+        public JSONObject doInBackground(URL... params) {
+            try {
+                URL url = new URL(PROTOCOL, HOST, PORT, FILE);
+                Log.v(TAG, "URL = "+url.toString());
+                InputStream is;
+                try{
+                    is = url.openStream();
+                    try {
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                                is, "UTF-8"), 8);
+                        StringBuilder sb = new StringBuilder();
+                        String line;
+                        while((line = reader.readLine()) != null){
+                            sb.append(line).append("\n");
+                        }
+                        is.close();
+                        json = sb.toString();
+                    } catch (Exception e) {
+                        Log.e("Buffer Error", "Error converting result: " + e.toString());
+                    }
+                    try {
+                        jObj = new JSONObject(json);
+                    } catch (JSONException e){
+                        Log.e("JSON Parser", "Error parsing data: " + e.toString());
+                    }
+
+                } catch (IOException e){
+                    Log.e("InputStream", "Could not open stream" );
+                }
+
+            } catch (MalformedURLException e) {
+                Log.e("TAG", "Malformed URL");
+            }
+            return jObj;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            //do nothing
+        }
+
+        @Override
+        public void onPostExecute(JSONObject result) {
+            //jsonCache = result; // update the cache with new data
+            if (result == null) {
+                // do something
+            } else {
+                ArrayList<Player> players = getIntersectionOfPlayersAllGames(result);
+            }
+
+        }
+
+    }
+
+
+
+
 }

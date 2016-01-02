@@ -127,7 +127,6 @@ public class Player implements Comparable{
 
             final ViewHolder holder;
 
-            //TODO: known bug: the notification circles will appear farther down on the listview.
             // Try fiddling around with this block here to see if I can prevent the notification states persisting
             if (convertView == null) {
 

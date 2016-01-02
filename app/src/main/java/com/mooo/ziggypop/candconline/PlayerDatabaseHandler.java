@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ziggypop on 12/29/15.
@@ -213,6 +214,17 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
 
 
         return newPlayers;
+    }
+
+    public ArrayList<Player> getIntersectionOfPlayers(List<Player> players){
+        ArrayList<Player> intersectedPlayers = new ArrayList<>();
+        ArrayList<Player> dbPlayers = getAllPlayers();
+        for (Player dbPlayer: dbPlayers) {
+            if(players.contains(dbPlayer)){
+                intersectedPlayers.add(dbPlayer);
+            }
+        }
+        return intersectedPlayers;
     }
 
 

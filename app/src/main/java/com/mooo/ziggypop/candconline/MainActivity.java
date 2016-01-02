@@ -4,6 +4,7 @@ package com.mooo.ziggypop.candconline;
 import java.util.Locale;
 
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity
         mSwipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
-                jsonHandler.refreshAndUpdateViews();}
+                refreshAndUpdateViews();}
         });
         mSwipeRefreshLayout.setProgressBackgroundColor(R.color.light_grey);
 
@@ -178,7 +179,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
     /**
      * Navigation Bar setup
      * Starts an animation for the "transition"
@@ -204,19 +204,19 @@ public class MainActivity extends AppCompatActivity
             // populates with info, then slides away and slides back, when it should only return.
             if (mViewPager.getCurrentItem() == 0
                     && mSectionsPagerAdapter.player.getListView().getChildCount() == 0 ){
-                jsonHandler.updateViews();
+                updateViews();
                 pager.startAnimation(returnAnimation);
                 Log.v(TAG, "Animating return from a page with no data");
             }
             else if (mViewPager.getCurrentItem() == 1
                     && mSectionsPagerAdapter.lobby.getListView().getChildCount() == 0 ){
-                jsonHandler.updateViews();
+                updateViews();
                 pager.startAnimation(returnAnimation);
                 Log.v(TAG, "Animating return from a page with no data");
             }
             else if (mViewPager.getCurrentItem() == 2
                     && mSectionsPagerAdapter.inGame.getListView().getChildCount() == 0 ){
-                jsonHandler.updateViews();
+                updateViews();
                 pager.startAnimation(returnAnimation);
                 Log.v(TAG, "Animating return from a page with no data");
             }
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     // instead of using an AnimationSet, we update the views after the first animation ends.
                     public void onAnimationEnd(Animation animation) {
-                        jsonHandler.updateViews();
+                        updateViews();
                         pager.startAnimation(returnAnimation); }
                     @Override
                     public void onAnimationRepeat(Animation animation) { }
@@ -423,8 +423,22 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onRefresh() {
         if (mSwipeRefreshLayout.isEnabled()) {
-            jsonHandler.refreshAndUpdateViews();
+            refreshAndUpdateViews();
         }
+    }
+
+    /**
+     * Singleton-like method to help access the jsonHandler for calls that don't have access to the MainActivity
+     */
+    private void updateViews(){
+        jsonHandler.updateViews(this);
+    }
+
+    /**
+     * Singleton-like method to help access the jsonHandler for calls that don't have access to the MainActivity
+     */
+    private void refreshAndUpdateViews(){
+        jsonHandler.refreshAndUpdateViews(this);
     }
 
     /**
