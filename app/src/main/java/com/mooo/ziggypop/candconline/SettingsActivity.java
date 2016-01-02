@@ -3,14 +3,17 @@ package com.mooo.ziggypop.candconline;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.preference.Preference;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -68,6 +71,9 @@ public class SettingsActivity extends AppCompatActivity{
                     break;
             }
         }
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Log.v(TAG, "Current interval = " + preferences.getString(getString(R.string.time_interval_pref), "15"));
 
         //swap in the settings fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -143,6 +149,7 @@ public class SettingsActivity extends AppCompatActivity{
                                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                                 PackageManager.DONT_KILL_APP);
                         notifyIfOnline.setEnabled(true);
+                        AlarmArmingBootReceiver.setAlarm(getContext());
                     } else {
                         ComponentName receiver = new ComponentName(getContext(), AlarmArmingBootReceiver.class);
                         PackageManager pm = getContext().getPackageManager();
@@ -171,6 +178,7 @@ public class SettingsActivity extends AppCompatActivity{
             notifyIntervalPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    Log.v(TAG, "Interval changed");
                     AlarmArmingBootReceiver.setAlarm(getContext());
                     return true;
                 }

@@ -61,8 +61,6 @@ public class NotificationMessage extends BroadcastReceiver {
                     .setContentText(contentText)  // the contents of the entry
                     .setContentIntent(appIntent)  // The intent to send when the entry is clicked
                     .setStyle(new Notification.BigTextStyle().bigText(contentText))
-                    //.addAction(R.mipmap.ic_stat_gdi_original_transparent, "Dismiss", piD)
-                    //.addAction(R.mipmap.ic_stat_gdi_original_transparent, "Launch App", appIntent)
                     .build();
             notification.flags = Notification.FLAG_AUTO_CANCEL;
 

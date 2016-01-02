@@ -35,7 +35,7 @@ public class AlarmArmingBootReceiver extends BroadcastReceiver {
 
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        int interval = preferences.getInt(context.getString(R.string.time_interval_pref), 15);
+        int interval = Integer.parseInt(preferences.getString(context.getString(R.string.time_interval_pref), "15"));
 
 
         alarmMgr.setInexactRepeating(AlarmManager.RTC,
