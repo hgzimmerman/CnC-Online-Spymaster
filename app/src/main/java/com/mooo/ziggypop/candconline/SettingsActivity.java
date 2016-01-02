@@ -65,9 +65,7 @@ public class SettingsActivity extends AppCompatActivity{
                     setBarColors(R.color.ra3_red);
                     break;
             }
-
         }
-
 
         //swap in the settings fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -192,6 +190,10 @@ public class SettingsActivity extends AppCompatActivity{
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            window.setStatusBarColor(getResources().getColor(colorResourceId));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                window.setStatusBarColor(getResources().getColor(colorResourceId, getTheme()));
+            } else{
+                window.setStatusBarColor(getResources().getColor(colorResourceId));
+            }
     }
 }

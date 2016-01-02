@@ -83,7 +83,6 @@ public class PlayerDatabaseViewerActivity extends AppCompatActivity
         ArrayList<Player> players = dbHandler.getAllPlayers();
 
         Collections.sort(players);
-        Log.v(TAG, players.get(0).getNickname());
         playerFragment.refreshData(players, this);
 
         //set up swipe down to refresh
