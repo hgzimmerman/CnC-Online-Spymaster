@@ -362,6 +362,7 @@ public class JsonHandler {
                 // do something
             } else {
                 ArrayList<Player> players = getIntersectionOfPlayersAllGames(result, context);
+                Log.v(TAG, "size of intersection: " + players.size());
                 NotificationMessage.showNotification(context, players);
             }
 

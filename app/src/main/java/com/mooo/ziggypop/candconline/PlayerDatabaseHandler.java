@@ -220,8 +220,10 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
         ArrayList<Player> intersectedPlayers = new ArrayList<>();
         ArrayList<Player> dbPlayers = getAllPlayers();
         for (Player dbPlayer: dbPlayers) {
-            if(players.contains(dbPlayer)){
-                intersectedPlayers.add(dbPlayer);
+            for (Player player: players){
+                if (player.getID() == dbPlayer.getID()){
+                    intersectedPlayers.add(dbPlayer);
+                }
             }
         }
         return intersectedPlayers;
