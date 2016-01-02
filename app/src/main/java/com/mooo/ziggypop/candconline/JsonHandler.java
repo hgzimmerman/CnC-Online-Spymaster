@@ -130,17 +130,17 @@ public class JsonHandler {
         return returnArr;
     }
 
-    private ArrayList<Player> getIntersectionOfPlayersAllGames(JSONObject gameObject) {
+    private static ArrayList<Player> getIntersectionOfPlayersAllGames(JSONObject gameObject, Context context) {
         ArrayList<Player> returnArr = new ArrayList<>();
 
         JSONObject playersObject;
         try {
             List<JSONObject> gameJSONs = new ArrayList<>();
-            gameJSONs.add(jsonCache.getJSONObject(context.getString(R.string.KanesWrathJSON)));
-            gameJSONs.add(jsonCache.getJSONObject(context.getString(R.string.CandC3JSON)));
-            gameJSONs.add(jsonCache.getJSONObject(context.getString(R.string.GeneralsJSON)));
-            gameJSONs.add(jsonCache.getJSONObject(context.getString(R.string.ZeroHourJSON)));
-            gameJSONs.add(jsonCache.getJSONObject(context.getString(R.string.RedAlert3JSON)));
+            gameJSONs.add(gameObject.getJSONObject(context.getString(R.string.KanesWrathJSON)));
+            gameJSONs.add(gameObject.getJSONObject(context.getString(R.string.CandC3JSON)));
+            gameJSONs.add(gameObject.getJSONObject(context.getString(R.string.GeneralsJSON)));
+            gameJSONs.add(gameObject.getJSONObject(context.getString(R.string.ZeroHourJSON)));
+            gameJSONs.add(gameObject.getJSONObject(context.getString(R.string.RedAlert3JSON)));
 
             List<Player> allOnlinePlayers = new ArrayList<>();
             for ( JSONObject gameJSON: gameJSONs) {
@@ -301,13 +301,15 @@ public class JsonHandler {
         }
     }
 
-    public class ServiceJsonGetter extends AsyncTask<URL, Integer, JSONObject> {
+    public static class ServiceJsonGetter extends AsyncTask<URL, Integer, JSONObject> {
 
 
         JSONObject jObj = null;
         String json = "";
+        Context context;
 
-        public ServiceJsonGetter(){
+        public ServiceJsonGetter(Context context){
+            this.context = context;
         }
 
 
@@ -359,7 +361,8 @@ public class JsonHandler {
             if (result == null) {
                 // do something
             } else {
-                ArrayList<Player> players = getIntersectionOfPlayersAllGames(result);
+                ArrayList<Player> players = getIntersectionOfPlayersAllGames(result, context);
+                NotificationMessage.showNotification(context, players);
             }
 
         }

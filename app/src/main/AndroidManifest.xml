@@ -3,6 +3,7 @@
     package="com.mooo.ziggypop.candconline" >
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     
     <application
         android:supportsRtl="true"
@@ -27,6 +28,17 @@
         <activity android:name=".PlayerDatabaseViewerActivity"
             android:parentActivityName=".SettingsActivity"
             />
+
+        <receiver android:name=".AlarmArmingBootReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".NotificationMessage">
+
+        </receiver>
+
 
 
     </application>

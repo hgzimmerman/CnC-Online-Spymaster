@@ -5,6 +5,7 @@ import java.util.Locale;
 
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -171,6 +172,8 @@ public class MainActivity extends AppCompatActivity
                 return true;
             case R.id.action_graph:
                 Log.v(TAG, "Graph selected");
+                Intent alarmIntent = new Intent(this, NotificationMessage.class);
+                sendBroadcast(alarmIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

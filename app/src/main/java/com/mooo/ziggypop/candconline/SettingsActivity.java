@@ -1,7 +1,9 @@
 package com.mooo.ziggypop.candconline;
 
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.preference.Preference;
@@ -132,8 +134,22 @@ public class SettingsActivity extends AppCompatActivity{
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     boolean isActive = (boolean) newValue;
                     if (isActive) {
+                        //Start Alarm (will be enabled at boot. Will stay on until disabled)
+                        ComponentName receiver =
+                                new ComponentName(getContext(), AlarmArmingBootReceiver.class);
+                        PackageManager pm = getContext().getPackageManager();
+
+                        pm.setComponentEnabledSetting(receiver,
+                                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                                PackageManager.DONT_KILL_APP);
                         notifyIfOnline.setEnabled(true);
                     } else {
+                        ComponentName receiver = new ComponentName(getContext(), AlarmArmingBootReceiver.class);
+                        PackageManager pm = getContext().getPackageManager();
+
+                        pm.setComponentEnabledSetting(receiver,
+                                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                                PackageManager.DONT_KILL_APP);
                         notifyIfOnline.setEnabled(false);
                     }
                     return true;
@@ -155,8 +171,7 @@ public class SettingsActivity extends AppCompatActivity{
             notifyIntervalPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    //Todo: save the interval.
-                    int interval = (int) newValue;
+                    AlarmArmingBootReceiver.setAlarm(getContext());
                     return true;
                 }
             });
