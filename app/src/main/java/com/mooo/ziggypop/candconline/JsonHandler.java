@@ -59,7 +59,7 @@ public class JsonHandler {
                 /*===Get_Base_Game_Json===*/
                 JSONObject game = jsonCache.getJSONObject(mainActivity.getQueryJsonString());
                 /*===START_PLAYERS===*/
-                ArrayList<Player> usersArray = getPlayers(game);
+                ArrayList<Player> usersArray = getAndAugmentPlayers(game);
                 Log.v(TAG, "NUM_OF_PLAYERS: " + usersArray.size());
 
                 /*===START_LOBBIES===*/
@@ -113,9 +113,6 @@ public class JsonHandler {
                     Player newPlayer = new Player(value.getString("nickname"),
                             Integer.parseInt(value.getString("id")),
                             Integer.parseInt(value.getString("pid")));
-
-                    //newPlayer = db.getPlayer(newPlayer);
-
                     returnArr.add(newPlayer);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -124,10 +121,16 @@ public class JsonHandler {
         } catch(JSONException e){
             e.printStackTrace();
         }
-        returnArr = db.augmentPlayers(returnArr);
 
-        Collections.sort(returnArr);
         return returnArr;
+    }
+
+    public static ArrayList<Player> getAndAugmentPlayers(JSONObject gameObject){
+        ArrayList<Player> players = getPlayers(gameObject);
+        players = db.augmentPlayers(players);
+        Collections.sort(players);
+
+        return players;
     }
 
     private static ArrayList<Player> getIntersectionOfPlayersAllGames(JSONObject gameObject, Context context) {

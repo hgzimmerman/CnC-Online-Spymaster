@@ -102,7 +102,7 @@
     <string name="player_db_help_message">This page displays all of the players you have marked as a friend, marked to receive notifications or marked as yourself. You can alter their marks here. Note: removing all marks will cause the player to be removed from this list and you will have to wait for them to come online again to add them again.</string>
     <string name="friends_online_service_started">Service started</string>
     <string name="friends_online_service_stopped">Service stopped</string>
-    <string name="friends_online_service_label">Players Online</string>
+    <string name="friends_online_service_label">CnC Players Online</string>
 
 
 

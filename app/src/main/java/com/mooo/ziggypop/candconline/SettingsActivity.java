@@ -175,6 +175,7 @@ public class SettingsActivity extends AppCompatActivity{
             //Notification interval
             TimeIntervalPreference notifyIntervalPref =
                     (TimeIntervalPreference) getPreferenceScreen().findPreference(getString(R.string.time_interval_pref));
+            //Todo: this doesn't seem to fire, investigate why that is.
             notifyIntervalPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {

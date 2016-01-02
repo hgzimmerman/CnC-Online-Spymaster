@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -196,9 +197,15 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Given a list of players online with their flags unset, replace the players also found in the DB.
+     * @param players The list of players currently online.
+     * @return An ArrayList of Players that have their flags set.
+     */
     public ArrayList<Player> augmentPlayers(ArrayList<Player> players){
         ArrayList<Player> newPlayers = new ArrayList<>();
         ArrayList<Player> dbPlayers =  getAllPlayers();
+        //Todo: investigate if using a tree here would be faster, because nLog(n) is better than n^2
         for (Player player : players ){
             boolean isAdded = false;
             for (Player dbPlayer: dbPlayers){
@@ -212,20 +219,26 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
             }
         }
 
-
         return newPlayers;
     }
 
+    /**
+     * Gets the intersection of players that are online and those in the DB who have the
+     * receiveNotification flag set.
+     * @param players The list of players currently online.
+     * @return An arrayList of marked players that are online currently.
+     */
     public ArrayList<Player> getIntersectionOfPlayers(List<Player> players){
         ArrayList<Player> intersectedPlayers = new ArrayList<>();
         ArrayList<Player> dbPlayers = getAllPlayers();
         for (Player dbPlayer: dbPlayers) {
             for (Player player: players){
-                if (player.getID() == dbPlayer.getID()){
+                if (player.getID() == dbPlayer.getID() && dbPlayer.getIsRecieveNotifications()){
                     intersectedPlayers.add(dbPlayer);
                 }
             }
         }
+        Collections.sort(intersectedPlayers);
         return intersectedPlayers;
     }
 
