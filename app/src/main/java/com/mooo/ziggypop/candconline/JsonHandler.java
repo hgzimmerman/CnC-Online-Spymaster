@@ -149,6 +149,10 @@ public class JsonHandler {
             for ( JSONObject gameJSON: gameJSONs) {
                 allOnlinePlayers.addAll(getPlayers(gameJSON));
             }
+            // For some reason, the service was crashing on a null reference here.
+            if (db == null){
+                db = new PlayerDatabaseHandler(context);
+            }
             returnArr = db.getIntersectionOfPlayers(allOnlinePlayers);
 
         } catch (JSONException e ){
@@ -360,12 +364,12 @@ public class JsonHandler {
 
         @Override
         public void onPostExecute(JSONObject result) {
-            //jsonCache = result; // update the cache with new data
+
             if (result == null) {
-                // do something
+                // do nothing
             } else {
                 ArrayList<Player> players = getIntersectionOfPlayersAllGames(result, context);
-                Log.v(TAG, "size of intersection: " + players.size());
+                Log.v(TAG, "Size of intersection of db players and players online: " + players.size());
                 NotificationMessage.showNotification(context, players);
             }
 
