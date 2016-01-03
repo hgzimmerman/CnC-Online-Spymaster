@@ -18,6 +18,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.content.SharedPreferences;
+
+import java.util.prefs.Preferences;
 
 /**
  * Created by ziggypop on 4/17/15.
@@ -97,8 +100,9 @@ public class SettingsActivity extends AppCompatActivity{
     }
 
 
-    public static class SettingsFragment extends PreferenceFragmentCompat
-            implements SharedPreferences.OnSharedPreferenceChangeListener{
+    public static class SettingsFragment extends PreferenceFragmentCompat {
+        protected SharedPreferences.OnSharedPreferenceChangeListener mListener;
+
 
 
         @Override
@@ -150,7 +154,6 @@ public class SettingsActivity extends AppCompatActivity{
                         pm.setComponentEnabledSetting(receiver,
                                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                                 PackageManager.DONT_KILL_APP);
-                        notifyIfOnline.setEnabled(true);
                         AlarmArmingBootReceiver.setAlarm(getContext());
                     } else {
                         Log.v(TAG, "Disable notification alarm");
@@ -160,7 +163,7 @@ public class SettingsActivity extends AppCompatActivity{
                         pm.setComponentEnabledSetting(receiver,
                                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                                 PackageManager.DONT_KILL_APP);
-                        notifyIfOnline.setEnabled(false);
+                        AlarmArmingBootReceiver.stopAlarm(getContext());
                     }
                     return true;
                 }
@@ -173,6 +176,7 @@ public class SettingsActivity extends AppCompatActivity{
                     return true;
                 }
             });
+
 
 
             //Notification interval
@@ -206,14 +210,40 @@ public class SettingsActivity extends AppCompatActivity{
         }
 
         @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            Log.v(TAG, "Shared Prefs changed: " + key);
-            if (key.equals(getString(R.string.time_interval_pref))){
-                Log.v(TAG, "OnSharedPrefChanged: time interval");
-                AlarmArmingBootReceiver.setAlarm(getContext());
-            }
+        public void onResume() {
+            super.onResume();
+            getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(mListener);
         }
+
+        @Override
+        public void onPause() {
+            getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(mListener);
+            super.onPause();
+        }
+
+        @Override
+        public void onActivityCreated(Bundle savedInstanceState) {
+            super.onActivityCreated(savedInstanceState);
+            mListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+                @Override
+                public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                    //Preferences.sync(getPreferenceManager(), key);
+                    if (key.equals(getActivity().getString(R.string.time_interval_pref))) {
+                        //AppUtils.restart(getActivity());
+                        Log.v(TAG, "Shared prefs changed time interval");
+                        AlarmArmingBootReceiver.setAlarm(getContext());
+                    }
+                }
+            };
+        }
+
+
+
     }
+
+
+
+
 
     private void setBarColors(int colorResourceId){
         // Set the action bar.

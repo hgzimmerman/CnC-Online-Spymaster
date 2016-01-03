@@ -151,8 +151,6 @@ public abstract class SpinnerPreference extends Preference {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mSelection = position;
                 persistString(mEntryValues[position]);
-                Log.v(TAG, "item selected");
-                doActionOnItemSelected();
             }
 
             @Override
@@ -166,7 +164,6 @@ public abstract class SpinnerPreference extends Preference {
 
     protected abstract void bindDropDownView(int position, View view);
 
-    protected abstract void doActionOnItemSelected();
 
 
 

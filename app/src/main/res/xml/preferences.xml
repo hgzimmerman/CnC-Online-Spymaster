@@ -22,14 +22,15 @@
             android:key="@string/notify_if_online_pref"
             android:title="Notify Only if You are Online"
             android:summary="Only send notifications if the player you marked as yourself is online."
-            android:enabled="false"
             android:defaultValue="false"
+            android:dependency="@string/receive_notifications_pref"
             />
 
         <com.mooo.ziggypop.candconline.TimeIntervalPreference
             android:key="@string/time_interval_pref"
             android:title="Notifications Interval"
             android:summary="Time in interval between updates. Warning, the shorter the interval, the more this will drain your battery"
+            android:dependency="@string/receive_notifications_pref"
             android:defaultValue="10"
             app:entries="@array/service_ping_interval_entries"
             app:entryValues="@array/service_ping_interval_values" />

@@ -16,6 +16,7 @@ import android.widget.TextView;
  *
  */
 public class TimeIntervalPreference extends SpinnerPreference{
+    public static final String TAG = "TimeIntervalPreference";
 
     private final LayoutInflater mLayoutInflater;
 
@@ -39,11 +40,7 @@ public class TimeIntervalPreference extends SpinnerPreference{
         textView.setText(mEntries[position]);
     }
 
-    @Override
-    protected void doActionOnItemSelected() {
-        Log.v(TAG, "Interval changed, setting alarm");
-        AlarmArmingBootReceiver.setAlarm(getContext());
-    }
+
 
 
 }

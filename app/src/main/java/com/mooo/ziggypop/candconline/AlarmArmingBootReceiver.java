@@ -41,4 +41,13 @@ public class AlarmArmingBootReceiver extends BroadcastReceiver {
         alarmMgr.setInexactRepeating(AlarmManager.RTC,
                 SystemClock.elapsedRealtime(), interval * 60 * 1000, pi);
     }
+
+    public static void stopAlarm(Context context){
+        Log.v(TAG, "Stopping Alarm");
+        AlarmManager alarmMgr =  (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent alarmIntent = new Intent(context, NotificationMessage.class);
+        PendingIntent pi = PendingIntent.getBroadcast(context, ALARM_ID, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        alarmMgr.cancel(pi);
+    }
 }
