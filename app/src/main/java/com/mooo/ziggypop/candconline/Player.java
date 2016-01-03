@@ -285,7 +285,7 @@ public class Player implements Comparable{
 
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+        public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                                  Bundle savedInstanceState) {
             super.onCreateView(inflater,container,savedInstanceState);
             // Set a flag to determine if the parent view is the mainActivity so onScroll can interact properly
@@ -325,11 +325,17 @@ public class Player implements Comparable{
                         enable = true;
                     }
 
-                    if ( isMainActivity) { //if the parent activity is the main activity
+                    // Hacky way of determining which activity this is being called from.
+                    // HOORAY CODE REUSE!!!
+                    //Todo: this is still terrible, find a better means of setting this (maybe set it from the parent Activity by getting a reference to the playerFragment???
+                    if ( container.getClass().getSimpleName().equals("ViewPager")) { //if the parent activity is the main activity
                         MainActivity activity = (MainActivity) getActivity();
                         activity.setSafeToRefresh(enable, 0);
+                    } else if (container.getClass().getSimpleName().equals("FrameLayout")){ // if the parent activity is the player db viewer activity
+                        PlayerDatabaseViewerActivity activity
+                                = (PlayerDatabaseViewerActivity) getActivity();
+                        activity.setSafeToRefresh(enable);
                     }
-
                 }
             });
             return rootView;

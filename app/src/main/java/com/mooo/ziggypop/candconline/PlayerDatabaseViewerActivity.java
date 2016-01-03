@@ -186,4 +186,10 @@ public class PlayerDatabaseViewerActivity extends AppCompatActivity
         playerFragment.refreshData(players, this);
         mSwipeRefreshLayout.setRefreshing(false);
     }
+
+    public void setSafeToRefresh(boolean isSafe){
+        mSwipeRefreshLayout.setEnabled(isSafe);
+    }
+
+
 }
