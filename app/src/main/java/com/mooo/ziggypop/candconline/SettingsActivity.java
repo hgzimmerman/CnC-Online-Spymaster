@@ -97,7 +97,8 @@ public class SettingsActivity extends AppCompatActivity{
     }
 
 
-    public static class SettingsFragment extends PreferenceFragmentCompat{
+    public static class SettingsFragment extends PreferenceFragmentCompat
+            implements SharedPreferences.OnSharedPreferenceChangeListener{
 
 
         @Override
@@ -140,6 +141,7 @@ public class SettingsActivity extends AppCompatActivity{
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     boolean isActive = (boolean) newValue;
                     if (isActive) {
+                        Log.v(TAG, "Enable notification alarm");
                         //Start Alarm (will be enabled at boot. Will stay on until disabled)
                         ComponentName receiver =
                                 new ComponentName(getContext(), AlarmArmingBootReceiver.class);
@@ -151,6 +153,7 @@ public class SettingsActivity extends AppCompatActivity{
                         notifyIfOnline.setEnabled(true);
                         AlarmArmingBootReceiver.setAlarm(getContext());
                     } else {
+                        Log.v(TAG, "Disable notification alarm");
                         ComponentName receiver = new ComponentName(getContext(), AlarmArmingBootReceiver.class);
                         PackageManager pm = getContext().getPackageManager();
 
@@ -176,11 +179,13 @@ public class SettingsActivity extends AppCompatActivity{
             TimeIntervalPreference notifyIntervalPref =
                     (TimeIntervalPreference) getPreferenceScreen().findPreference(getString(R.string.time_interval_pref));
             //Todo: this doesn't seem to fire, investigate why that is.
+
             notifyIntervalPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    Log.v(TAG, "Interval changed");
-                    AlarmArmingBootReceiver.setAlarm(getContext());
+                    // For some reason, this is never called, so I implemented what SHOULD be done here
+                    // In TimeIntervalPreference.doActionOnItemSelected, which is called from
+                    // the abstract SpinnerPreference.OnItemSelected.
                     return true;
                 }
             });
@@ -198,6 +203,15 @@ public class SettingsActivity extends AppCompatActivity{
                     return true;
                 }
             });
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            Log.v(TAG, "Shared Prefs changed: " + key);
+            if (key.equals(getString(R.string.time_interval_pref))){
+                Log.v(TAG, "OnSharedPrefChanged: time interval");
+                AlarmArmingBootReceiver.setAlarm(getContext());
+            }
         }
     }
 

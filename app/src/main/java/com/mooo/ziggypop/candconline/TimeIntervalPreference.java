@@ -2,6 +2,7 @@ package com.mooo.ziggypop.candconline;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,4 +38,12 @@ public class TimeIntervalPreference extends SpinnerPreference{
         TextView textView = (TextView) view.findViewById(android.R.id.text1);
         textView.setText(mEntries[position]);
     }
+
+    @Override
+    protected void doActionOnItemSelected() {
+        Log.v(TAG, "Interval changed, setting alarm");
+        AlarmArmingBootReceiver.setAlarm(getContext());
+    }
+
+
 }
