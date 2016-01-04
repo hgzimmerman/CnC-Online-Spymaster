@@ -19,8 +19,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import java.util.prefs.Preferences;
-
 /**
  * Created by ziggypop on 4/17/15.
  * Contains settings
@@ -186,8 +184,8 @@ public class SettingsActivity extends AppCompatActivity{
 
 
             //Notification interval
-            TimeIntervalPreference notifyIntervalPref =
-                    (TimeIntervalPreference) getPreferenceScreen().findPreference(getString(R.string.time_interval_pref));
+            CustomSpinnerPreference notifyIntervalPref =
+                    (CustomSpinnerPreference) getPreferenceScreen().findPreference(getString(R.string.time_interval_pref));
             //Todo: this doesn't seem to fire, investigate why that is.
             notifyIntervalPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override

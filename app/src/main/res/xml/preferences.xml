@@ -33,7 +33,7 @@
             android:dependency="@string/receive_notifications_pref"
             />
 
-        <com.mooo.ziggypop.candconline.TimeIntervalPreference
+        <com.mooo.ziggypop.candconline.CustomSpinnerPreference
             android:key="@string/time_interval_pref"
             android:title="Notifications Interval"
             android:summary="Time in interval between updates. Warning, the shorter the interval, the more this app will drain your battery"
@@ -46,7 +46,7 @@
     <PreferenceCategory
         android:title="Miscellaneous">
 
-        <com.mooo.ziggypop.candconline.TimeIntervalPreference
+        <com.mooo.ziggypop.candconline.CustomSpinnerPreference
             android:title="Default Game"
             android:key="default_game"
             android:summary="The game that will be shown on app startup."
@@ -59,6 +59,14 @@
             android:key="@string/manage_friends_pref"
             android:title="Manage Players"
             android:summary="Update or remove preferences for players already in the database."
+            />
+
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="@string/sort_players_by_friendship_first_pref"
+            android:title="Sort Players by Friendship"
+            android:summary="Sort the players by friendship status first, then alphabetically."
+            android:defaultValue="true"
+            android:dependency="@string/receive_notifications_pref"
             />
 
 

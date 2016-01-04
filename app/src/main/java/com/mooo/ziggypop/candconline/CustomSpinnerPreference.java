@@ -2,7 +2,6 @@ package com.mooo.ziggypop.candconline;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +14,16 @@ import android.widget.TextView;
  *
  *
  */
-public class TimeIntervalPreference extends SpinnerPreference{
+public class CustomSpinnerPreference extends SpinnerPreference{
     public static final String TAG = "TimeIntervalPreference";
 
     private final LayoutInflater mLayoutInflater;
 
-    public TimeIntervalPreference(Context context, AttributeSet attrs) {
+    public CustomSpinnerPreference(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public TimeIntervalPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CustomSpinnerPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mLayoutInflater = LayoutInflater.from(getContext());
     }
