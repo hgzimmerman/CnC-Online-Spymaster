@@ -3,23 +3,24 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="fill_parent" >
 
-
     <ListView
         android:id="@android:id/list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:divider="@null"
         android:dividerHeight="4dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:listSelector="@android:color/transparent"
         android:cacheColorHint="@android:color/transparent"
         android:headerDividersEnabled="true"
         android:footerDividersEnabled="true"
         android:paddingTop="0dp"
-        android:layout_marginTop="-9dp"
-        >
+        android:scrollbarStyle="outsideOverlay">
+        <!--android:layout_marginTop="-9dp"-->
+
 
 
         </ListView>
-
 
 </LinearLayout>
