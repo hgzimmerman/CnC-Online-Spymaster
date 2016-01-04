@@ -99,9 +99,10 @@ public class Player implements Comparable{
     @Override
     public int compareTo(@NonNull Object another) {
         Player rightPlayer = (Player) another;
-        if (PreferenceManager.getDefaultSharedPreferences(CnCSpymaster.getAppContext())
-                .getBoolean(CnCSpymaster.getAppContext()
-                        .getString(R.string.sort_players_by_friendship_first_pref), true)){
+        // This logic slows the method significantly, but it still took .050 seconds to sort about 100 elements, so this is /acceptable/.
+        Context context = CnCSpymaster.getAppContext();
+        if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+                context.getString(R.string.sort_players_by_friendship_first_pref), true)){
             Integer lPlayerValue = valueAdder(this);
             Integer rPlayerValue = valueAdder(rightPlayer);
             int returnValue = rPlayerValue.compareTo(lPlayerValue); // we want the lesser value of the two to be "Greater"
@@ -117,6 +118,11 @@ public class Player implements Comparable{
         return this.nickname.compareToIgnoreCase(rightPlayer.nickname);
     }
 
+    /**
+     * Assigns a value based on the flags set for a player
+     * @param player The player to be evaluated.
+     * @return The player's "value".
+     */
     private int valueAdder(Player player){
         int sum = 0;
         if (player.getIsYourself())
