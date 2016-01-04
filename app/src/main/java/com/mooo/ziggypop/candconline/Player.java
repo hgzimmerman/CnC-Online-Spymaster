@@ -107,7 +107,8 @@ public class Player implements Comparable{
                 context.getString(R.string.sort_players_by_friendship_first_pref), true)){
             Integer lPlayerValue = valueAdder(this);
             Integer rPlayerValue = valueAdder(rightPlayer);
-            int returnValue = rPlayerValue.compareTo(lPlayerValue); // we want the lesser value of the two to be "Greater"
+            // we want the greater value of the two to be "Lesser", so this is opposite from normal.
+            int returnValue = rPlayerValue.compareTo(lPlayerValue);
             if (returnValue != 0){
                 return returnValue;
             }
@@ -364,9 +365,9 @@ public class Player implements Comparable{
                         enable = true;
                     }
 
-                    // Hacky way of determining which activity this is being called from.
+                    // Hacky way of determining which activity this is being called from using Type Introspection
                     // HOORAY CODE REUSE!!!
-                    //Todo: this is still terrible, find a better means of setting this (maybe set it from the parent Activity by getting a reference to the playerFragment???
+                    //Todo: Type Introspection is less than ideal, find a better means of determining the parent (maybe set it from the parent Activity by getting a reference to the playerFragment???
                     if ( container.getClass().getSimpleName().equals("ViewPager")) { //if the parent activity is the main activity
                         MainActivity activity = (MainActivity) getActivity();
                         activity.setSafeToRefresh(enable, 0);
