@@ -21,7 +21,14 @@
         <android.support.v7.preference.SwitchPreferenceCompat
             android:key="@string/notify_if_online_pref"
             android:title="Notify Only if You are Online"
-            android:summary="Only send notifications if the player you marked as yourself is online."
+            android:summary="Only send notifications if the player you marked as yourself is online. This will not improve battery drain."
+            android:defaultValue="false"
+            android:dependency="@string/receive_notifications_pref"
+            />
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="@string/notify_if_charging_pref"
+            android:title="Notify Only if You are Charging"
+            android:summary="Only send notifications if your phone is charging or fully charged. This will improve battery drain."
             android:defaultValue="false"
             android:dependency="@string/receive_notifications_pref"
             />
@@ -29,7 +36,7 @@
         <com.mooo.ziggypop.candconline.TimeIntervalPreference
             android:key="@string/time_interval_pref"
             android:title="Notifications Interval"
-            android:summary="Time in interval between updates. Warning, the shorter the interval, the more this will drain your battery"
+            android:summary="Time in interval between updates. Warning, the shorter the interval, the more this app will drain your battery"
             android:dependency="@string/receive_notifications_pref"
             android:defaultValue="10"
             app:entries="@array/service_ping_interval_entries"

@@ -96,6 +96,7 @@
     <string name="receive_notifications_pref">receive_notifications</string>
     <string name="time_interval_pref">time_interval</string>
     <string name="manage_friends_pref">manage_friends</string>
+    <string name="notify_if_charging_pref">notify_if_charging</string>
     <!-- END Strings for tagging and retrieving preferences-->
 
     <string name="reset_player_db">Reset Player Database</string>
