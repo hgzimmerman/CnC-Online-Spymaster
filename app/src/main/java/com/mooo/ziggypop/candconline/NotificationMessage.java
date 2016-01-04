@@ -5,7 +5,10 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.support.v4.content.SharedPreferencesCompat;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -28,7 +31,7 @@ public class NotificationMessage extends BroadcastReceiver {
     }
 
     public static void showNotification(Context context, ArrayList<Player> players) {
-        Log.v(TAG, "showing the notification");
+        Log.v(TAG, "Attempting to show the notification");
 
         NotificationManagerCompat mNM = NotificationManagerCompat.from(context);
 
@@ -36,15 +39,26 @@ public class NotificationMessage extends BroadcastReceiver {
         dismissIntent.setAction(NotificationMessage.ACTION_DISMISS);
 
 
+
+
         // The PendingIntent to launch our activity if the user selects this notification
         PendingIntent appIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
 
         String contentText = new String();
         String separator = ",  ";
+
+        boolean userMustBeOnline = PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(context.getString(R.string.notify_if_online_pref), false);
+        boolean userIsOnline = false;
         for (Player player: players){
             contentText += player.getNickname() + separator;
+            if (player.getIsYourself())
+                userIsOnline = true;
         }
-        if (players.size() > 0 ) {
+
+        //If there are players and if the user must be online, the user is online
+        if (players.size() > 0 && !(userMustBeOnline && !userIsOnline)) {
+            Log.v(TAG, "Actually showing the notification");
 
             contentText = contentText.substring(0, contentText.length() - separator.length());
 
