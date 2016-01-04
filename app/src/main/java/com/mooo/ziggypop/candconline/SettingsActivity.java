@@ -48,6 +48,7 @@ public class SettingsActivity extends AppCompatActivity{
             }
         });
         setSupportActionBar(mToolBar);
+        assert getSupportActionBar() != null; // I'm only doing this to make the IDE stop yelling at me, I know its not null, I just set it...
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
 
@@ -99,7 +100,9 @@ public class SettingsActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-
+    /**
+     * The fragment that is inside of the activity.
+     */
     public static class SettingsFragment extends PreferenceFragmentCompat {
         protected SharedPreferences.OnSharedPreferenceChangeListener mListener;
 
@@ -110,6 +113,10 @@ public class SettingsActivity extends AppCompatActivity{
             addPreferencesFromResource(R.xml.preferences);
         }
 
+        /**
+         * Sets up all of the preferences.
+         * @param savedInstanceState The bundle!
+         */
         public void onCreate(Bundle savedInstanceState) {
             getActivity().setTheme(R.style.AppTheme);
             super.onCreate(savedInstanceState);
@@ -136,7 +143,6 @@ public class SettingsActivity extends AppCompatActivity{
             });
 
             // get pref early so receiveNotifications can interact with it and change its state.
-            final Preference notifyIfOnline = getPreferenceScreen().findPreference(getString(R.string.notify_if_online_pref));
 
             // Receive notifications
             Preference receiveNotifications = getPreferenceScreen().findPreference(getString(R.string.receive_notifications_pref));
@@ -170,6 +176,7 @@ public class SettingsActivity extends AppCompatActivity{
             });
 
             //Notification if you are online.
+            Preference notifyIfOnline = getPreferenceScreen().findPreference(getString(R.string.notify_if_online_pref));
             notifyIfOnline.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object o) {
@@ -183,7 +190,6 @@ public class SettingsActivity extends AppCompatActivity{
             TimeIntervalPreference notifyIntervalPref =
                     (TimeIntervalPreference) getPreferenceScreen().findPreference(getString(R.string.time_interval_pref));
             //Todo: this doesn't seem to fire, investigate why that is.
-
             notifyIntervalPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -236,15 +242,13 @@ public class SettingsActivity extends AppCompatActivity{
                 }
             };
         }
-
-
-
     }
 
 
-
-
-
+    /**
+     * Sets the actionbar and the status bar (if the build allows it) to the provided color id.
+     * @param colorResourceId The id of the color to which the bars will be set.
+     */
     private void setBarColors(int colorResourceId){
         // Set the action bar.
         mToolBar.setBackgroundResource(colorResourceId);
