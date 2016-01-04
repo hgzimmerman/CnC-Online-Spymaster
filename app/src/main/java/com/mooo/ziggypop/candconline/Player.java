@@ -98,7 +98,6 @@ public class Player implements Comparable{
     @Override
     public int compareTo(@NonNull Object another) {
         Player rightPlayer = (Player) another;
-        Log.v("PLAYER", "Compare");
         // This logic slows the method significantly, but, with logging, it still took about .050 seconds
         // to sort 100 elements (.0002s per compare) on a Nexus 5x, so this is /acceptable/. This is
         // instead of the .011 seconds without the logic, or .040 seconds if the preference is disabled.
