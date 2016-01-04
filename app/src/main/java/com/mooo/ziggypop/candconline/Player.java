@@ -208,9 +208,11 @@ public class Player implements Comparable{
                     TextView playerNickname = (TextView) dialogView.findViewById(R.id.players_name);
                     playerNickname.setText(player.nickname);
                     TextView playerID = (TextView) dialogView.findViewById(R.id.players_id);
-                    playerID.setText(player.id + "");
+                    String playerIDText = player.id + ""; // avoid the IDE complaining about creating a string in the setText method below.
+                    playerID.setText(playerIDText);
                     TextView playerPID = (TextView) dialogView.findViewById(R.id.players_pid);
-                    playerPID.setText(player.pid + "");
+                    String playerPIDText = player.pid + "";
+                    playerPID.setText(playerPIDText);
 
                     final CheckBox friendsCheckbox = (CheckBox) dialogView.findViewById(R.id.friends_checkbox);
                     if (player.isFriend){
