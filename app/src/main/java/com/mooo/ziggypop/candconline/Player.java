@@ -4,7 +4,6 @@ package com.mooo.ziggypop.candconline;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ListFragment;
@@ -109,12 +108,9 @@ public class Player implements Comparable{
             Integer lPlayerValue = valueAdder(this);
             Integer rPlayerValue = valueAdder(rightPlayer);
             int returnValue = rPlayerValue.compareTo(lPlayerValue); // we want the lesser value of the two to be "Greater"
-            if (returnValue == 0){
-                this.nickname.compareToIgnoreCase(rightPlayer.nickname);
-            } else {
+            if (returnValue != 0){
                 return returnValue;
             }
-
         }
 
         return this.nickname.compareToIgnoreCase(rightPlayer.nickname);
