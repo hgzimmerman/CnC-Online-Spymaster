@@ -46,12 +46,12 @@
     <PreferenceCategory
         android:title="Miscellaneous">
 
-        <ListPreference
+        <com.mooo.ziggypop.candconline.TimeIntervalPreference
             android:title="Default Game"
             android:key="default_game"
             android:summary="The game that will be shown on app startup."
-            android:entries="@array/games_list"
-            android:entryValues="@array/games_list_values"
+            app:entries="@array/games_list"
+            app:entryValues="@array/games_list_values"
             android:defaultValue="1"
             />
 

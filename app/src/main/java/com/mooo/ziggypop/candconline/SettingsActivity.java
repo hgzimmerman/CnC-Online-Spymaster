@@ -236,6 +236,8 @@ public class SettingsActivity extends AppCompatActivity{
                     if (key.equals(getActivity().getString(R.string.time_interval_pref))) {
                         Log.v(TAG, "Shared prefs changed time interval");
                         AlarmArmingBootReceiver.setAlarm(getContext());
+                    } else if (key.equals("default_game")){
+                        Log.v(TAG, "default game selected");
                     }
                 }
             };
