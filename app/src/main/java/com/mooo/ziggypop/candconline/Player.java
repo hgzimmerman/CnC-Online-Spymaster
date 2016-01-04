@@ -4,10 +4,12 @@ package com.mooo.ziggypop.candconline;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +33,10 @@ import java.util.ArrayList;
  *
  */
 public class Player implements Comparable{
+
+    private static int NOTIFICATION_VALUE = 1;
+    private static int FRIEND_VALUE = 2;
+    private static int YOURSELF_VALUE = 4;
 
     private String nickname;
     private int id;
@@ -93,7 +99,34 @@ public class Player implements Comparable{
     @Override
     public int compareTo(@NonNull Object another) {
         Player rightPlayer = (Player) another;
+        if (PreferenceManager.getDefaultSharedPreferences(CnCSpymaster.getAppContext())
+                .getBoolean(CnCSpymaster.getAppContext()
+                        .getString(R.string.sort_players_by_friendship_first_pref), true)){
+            Integer lPlayerValue = valueAdder(this);
+            Integer rPlayerValue = valueAdder(rightPlayer);
+            int returnValue = rPlayerValue.compareTo(lPlayerValue); // we want the lesser value of the two to be "Greater"
+            if (returnValue == 0){
+                this.nickname.compareToIgnoreCase(rightPlayer.nickname);
+            } else {
+                return returnValue;
+            }
+
+        }
+
+
         return this.nickname.compareToIgnoreCase(rightPlayer.nickname);
+    }
+
+    private int valueAdder(Player player){
+        int sum = 0;
+        if (player.getIsYourself())
+            sum += YOURSELF_VALUE;
+        if (player.getIsRecieveNotifications())
+            sum += NOTIFICATION_VALUE;
+        if (player.getIsFriend())
+            sum += FRIEND_VALUE;
+        return sum;
+
     }
 
 

@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     
     <application
+        android:name="com.mooo.ziggypop.candconline.CnCSpymaster"
         android:supportsRtl="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -42,6 +43,7 @@
 
 
     </application>
+
 
 
 </manifest>
