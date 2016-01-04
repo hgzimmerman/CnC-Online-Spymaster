@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.content.SharedPreferences;
 
 import java.util.prefs.Preferences;
 
@@ -29,7 +28,7 @@ import java.util.prefs.Preferences;
 public class SettingsActivity extends AppCompatActivity{
 
     public static final String TAG = "SettingsActivity";
-    static public int current_game;
+    static public int currentGame;
     Toolbar mToolBar;
 
 
@@ -53,11 +52,11 @@ public class SettingsActivity extends AppCompatActivity{
 
 
 
-
+        //set the bar colors
         if (getIntent().getExtras() != null ) {
             // set the color of the toolbar based on the current game.
-            current_game = getIntent().getExtras().getInt("current_game");
-            switch (current_game) {
+            currentGame = getIntent().getExtras().getInt("current_game");
+            switch (currentGame) {
                 case 1:
                     setBarColors(R.color.kw_red);
                     break;
@@ -93,7 +92,7 @@ public class SettingsActivity extends AppCompatActivity{
                 // go to previous screen when app icon in action bar is clicked
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("current_game", current_game);
+                intent.putExtra("current_game", currentGame);
                 startActivity(intent);
                 return true;
         }
@@ -208,7 +207,7 @@ public class SettingsActivity extends AppCompatActivity{
                 public boolean onPreferenceClick(Preference preference) {
                     // launch an activity to show all players in the database (regardless of their online status)
                     Intent intent = new Intent(getContext().getApplicationContext(), PlayerDatabaseViewerActivity.class);
-                    intent.putExtra("current_game", current_game);
+                    intent.putExtra("currentGame", currentGame);
                     getActivity().startActivity(intent);
                     return true;
                 }
@@ -235,7 +234,6 @@ public class SettingsActivity extends AppCompatActivity{
                 public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
                     //Preferences.sync(getPreferenceManager(), key);
                     if (key.equals(getActivity().getString(R.string.time_interval_pref))) {
-                        //AppUtils.restart(getActivity());
                         Log.v(TAG, "Shared prefs changed time interval");
                         AlarmArmingBootReceiver.setAlarm(getContext());
                     }
@@ -260,12 +258,10 @@ public class SettingsActivity extends AppCompatActivity{
         // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
+        //Set the status bar color
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                window.setStatusBarColor(getResources().getColor(colorResourceId, getTheme()));
-            } else{
                 window.setStatusBarColor(getResources().getColor(colorResourceId));
-            }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            window.setStatusBarColor(getResources().getColor(colorResourceId, getTheme()));
     }
 }
