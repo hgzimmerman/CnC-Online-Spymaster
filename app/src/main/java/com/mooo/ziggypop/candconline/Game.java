@@ -148,6 +148,9 @@ public class Game {
             setListAdapter(mAdapter);
 
             listView = (ListView) rootView.findViewById(android.R.id.list);
+            View padding = inflater.inflate(R.layout.padding_layout, null, false);
+            listView.addHeaderView(padding);
+
 
             listView.setOnScrollListener(new AbsListView.OnScrollListener() {
                 @Override
@@ -212,6 +215,8 @@ public class Game {
             setListAdapter(mAdapter);
 
             listView = (ListView) rootView.findViewById(android.R.id.list);
+            View padding = inflater.inflate(R.layout.padding_layout, null, false);
+            listView.addHeaderView(padding);
 
             listView.setOnScrollListener(new AbsListView.OnScrollListener() {
                 @Override

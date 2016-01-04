@@ -327,9 +327,6 @@ public class Player implements Comparable{
         public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                                  Bundle savedInstanceState) {
             super.onCreateView(inflater,container,savedInstanceState);
-            // Set a flag to determine if the parent view is the mainActivity so onScroll can interact properly
-            // Todo: find a more elegant solution to this.
-            isMainActivity = (getActivity().findViewById(R.id.activity_main) != null);
 
             mAdapter = new PlayersAdapter(getActivity(), R.layout.players_layout, wordsArr);
             setListAdapter(mAdapter);
@@ -342,6 +339,9 @@ public class Player implements Comparable{
             setRetainInstance(true);//This prevents the GC-ing of the fragment.
 
             listView = (ListView) rootView.findViewById(android.R.id.list);
+            //Because doing this the "right way" in xml breaks the logic in onScroll(), this is a way to add padding at the top.
+            View padding = inflater.inflate(R.layout.padding_layout, null, false);
+            listView.addHeaderView(padding);
 
             listView.setOnScrollListener(new AbsListView.OnScrollListener() {
                 @Override
@@ -378,7 +378,6 @@ public class Player implements Comparable{
                 }
             });
             return rootView;
-
         }
 
         /**
