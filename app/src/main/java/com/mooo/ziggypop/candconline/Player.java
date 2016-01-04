@@ -99,7 +99,10 @@ public class Player implements Comparable{
     @Override
     public int compareTo(@NonNull Object another) {
         Player rightPlayer = (Player) another;
-        // This logic slows the method significantly, but it still took .050 seconds to sort about 100 elements, so this is /acceptable/.
+        Log.v("PLAYER", "Compare");
+        // This logic slows the method significantly, but, with logging, it still took about .050 seconds
+        // to sort 100 elements (.0002s per compare) on a Nexus 5x, so this is /acceptable/. This is
+        // instead of the .011 seconds without the logic, or .040 seconds if the preference is disabled.
         Context context = CnCSpymaster.getAppContext();
         if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
                 context.getString(R.string.sort_players_by_friendship_first_pref), true)){
@@ -113,7 +116,6 @@ public class Player implements Comparable{
             }
 
         }
-
 
         return this.nickname.compareToIgnoreCase(rightPlayer.nickname);
     }
