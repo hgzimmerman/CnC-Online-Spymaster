@@ -105,9 +105,9 @@
     <string name="friends_online_service_started">Service started</string>
     <string name="friends_online_service_stopped">Service stopped</string>
     <string name="friends_online_service_label">CnC Players Online</string>
-
-
-
+    <string name="flag_for_marking_friends">Flag for marking friends.</string>
+    <string name="flag_if_you_want_to_receive_notifications_about_this_player">Flag if you want to receive notifications about this player.</string>
+    <string name="flag_for_marking_yourself">Flag for marking yourself.</string>
 
 
 </resources>
