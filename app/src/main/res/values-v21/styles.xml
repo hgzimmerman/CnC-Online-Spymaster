@@ -17,10 +17,9 @@
         <item name="android:colorAccent">@color/grey_blue</item>
         <item name="android:alertDialogTheme">@style/AlertDialogCustom</item>
     </style>
-
+<!--this one doesn't seem to do anything :/ -->
     <style name="AlertDialogCustom" parent="android:Theme.Material.Light.Dialog.Alert">
         <item name="android:colorAccent">@color/grey_blue</item>
-        <item name="android:colorPrimary">@color/kw_red</item>
     </style>
 
 </resources>
