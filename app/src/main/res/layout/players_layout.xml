@@ -8,6 +8,7 @@
     android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     card_view:cardCornerRadius="4dp">
 
     <LinearLayout
@@ -15,6 +16,8 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="false"
+        android:background="?android:attr/selectableItemBackground"
         android:padding="12dp"
         android:layout_gravity="center_horizontal"
         >
