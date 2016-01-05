@@ -9,15 +9,21 @@
 
 <android.support.v4.widget.DrawerLayout
     xmlns:tools="http://schemas.android.com/tools" android:id="@+id/drawer_layout"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".MainActivity">
 
 
     <LinearLayout
         android:orientation="vertical"
-        android:background="@color/offwhite"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:background="@color/offwhite"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
        <!-- Toolbar that fills the normal role of an ActionBar -->
         <android.support.v7.widget.Toolbar
@@ -28,14 +34,16 @@
             </android.support.v7.widget.Toolbar>
 
        <!-- Toolbar for the sliding tabs -->
-       <!-- -3dp margin-bottom offset the fact that there is unneeded space beneath the toolbar to start with -->
+       <!-- -4dp margin-bottom and top to offset the fact that there is unneeded space beneath the toolbar to start with -->
         <android.support.v7.widget.Toolbar
             android:gravity="top"
             android:id="@+id/toolbar"
+            android:paddingTop="0dp"
             android:layout_width="fill_parent"
+            android:background="@null"
+            android:layout_marginTop="-4dp"
             app:contentInsetStart="0dp"
-            android:minHeight="40dp"
-            android:layout_marginBottom="-4.0dp"
+            android:layout_marginBottom="-4dp"
             android:layout_height="wrap_content">
 
 
@@ -46,6 +54,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
        </android.support.v7.widget.Toolbar>
+        </LinearLayout>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
 
 
         <android.support.v4.widget.SwipeRefreshLayout
@@ -58,8 +75,13 @@
                 android:layout_width="match_parent" android:layout_height="match_parent"
                 tools:context=".MainActivity" />
 
-       </android.support.v4.widget.SwipeRefreshLayout>
+        </android.support.v4.widget.SwipeRefreshLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@drawable/toolbar_shadow"/>
+        </FrameLayout>
 
 
 

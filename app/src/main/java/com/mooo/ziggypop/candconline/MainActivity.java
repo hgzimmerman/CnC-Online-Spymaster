@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity
         topToolbar = (Toolbar) findViewById(R.id.top_toolbar);
         setSupportActionBar(topToolbar);
 
+        Toolbar bottomToolbar = (Toolbar) findViewById(R.id.toolbar);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
