@@ -296,7 +296,12 @@ public class Player implements Comparable{
                             // do nothing
                         }
                     });
-                    builder.show();
+                    AlertDialog dialog  = builder.create();
+
+                    dialog.show();
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.grey_blue));
+                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getContext().getResources().getColor(R.color.grey_blue));
+
                 }
             });
 

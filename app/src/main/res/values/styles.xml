@@ -7,10 +7,13 @@
         <item name="android:color">@color/black</item>
         <item name="preferenceTheme">@style/Theme.WtfPreference</item>
         <item name="colorAccent">@color/grey_blue</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogCustom</item>
     </style>
 
     <style name="prefTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogCustom</item>
+
     </style>
 
 
@@ -25,6 +28,12 @@
         <item name="dialogPreferenceStyle">@style/Preference.DialogPreference</item>
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
         <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList</item>
+
+    </style>
+
+    <style name="AlertDialogCustom" parent="android:Theme.Material.Light.Dialog.Alert">
+        <item name="android:colorAccent">@color/grey_blue</item>
+        <item name="android:colorPrimary">@color/kw_red</item>
     </style>
 
 </resources>
