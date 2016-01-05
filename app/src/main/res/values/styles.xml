@@ -6,6 +6,7 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:color">@color/black</item>
         <item name="preferenceTheme">@style/Theme.WtfPreference</item>
+        <item name="colorAccent">@color/grey_blue</item>
     </style>
 
     <style name="prefTheme" parent="Theme.AppCompat.Light.NoActionBar">

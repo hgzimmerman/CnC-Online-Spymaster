@@ -7,6 +7,11 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:color">@color/normal_blue</item>
         <item name="android:colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/grey_blue</item>
+    </style>
+    <style name="prefTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="android:colorAccent">@color/grey_blue</item>
     </style>
 
 </resources>
