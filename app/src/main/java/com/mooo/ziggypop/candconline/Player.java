@@ -4,6 +4,9 @@ package com.mooo.ziggypop.candconline;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ListFragment;
@@ -15,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 
 import android.widget.ListView;
@@ -43,6 +47,7 @@ public class Player implements Comparable{
     private boolean isFriend;
     private boolean isReceiveNotifications;
     private boolean isYourself;
+    private String game;
 
 
 
@@ -53,7 +58,7 @@ public class Player implements Comparable{
         this.isFriend = false;
         this.isReceiveNotifications = false;
         this.isYourself = false;
-
+        this.game = "";
     }
 
     public Player(String nickname, int id, int pid, boolean isFriend,
@@ -203,12 +208,37 @@ public class Player implements Comparable{
                     View dialogView = vi.inflate(R.layout.player_alert_dialog, null);
                     TextView playerNickname = (TextView) dialogView.findViewById(R.id.players_name);
                     playerNickname.setText(player.nickname);
+                    /*
                     TextView playerID = (TextView) dialogView.findViewById(R.id.players_id);
                     String playerIDText = player.id + ""; // avoid the IDE complaining about creating a string in the setText method below.
                     playerID.setText(playerIDText);
                     TextView playerPID = (TextView) dialogView.findViewById(R.id.players_pid);
                     String playerPIDText = player.pid + "";
                     playerPID.setText(playerPIDText);
+                    */
+
+                    Button playerButton = (Button) dialogView.findViewById(R.id.player_link);
+                    final String cncOnlineLink = "http://cnc-online.net/profiles/"  + player.pid + "/";
+                    playerButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(cncOnlineLink));
+                            getContext().startActivity(browserIntent);
+                        }
+                    });
+                    /*
+                    Button statsButton = (Button) dialogView.findViewById(R.id.stats_link);
+                    String gameID = "kw";
+                    final String statsLink = "http://www.shatabrick.com/cco/"+ gameID +"/index.php?g=kw&a=sp&name=" + player.nickname;
+                    statsButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent statsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(statsLink));
+                            getContext().startActivity(statsIntent);
+                        }
+                    });
+                    */
+
 
                     final CheckBox friendsCheckbox = (CheckBox) dialogView.findViewById(R.id.friends_checkbox);
                     if (player.isFriend){
