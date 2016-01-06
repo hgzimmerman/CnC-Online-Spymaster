@@ -133,16 +133,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    /**
-     * Updates the views when the app resumes.
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //mSwipeRefreshLayout.setRefreshing(true);
-        //jsonHandler.refreshAndUpdateViews();
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -336,7 +326,9 @@ public class MainActivity extends AppCompatActivity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
+        //noinspection deprecation
         findViewById(R.id.top_toolbar).setBackgroundColor(getResources().getColor(colorResourceId));
+        //noinspection deprecation
         findViewById(R.id.sliding_tabs).setBackgroundColor( getResources().getColor(colorResourceId));
         mSwipeRefreshLayout.setColorSchemeResources(colorResourceId);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
@@ -435,14 +427,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Singleton-like method to help access the jsonHandler for calls that don't have access to the MainActivity
+     * Singleton wrapper method to help access the jsonHandler for calls that don't have access to the MainActivity
      */
     private void updateViews(){
         jsonHandler.updateViews(this);
     }
 
     /**
-     * Singleton-like method to help access the jsonHandler for calls that don't have access to the MainActivity
+     * Singleton wrapper method to help access the jsonHandler for calls that don't have access to the MainActivity
      */
     private void refreshAndUpdateViews(){
         jsonHandler.refreshAndUpdateViews(this);
