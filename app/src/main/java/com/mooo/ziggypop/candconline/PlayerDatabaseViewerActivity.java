@@ -133,9 +133,8 @@ public class PlayerDatabaseViewerActivity extends AppCompatActivity
                                 // delete the database.
                                 PlayerDatabaseHandler db = new PlayerDatabaseHandler(getApplicationContext());
                                 db.resetDB(db.getReadableDatabase());
-                                // update the view
-                                //Todo: send an intent to itself to avoid crashing.
-                                playerFragment.refreshData(dbHandler.getAllPlayers(), getParent());
+                                //Exit the activity, to avoid a crash caused by updating (that is, if I refreshed the views).
+                                finish();
                             }
                         });
                 builder.setNegativeButton(getText(R.string.cancel), new DialogInterface.OnClickListener() {
