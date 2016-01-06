@@ -333,7 +333,7 @@ public class MainActivity extends AppCompatActivity
         //noinspection deprecation
         findViewById(R.id.sliding_tabs).setBackgroundColor( getResources().getColor(colorResourceId));
         mSwipeRefreshLayout.setColorSchemeResources(colorResourceId);
-        bottomToolbar.setBackgroundColor(getColor(colorResourceId));
+        bottomToolbar.setBackgroundColor(getResources().getColor(colorResourceId));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             window.setStatusBarColor(getResources().getColor(colorResourceId));
     }
