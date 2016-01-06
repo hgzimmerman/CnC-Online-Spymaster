@@ -35,6 +35,7 @@ import java.util.ArrayList;
  *
  */
 public class Player implements Comparable{
+    private static final String TAG = "Player";
 
     private static int NOTIFICATION_VALUE = 1;
     private static int FRIEND_VALUE = 2;
@@ -47,6 +48,7 @@ public class Player implements Comparable{
     private boolean isReceiveNotifications;
     private boolean isYourself;
     private String game;
+    private String inGameName;
 
 
 
@@ -58,16 +60,18 @@ public class Player implements Comparable{
         this.isReceiveNotifications = false;
         this.isYourself = false;
         this.game = "";
+        this.inGameName = "";
     }
 
     public Player(String nickname, int id, int pid, boolean isFriend,
-                  boolean isRecieveNotifications, boolean isYourself) {
+                  boolean isRecieveNotifications, boolean isYourself, String inGameName) {
         this.nickname = nickname;
         this.id = id;
         this.pid = pid;
         this.isFriend = isFriend;
         this.isReceiveNotifications = isRecieveNotifications;
         this.isYourself = isYourself;
+        this.inGameName = inGameName;
     }
 
 
@@ -82,16 +86,16 @@ public class Player implements Comparable{
     public boolean getIsFriend(){return isFriend;}
     public boolean getIsRecieveNotifications(){return isReceiveNotifications;}
     public boolean getIsYourself(){return isYourself;}
+    public String getInGameName(){ return inGameName;}
 
     public void setIsFriend(boolean isFriend){
         this.isFriend = isFriend;
     }
-    public void setIsRecieveNotifications(boolean isRecieve){
-        this.isReceiveNotifications = isRecieve;
-    }
+    public void setIsRecieveNotifications(boolean isRecieve){ this.isReceiveNotifications = isRecieve; }
     public void setIsYourself(boolean isYourself){
         this.isYourself = isYourself;
     }
+    public void setInGameName(String inGameName) { this.inGameName = inGameName; }
 
 
     /**
@@ -216,7 +220,7 @@ public class Player implements Comparable{
                     playerPID.setText(playerPIDText);
                     */
 
-                    Button playerButton = (Button) dialogView.findViewById(R.id.player_link);
+                    final Button playerButton = (Button) dialogView.findViewById(R.id.player_link);
                     final String cncOnlineLink = "http://cnc-online.net/profiles/"  + player.pid + "/";
                     playerButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -237,8 +241,14 @@ public class Player implements Comparable{
                         }
                     });
                     */
-                    new RealUsernameHandler(cncOnlineLink, player.id+"", playerButton);
 
+                    // Set the string to the username if the player is not found in the database.
+                    if (player.getInGameName() == null || player.getInGameName().equals("")
+                            || player.getInGameName().equals(getContext().getString(R.string.profile))){
+                        new RealUsernameHandler(cncOnlineLink, player.id+"", playerButton);
+                    } else {
+                        playerButton.setText(player.getInGameName());
+                    }
 
 
                     final CheckBox friendsCheckbox = (CheckBox) dialogView.findViewById(R.id.friends_checkbox);
@@ -281,7 +291,8 @@ public class Player implements Comparable{
                                 player.setIsYourself(false);
                                 holder.yourselfMarker.setVisibility(View.INVISIBLE);
                             }
-                            //notifyDataSetChanged();
+                            Log.v(TAG, playerButton.getText()+"");
+                            player.setInGameName(playerButton.getText() + "");
 
                             // Commit the new player to the DB.
                             if (!friendsCheckbox.isChecked() && !notificationsCheckbox.isChecked() && !yourselfCheckbox.isChecked()){

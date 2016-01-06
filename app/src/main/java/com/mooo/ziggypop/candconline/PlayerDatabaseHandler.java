@@ -17,7 +17,7 @@ import java.util.List;
 public class PlayerDatabaseHandler extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 10;
 
     // Database Name
     private static final String DATABASE_NAME = "playerDB";
@@ -32,6 +32,7 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_PLAYER_IS_FRIEND = "friend";
     private static final String KEY_PLAYER_NOTIFICATIONS = "notifications";
     private static final String KEY_PLAYER_IS_YOURSELF = "yourself";
+    private static final String KEY_PLAYER_IN_GAME_NAME = "ign";
 
 
 
@@ -48,7 +49,8 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
                 + KEY_PLAYER_NICKNAME + " TEXT,"
                 + KEY_PLAYER_IS_FRIEND + " INTEGER,"
                 + KEY_PLAYER_NOTIFICATIONS + " INTEGER,"
-                + KEY_PLAYER_IS_YOURSELF + " INTEGER"
+                + KEY_PLAYER_IS_YOURSELF + " INTEGER,"
+                + KEY_PLAYER_IN_GAME_NAME + " Text"
                 + ")";
         db.execSQL(CREATE_RSS_TABLE);
 
@@ -87,6 +89,7 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
         int friendIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_IS_FRIEND);
         int notificationIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_NOTIFICATIONS);
         int yourselfIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_IS_YOURSELF);
+        int ignIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_IN_GAME_NAME);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
@@ -98,7 +101,8 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
                         cursor.getInt(pidIndex),
                         (cursor.getInt(friendIndex) == 1),
                         (cursor.getInt(notificationIndex) == 1),
-                        (cursor.getInt(yourselfIndex) == 1));
+                        (cursor.getInt(yourselfIndex) == 1),
+                        cursor.getString(ignIndex));
                 // Adding contact to list
                 playerList.add(player);
             } while (cursor.moveToNext());
@@ -121,7 +125,7 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_PLAYER_IS_FRIEND, (player.getIsFriend())? 1 : 0);
         values.put(KEY_PLAYER_NOTIFICATIONS, (player.getIsRecieveNotifications())? 1 : 0);
         values.put(KEY_PLAYER_IS_YOURSELF, (player.getIsYourself())? 1 :0);
-
+        values.put(KEY_PLAYER_IN_GAME_NAME, player.getInGameName());
 
         // Check if row already existed in database
         if (!isPlayerExists(db, player.getID())) {
@@ -154,6 +158,7 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
             int friendIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_IS_FRIEND);
             int notificationIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_NOTIFICATIONS);
             int yourselfIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_IS_YOURSELF);
+            int ignIndex = cursor.getColumnIndexOrThrow(KEY_PLAYER_IN_GAME_NAME);
 
             Player player = new Player(
                     cursor.getString(nicknameIndex),
@@ -161,7 +166,8 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
                     cursor.getInt(pidIndex),
                     (cursor.getInt(friendIndex) == 1),
                     (cursor.getInt(notificationIndex) == 1),
-                    (cursor.getInt(yourselfIndex) == 1));
+                    (cursor.getInt(yourselfIndex) == 1),
+                    cursor.getString(ignIndex));
             cursor.close();
             db.close();
             return player;

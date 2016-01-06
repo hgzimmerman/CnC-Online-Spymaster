@@ -134,6 +134,7 @@ public class PlayerDatabaseViewerActivity extends AppCompatActivity
                                 PlayerDatabaseHandler db = new PlayerDatabaseHandler(getApplicationContext());
                                 db.resetDB(db.getReadableDatabase());
                                 // update the view
+                                //Todo: send an intent to itself to avoid crashing.
                                 playerFragment.refreshData(dbHandler.getAllPlayers(), getParent());
                             }
                         });

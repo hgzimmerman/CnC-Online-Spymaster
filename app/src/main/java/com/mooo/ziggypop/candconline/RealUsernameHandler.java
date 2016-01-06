@@ -52,7 +52,7 @@ public class RealUsernameHandler {
 
 
                 String queryString = "[href*=/users/"+strings[1]+"/]";
-                Log.v(TAG, queryString);
+                Log.v(TAG, "queryString: " +queryString);
                 Log.v(TAG, doc.select(queryString).toString());
                 buffer.append(doc.select(queryString).text());
 
