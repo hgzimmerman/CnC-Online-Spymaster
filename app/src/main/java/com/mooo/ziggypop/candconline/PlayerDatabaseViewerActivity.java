@@ -2,6 +2,7 @@ package com.mooo.ziggypop.candconline;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.graphics.PorterDuff.Mode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,10 +48,9 @@ public class PlayerDatabaseViewerActivity extends AppCompatActivity
 
         toolbar = (Toolbar) findViewById(R.id.db_toolbar);
         toolbar.setTitle("Manage Database");
-        Drawable backButon = ContextCompat.getDrawable(getApplicationContext(), R.mipmap.my_abc_ic_ab_back_mtrl_am_alpha);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            backButon.setTint(getColor(R.color.black));
-        toolbar.setNavigationIcon(backButon);
+        Drawable backButton = ContextCompat.getDrawable(getApplicationContext(), R.mipmap.my_abc_ic_ab_back_mtrl_am_alpha);
+        backButton.setColorFilter(getResources().getColor(R.color.black), Mode.MULTIPLY);
+        toolbar.setNavigationIcon(backButton);
         setSupportActionBar(toolbar);
         //noinspection ConstantConditions
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
