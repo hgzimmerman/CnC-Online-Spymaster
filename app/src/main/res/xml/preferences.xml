@@ -58,7 +58,7 @@
         <Preference
             android:key="@string/manage_friends_pref"
             android:title="Manage Players"
-            android:summary="Update or remove preferences for players already in the database."
+            android:summary="Update or remove flags for players already in the database."
             />
 
         <android.support.v7.preference.SwitchPreferenceCompat
