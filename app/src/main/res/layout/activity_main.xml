@@ -34,7 +34,6 @@
             </android.support.v7.widget.Toolbar>
 
        <!-- Toolbar for the sliding tabs -->
-       <!-- -4dp margin-bottom and top to offset the fact that there is unneeded space beneath the toolbar to start with -->
         <android.support.v7.widget.Toolbar
             android:gravity="top"
             android:id="@+id/toolbar"
@@ -42,6 +41,7 @@
             android:layout_width="fill_parent"
             android:background="@color/kw_red"
             app:contentInsetStart="0dp"
+            android:layout_marginBottom="-4dp"
             android:layout_height="wrap_content">
 
 
