@@ -26,8 +26,10 @@ import android.view.WindowManager;
 public class SettingsActivity extends AppCompatActivity{
 
     public static final String TAG = "SettingsActivity";
-    static public int currentGame;
+    public int currentGame;
     Toolbar mToolBar;
+
+    static Intent dbViewIntent;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,8 @@ public class SettingsActivity extends AppCompatActivity{
                     break;
             }
         }
+        dbViewIntent = new Intent(getApplicationContext(), PlayerDatabaseViewerActivity.class);
+        dbViewIntent.putExtra("current_game", currentGame);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Log.v(TAG, "Current interval = " + preferences.getString(getString(R.string.time_interval_pref), "15"));
@@ -89,8 +93,7 @@ public class SettingsActivity extends AppCompatActivity{
             case android.R.id.home:
                 // go to previous screen when app icon in action bar is clicked
                 Intent intent = new Intent(this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("current_game", currentGame);
+                Log.v(TAG, "CurrentGame onOptionsItemSelected : " +currentGame);
                 startActivity(intent);
                 return true;
         }
@@ -135,6 +138,8 @@ public class SettingsActivity extends AppCompatActivity{
                     });
                     AlertDialog dialog = builder.create();
                     dialog.show();
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.material_blue_grey_500));
+                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getContext().getResources().getColor(R.color.material_blue_grey_500));
                     return true;
                 }
             });
@@ -183,30 +188,13 @@ public class SettingsActivity extends AppCompatActivity{
 
 
 
-            //Notification interval
-            CustomSpinnerPreference notifyIntervalPref =
-                    (CustomSpinnerPreference) getPreferenceScreen().findPreference(getString(R.string.time_interval_pref));
-            //Todo: this doesn't seem to fire, investigate why that is.
-            notifyIntervalPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    // For some reason, this is never called, so I implemented what SHOULD be done here
-                    // In TimeIntervalPreference.doActionOnItemSelected, which is called from
-                    // the abstract SpinnerPreference.OnItemSelected.
-                    return true;
-                }
-            });
-
-
             // Manage DB friends
             Preference manageFriends = getPreferenceScreen().findPreference(getString(R.string.manage_friends_pref));
             manageFriends.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     // launch an activity to show all players in the database (regardless of their online status)
-                    Intent intent = new Intent(getContext().getApplicationContext(), PlayerDatabaseViewerActivity.class);
-                    intent.putExtra("currentGame", currentGame);
-                    getActivity().startActivity(intent);
+                    getActivity().startActivity(dbViewIntent);
                     return true;
                 }
             });

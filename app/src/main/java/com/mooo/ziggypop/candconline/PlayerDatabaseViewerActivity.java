@@ -30,7 +30,7 @@ public class PlayerDatabaseViewerActivity extends AppCompatActivity
     public static final String TAG = "DatabaseViewerActivity";
 
     PlayerDatabaseHandler dbHandler;
-    int current_game;
+    int current_game = 22;
     Toolbar toolbar;
     Player.PlayersFragment playerFragment;
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -105,7 +105,6 @@ public class PlayerDatabaseViewerActivity extends AppCompatActivity
             case android.R.id.home:
                 // go to previous screen when app icon in action bar is clicked
                 Intent intent = new Intent(this, SettingsActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("current_game", current_game);
                 startActivity(intent);
                 return true;
