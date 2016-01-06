@@ -48,7 +48,7 @@ public class Player implements Comparable{
     private boolean isReceiveNotifications;
     private boolean isYourself;
     private String game;
-    private String inGameName;
+    private String userName;
 
 
 
@@ -60,18 +60,18 @@ public class Player implements Comparable{
         this.isReceiveNotifications = false;
         this.isYourself = false;
         this.game = "";
-        this.inGameName = "";
+        this.userName = "";
     }
 
     public Player(String nickname, int id, int pid, boolean isFriend,
-                  boolean isRecieveNotifications, boolean isYourself, String inGameName) {
+                  boolean isReceiveNotifications, boolean isYourself, String userName) {
         this.nickname = nickname;
         this.id = id;
         this.pid = pid;
         this.isFriend = isFriend;
-        this.isReceiveNotifications = isRecieveNotifications;
+        this.isReceiveNotifications = isReceiveNotifications;
         this.isYourself = isYourself;
-        this.inGameName = inGameName;
+        this.userName = userName;
     }
 
 
@@ -86,7 +86,7 @@ public class Player implements Comparable{
     public boolean getIsFriend(){return isFriend;}
     public boolean getIsRecieveNotifications(){return isReceiveNotifications;}
     public boolean getIsYourself(){return isYourself;}
-    public String getInGameName(){ return inGameName;}
+    public String getUserName(){ return userName;}
 
     public void setIsFriend(boolean isFriend){
         this.isFriend = isFriend;
@@ -95,7 +95,7 @@ public class Player implements Comparable{
     public void setIsYourself(boolean isYourself){
         this.isYourself = isYourself;
     }
-    public void setInGameName(String inGameName) { this.inGameName = inGameName; }
+    public void setUserName(String userName) { this.userName = userName; }
 
 
     /**
@@ -220,15 +220,10 @@ public class Player implements Comparable{
                     playerPID.setText(playerPIDText);
                     */
 
-                    final Button playerButton = (Button) dialogView.findViewById(R.id.player_link);
                     final String cncOnlineLink = "http://cnc-online.net/profiles/"  + player.pid + "/";
-                    playerButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(cncOnlineLink));
-                            getContext().startActivity(browserIntent);
-                        }
-                    });
+
+
+                    final TextView playerUserNameText = (TextView) dialogView.findViewById(R.id.players_user_name);
                     /*
                     Button statsButton = (Button) dialogView.findViewById(R.id.stats_link);
                     String gameID = "kw";
@@ -243,12 +238,12 @@ public class Player implements Comparable{
                     */
 
                     // Set the string to the username if the player is not found in the database.
-                    if (player.getInGameName().equals("")
-                            || player.getInGameName().equals(getContext().getString(R.string.profile))){
+                    if (player.getUserName().equals("")
+                            || player.getUserName().equals(getContext().getString(R.string.profile))){
                         Log.d(TAG, "Player IGN not found, getting from website");
-                        new RealUsernameHandler(cncOnlineLink, player.id+"", playerButton).getUsername();
+                        new RealUsernameHandler(cncOnlineLink, player.id+"", playerUserNameText).getUsername();
                     } else {
-                        playerButton.setText(player.getInGameName());
+                        playerUserNameText.setText(player.getUserName());
                     }
 
 
@@ -292,8 +287,7 @@ public class Player implements Comparable{
                                 player.setIsYourself(false);
                                 holder.yourselfMarker.setVisibility(View.INVISIBLE);
                             }
-                            Log.v(TAG, playerButton.getText()+"");
-                            player.setInGameName(playerButton.getText() + "");
+                            player.setUserName(playerUserNameText.getText() + "");
 
                             // Commit the new player to the DB.
                             if (!friendsCheckbox.isChecked() && !notificationsCheckbox.isChecked() && !yourselfCheckbox.isChecked()){
@@ -308,12 +302,20 @@ public class Player implements Comparable{
                         public void onClick(DialogInterface dialog, int id) {
                             // do nothing
                         }
+                    }).setNeutralButton(R.string.profile, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(cncOnlineLink));
+                            getContext().startActivity(browserIntent);
+                        }
                     });
                     AlertDialog dialog  = builder.create();
 
                     dialog.show();
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.material_blue_grey_500));
                     dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getContext().getResources().getColor(R.color.material_blue_grey_500));
+                    dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(getContext().getResources().getColor(R.color.material_blue_grey_500));
+
 
                 }
             });

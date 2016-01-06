@@ -125,7 +125,7 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_PLAYER_IS_FRIEND, (player.getIsFriend())? 1 : 0);
         values.put(KEY_PLAYER_NOTIFICATIONS, (player.getIsRecieveNotifications())? 1 : 0);
         values.put(KEY_PLAYER_IS_YOURSELF, (player.getIsYourself())? 1 :0);
-        values.put(KEY_PLAYER_IN_GAME_NAME, player.getInGameName());
+        values.put(KEY_PLAYER_IN_GAME_NAME, player.getUserName());
 
         // Check if row already existed in database
         if (!isPlayerExists(db, player.getID())) {
