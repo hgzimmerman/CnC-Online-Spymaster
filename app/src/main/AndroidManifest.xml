@@ -22,21 +22,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingsActivity"
+        <activity
+            android:name=".SettingsActivity"
             android:theme="@style/prefTheme"
             android:parentActivityName=".MainActivity"
             />
-        <activity android:name=".PlayerDatabaseViewerActivity"
+        <activity
+            android:name=".PlayerDatabaseViewerActivity"
             android:parentActivityName=".SettingsActivity"
             />
 
-        <receiver android:name=".AlarmArmingBootReceiver"
+        <receiver
+            android:name=".AlarmArmingBootReceiver"
             android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
-        <receiver android:name=".NotificationMessage">
+        <receiver
+            android:name=".NotificationMessage">
 
         </receiver>
 

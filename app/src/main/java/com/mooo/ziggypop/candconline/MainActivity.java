@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity
     public Toolbar topToolbar;
     public Toolbar bottomToolbar;
     public PlayerDatabaseHandler dbHandler;
+
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -129,7 +131,7 @@ public class MainActivity extends AppCompatActivity
             int currentGame = getIntent().getExtras().getInt("current_game");
             Log.v(TAG, "currentGame: " + currentGame);
             onSectionAttached(currentGame);
-            //currentNavDrawerIndex = currentGame;
+            currentNavDrawerIndex = currentGame;
             mNavigationDrawerFragment.mDrawerListView.setItemChecked(currentGame, true);
         }
     }
@@ -236,9 +238,8 @@ public class MainActivity extends AppCompatActivity
                 Log.v(TAG, "Animating transition between game titles");
             }
         }
-
         // Save which drawer was opened to prevent re-animating if you select the same one.
-        if (position !=0)
+        if (position !=0 && position!=6)
             currentNavDrawerIndex = position;
     }
 

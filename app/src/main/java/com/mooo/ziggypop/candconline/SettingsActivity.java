@@ -259,4 +259,11 @@ public class SettingsActivity extends AppCompatActivity{
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             window.setStatusBarColor(getResources().getColor(colorResourceId, getTheme()));
     }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("current_game", currentGame);
+        startActivity(intent);
+    }
 }
