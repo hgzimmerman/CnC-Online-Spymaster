@@ -11,6 +11,7 @@
 
     <style name="prefTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="colorAccent">@color/material_blue_grey_500</item>
     </style>
 
 
