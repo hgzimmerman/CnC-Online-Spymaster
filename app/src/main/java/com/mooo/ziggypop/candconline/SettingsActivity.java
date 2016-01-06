@@ -100,7 +100,7 @@ public class SettingsActivity extends AppCompatActivity{
             case android.R.id.home:
                 // go to previous screen when app icon in action bar is clicked
                 Intent intent = new Intent(this, MainActivity.class);
-                Log.v(TAG, "CurrentGame onOptionsItemSelected : " +currentGame);
+                intent.putExtra("current_game", currentGame);
                 startActivity(intent);
                 return true;
         }

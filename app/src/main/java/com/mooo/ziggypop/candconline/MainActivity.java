@@ -126,7 +126,9 @@ public class MainActivity extends AppCompatActivity
         // Todo: look into intent filters
         if (getIntent().getExtras() != null) {
             int currentGame = getIntent().getExtras().getInt("current_game");
+            Log.v(TAG, "currentGame: " + currentGame);
             onSectionAttached(currentGame);
+            //currentNavDrawerIndex = currentGame;
             mNavigationDrawerFragment.mDrawerListView.setItemChecked(currentGame, true);
         }
     }
