@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
 
     <item android:id="@+id/action_graph"
-        android:title="@string/help"
+        android:title="@string/graph"
         android:orderInCategory="1"
         app:showAsAction="ifRoom"
         android:icon="@mipmap/ic_action_line_chart"/>
@@ -12,7 +12,7 @@
         android:title="@string/help"
         android:orderInCategory="2"
         app:showAsAction="ifRoom"
-        android:icon="@mipmap/ic_action_question_help"/>
+        android:icon="@mipmap/ic_action_help"/>
 
 
 </menu>

@@ -89,6 +89,7 @@
         "</string>
     <string name="reset_db_summary">Reset the local database that holds player data.</string>
     <string name="help">Help</string>
+    <string name="graph">Graph</string>
 
     <!--Strings for tagging and retrieving preferences-->
     <string name="licence_pref">license_preference</string>
