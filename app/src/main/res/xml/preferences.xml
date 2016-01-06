@@ -73,6 +73,11 @@
             android:key="@string/licence_pref"
             android:title="@string/licence"
             />
+        <Preference
+            android:key="@string/donate_pref"
+            android:title="@string/donate"
+            android:summary="@string/donate_summary"
+            />
 
     </PreferenceCategory>
 

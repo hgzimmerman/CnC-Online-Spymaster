@@ -99,6 +99,7 @@
     <string name="manage_friends_pref">manage_friends</string>
     <string name="notify_if_charging_pref">notify_if_charging</string>
     <string name="sort_players_by_friendship_first_pref">sort_players_by_friendship</string>
+    <string name="donate_pref">donate</string>
     <!-- END Strings for tagging and retrieving preferences-->
 
     <string name="reset_player_db">Reset Player Database</string>
@@ -111,6 +112,8 @@
     <string name="flag_for_marking_yourself">Flag for marking yourself.</string>
     <string name="profile">Profile Page</string>
     <string name="user_name">User Name</string>
+    <string name="donate">Donate to Revora</string>
+    <string name="donate_summary">Revora server is the source of the player data this app uses.</string>
 
 
 </resources>

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -184,15 +185,6 @@ public class SettingsActivity extends AppCompatActivity{
                 }
             });
 
-            //Notification if you are online.
-            Preference notifyIfOnline = getPreferenceScreen().findPreference(getString(R.string.notify_if_online_pref));
-            notifyIfOnline.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object o) {
-                    return true;
-                }
-            });
-
 
 
             // Manage DB friends
@@ -205,6 +197,19 @@ public class SettingsActivity extends AppCompatActivity{
                     return true;
                 }
             });
+
+            // Manage DB friends
+            Preference donate = getPreferenceScreen().findPreference(getString(R.string.donate_pref));
+            donate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    //Start web browser with the donate page.
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://revora.net/donate"));
+                    getActivity().startActivity(browserIntent);
+                    return true;
+                }
+            });
+
         }
 
         @Override
