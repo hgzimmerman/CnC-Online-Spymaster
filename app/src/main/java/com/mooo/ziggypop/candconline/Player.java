@@ -245,7 +245,7 @@ public class Player implements Comparable{
                     // Set the string to the username if the player is not found in the database.
                     if (player.getInGameName() == null || player.getInGameName().equals("")
                             || player.getInGameName().equals(getContext().getString(R.string.profile))){
-                        new RealUsernameHandler(cncOnlineLink, player.id+"", playerButton);
+                        new RealUsernameHandler(cncOnlineLink, player.id+"", playerButton).getUsername();
                     } else {
                         playerButton.setText(player.getInGameName());
                     }

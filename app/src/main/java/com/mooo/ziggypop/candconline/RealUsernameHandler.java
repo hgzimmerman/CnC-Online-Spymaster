@@ -25,7 +25,6 @@ public class RealUsernameHandler {
         this.url = url;
         this.id = pid;
         this.textView = textView;
-        getUsername();
     }
 
 
@@ -49,7 +48,6 @@ public class RealUsernameHandler {
                 // Get document (HTML page) title
                 String title = doc.title();
                 Log.d("JSwA", "Title [" + title + "]");
-
 
                 String queryString = "[href*=/users/"+strings[1]+"/]";
                 Log.v(TAG, "queryString: " +queryString);
