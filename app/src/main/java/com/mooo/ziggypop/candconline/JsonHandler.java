@@ -308,6 +308,9 @@ public class JsonHandler {
         }
     }
 
+
+
+
     public static class ServiceJsonGetter extends AsyncTask<URL, Integer, JSONObject> {
 
 

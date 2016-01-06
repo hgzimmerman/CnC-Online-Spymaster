@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -238,6 +237,8 @@ public class Player implements Comparable{
                         }
                     });
                     */
+                    new RealUsernameHandler(cncOnlineLink, player.id+"", playerButton);
+
 
 
                     final CheckBox friendsCheckbox = (CheckBox) dialogView.findViewById(R.id.friends_checkbox);
