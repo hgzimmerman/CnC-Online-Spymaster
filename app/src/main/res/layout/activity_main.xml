@@ -40,10 +40,8 @@
             android:id="@+id/toolbar"
             android:paddingTop="0dp"
             android:layout_width="fill_parent"
-            android:background="@null"
-            android:layout_marginTop="-4dp"
+            android:background="@color/kw_red"
             app:contentInsetStart="0dp"
-            android:layout_marginBottom="-4dp"
             android:layout_height="wrap_content">
 
 

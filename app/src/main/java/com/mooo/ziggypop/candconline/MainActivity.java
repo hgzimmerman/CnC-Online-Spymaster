@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity
     public SwipeRefreshLayout mSwipeRefreshLayout;
     private int currentNavDrawerIndex = 0;
     public Toolbar topToolbar;
+    public Toolbar bottomToolbar;
     public PlayerDatabaseHandler dbHandler;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity
         topToolbar = (Toolbar) findViewById(R.id.top_toolbar);
         setSupportActionBar(topToolbar);
 
-        Toolbar bottomToolbar = (Toolbar) findViewById(R.id.toolbar);
+         bottomToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -331,6 +332,7 @@ public class MainActivity extends AppCompatActivity
         //noinspection deprecation
         findViewById(R.id.sliding_tabs).setBackgroundColor( getResources().getColor(colorResourceId));
         mSwipeRefreshLayout.setColorSchemeResources(colorResourceId);
+        bottomToolbar.setBackgroundColor(getColor(colorResourceId));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             window.setStatusBarColor(getResources().getColor(colorResourceId));
     }
