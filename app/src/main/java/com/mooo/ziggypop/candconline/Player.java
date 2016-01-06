@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -241,7 +242,8 @@ public class Player implements Comparable{
                     if (player.getUserName().equals("")
                             || player.getUserName().equals(getContext().getString(R.string.profile))){
                         Log.d(TAG, "Player IGN not found, getting from website");
-                        new RealUsernameHandler(cncOnlineLink, player.id+"", playerUserNameText).getUsername();
+                        LinearLayout progBarView = (LinearLayout) dialogView.findViewById(R.id.name_loading_progress_bar);
+                        new RealUsernameHandler(cncOnlineLink, player.id+"", playerUserNameText, progBarView).getUsername();
                     } else {
                         playerUserNameText.setText(player.getUserName());
                     }

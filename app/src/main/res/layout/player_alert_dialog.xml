@@ -38,6 +38,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:id="@+id/name_loading_progress_bar"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:layout_width="24dp"
+                android:layout_height="24dp"/>
+            <View
+                android:layout_width="48dp"
+                android:layout_height="24dp"/>
+
+        </LinearLayout>
+
         <TextView
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"

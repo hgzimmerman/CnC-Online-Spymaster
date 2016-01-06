@@ -2,6 +2,9 @@ package com.mooo.ziggypop.candconline;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
@@ -17,14 +20,16 @@ public class RealUsernameHandler {
 
     public static final String TAG = "JSwA";
 
+    LinearLayout progressBarLayout;
     TextView textView;
     String url;
     String id;
 
-    public RealUsernameHandler(String url, String pid, TextView textView){
+    public RealUsernameHandler(String url, String pid, TextView textView, LinearLayout progressBarLayout){
         this.url = url;
         this.id = pid;
         this.textView = textView;
+        this.progressBarLayout = progressBarLayout;
     }
 
 
@@ -62,9 +67,16 @@ public class RealUsernameHandler {
         }
 
         @Override
+        protected void onPreExecute() {
+            progressBarLayout.setVisibility(View.VISIBLE);
+            super.onPreExecute();
+        }
+
+        @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             textView.setText(s);
+            progressBarLayout.setVisibility(View.GONE);
         }
     }
 }

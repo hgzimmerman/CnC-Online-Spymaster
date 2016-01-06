@@ -167,11 +167,13 @@ public class MainActivity extends AppCompatActivity
                 helpDialog.show();
 
                 return true;
+            /*
             case R.id.action_graph:
                 Log.v(TAG, "Graph selected");
                 Intent alarmIntent = new Intent(this, NotificationMessage.class);
                 sendBroadcast(alarmIntent);
                 return true;
+                */
             default:
                 return super.onOptionsItemSelected(item);
         }
