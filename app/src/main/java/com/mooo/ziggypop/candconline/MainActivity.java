@@ -163,6 +163,7 @@ public class MainActivity extends AppCompatActivity
                 });
                 helpBuilder.setView(dialogView);
                 AlertDialog helpDialog = helpBuilder.create();
+                helpDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.material_blue_grey_500));
                 helpDialog.show();
 
                 return true;
