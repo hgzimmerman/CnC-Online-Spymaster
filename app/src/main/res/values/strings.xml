@@ -114,6 +114,11 @@
     <string name="user_name">User Name</string>
     <string name="donate">Donate to Revora</string>
     <string name="donate_summary">Revora server is the source of the player data this app uses.</string>
+    <string name="this_icon_represents_yourself_you_can_configure_the_app_to_only_send_notifications_if_you_are_also_online">This icon represents yourself. You can configure the app to only send notifications if you are also online.</string>
+    <string name="to_access_players_that_you_have_saved_while_they_are_offline_you_can_visit_settings_manage_players"><![CDATA[To access players that you have saved while they are offline, you can visit Settings > Manage Players.]]></string>
+    <string name="this_icon_means_that_if_enabled_the_app_will_notify_you_if_this_player_is_online">This icon means that, if enabled, the app will notify you if this player is online.</string>
+    <string name="this_icon_indicates_friends_this_is_useful_for_recognizing_players_as_you_scroll_through_the_list_of_players">This icon indicates friends. This is useful for recognizing players as you scroll through the list of players.</string>
+    <string name="clicking_on_a_player_will_bring_up_a_dialog_clicking_on_any_of_checkboxes_will_save_the_player_locally_to_the_phone">Clicking on a player will bring up a dialog. Clicking on any of checkboxes will save the player locally to the phone.</string>
 
 
 </resources>
