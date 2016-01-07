@@ -11,7 +11,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -46,7 +45,7 @@ public class PlayerDatabaseViewerActivity extends AppCompatActivity
         dbHandler = new PlayerDatabaseHandler(getApplicationContext());
 
         toolbar = (Toolbar) findViewById(R.id.db_toolbar);
-        toolbar.setTitle("Manage Database");
+        toolbar.setTitle(getString(R.string.local_player_database));
         Drawable backButton = ContextCompat.getDrawable(getApplicationContext(), R.mipmap.my_abc_ic_ab_back_mtrl_am_alpha);
         backButton.setColorFilter(getResources().getColor(R.color.black), Mode.MULTIPLY);
         toolbar.setNavigationIcon(backButton);
