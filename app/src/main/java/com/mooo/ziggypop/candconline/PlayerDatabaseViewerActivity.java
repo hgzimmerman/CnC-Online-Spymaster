@@ -1,8 +1,7 @@
 package com.mooo.ziggypop.candconline;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.ColorFilter;
+
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;

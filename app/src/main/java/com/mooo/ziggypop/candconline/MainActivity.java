@@ -4,8 +4,7 @@ package com.mooo.ziggypop.candconline;
 import java.util.Locale;
 
 
-import android.app.Activity;
-import android.app.PendingIntent;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -32,7 +31,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.TextView;
+
 
 
 public class MainActivity extends AppCompatActivity
