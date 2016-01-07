@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -20,6 +21,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity
         topToolbar = (Toolbar) findViewById(R.id.top_toolbar);
         setSupportActionBar(topToolbar);
 
-         bottomToolbar = (Toolbar) findViewById(R.id.toolbar);
+        bottomToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -124,15 +126,6 @@ public class MainActivity extends AppCompatActivity
         });
         mSwipeRefreshLayout.setProgressBackgroundColor(R.color.light_grey);
 
-        // Handle intent from settings, set the nav drawer and selected game to the one presented in settings
-        // Todo: look into intent filters
-        if (getIntent().getExtras() != null) {
-            int currentGame = getIntent().getExtras().getInt("current_game");
-            Log.v(TAG, "currentGame: " + currentGame);
-            onSectionAttached(currentGame);
-            currentNavDrawerIndex = currentGame;
-            mNavigationDrawerFragment.mDrawerListView.setItemChecked(currentGame, true);
-        }
     }
 
 

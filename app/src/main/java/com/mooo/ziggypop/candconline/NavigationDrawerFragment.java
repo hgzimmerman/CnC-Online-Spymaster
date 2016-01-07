@@ -94,14 +94,11 @@ public class NavigationDrawerFragment extends Fragment {
 
         Log.v("DEFAULT_GAME", sp.getString("default_game", "1"));
         mCurrentSelectedPosition = Integer.parseInt(sp.getString("default_game", "1"));
-        //mCurrentSelectedPosition = 2;
-
 
         game_bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kw_cropped);
 
         // Select either the default item (0) or the last selected item.
         selectItem(mCurrentSelectedPosition);
-
     }
 
     @Override
