@@ -55,7 +55,7 @@ public class Game {
         for(String element: players) {
             retVal += element +"\n";
         }
-        retVal = retVal.substring(0, retVal.length()-2);
+        retVal = retVal.substring(0, retVal.length()-1);
         return retVal;
     }
     public boolean getLockStatus(){
