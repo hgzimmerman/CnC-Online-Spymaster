@@ -105,9 +105,7 @@ public class PlayerDatabaseViewerActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case android.R.id.home:
                 // go to previous screen when app icon in action bar is clicked
-                Intent intent = new Intent(this, SettingsActivity.class);
-                intent.putExtra("current_game", current_game);
-                startActivity(intent);
+                finish();
                 return true;
             case R.id.menu_help:
                 AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
@@ -190,6 +188,5 @@ public class PlayerDatabaseViewerActivity extends AppCompatActivity
     public void setSafeToRefresh(boolean isSafe){
         mSwipeRefreshLayout.setEnabled(isSafe);
     }
-
 
 }

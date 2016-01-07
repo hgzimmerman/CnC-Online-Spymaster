@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity
             }
         }
         // Save which drawer was opened to prevent re-animating if you select the same one.
-        if (position !=0 && position!=6)
+        if (position !=0 && position != 6)
             currentNavDrawerIndex = position;
     }
 
@@ -276,6 +276,9 @@ public class MainActivity extends AppCompatActivity
                 mGameTitle = NavigationDrawerFragment.GameTitle.RA3;
                 break;
             case 6: //settings
+                // Set the highlighted list element of the drawer to the current game.
+                mNavigationDrawerFragment.mDrawerListView.setItemChecked(currentNavDrawerIndex, true);
+                // Start the settings activity.
                 Intent intentSetPref = new Intent(this, SettingsActivity.class);
                 intentSetPref.putExtra("current_game", currentNavDrawerIndex);
                 startActivityForResult(intentSetPref, 0);
