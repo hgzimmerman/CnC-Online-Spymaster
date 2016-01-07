@@ -55,6 +55,7 @@ public class NavigationDrawerFragment extends Fragment {
      * Helper component that ties the action bar to the navigation drawer.
      */
     public ActionBarDrawerToggle mDrawerToggle;
+    private static final int NO_SELECT = 6; //do not select a fragment if position is this.
 
     public DrawerLayout mDrawerLayout;
     public ListView mDrawerListView;
@@ -234,7 +235,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private void selectItem(int position) {
-        if (position != 6) {
+        if (position != NO_SELECT) {
             mCurrentSelectedPosition = position;
             if (mDrawerListView != null) {
                 mDrawerListView.setItemChecked(position, true);
