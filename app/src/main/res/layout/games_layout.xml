@@ -35,7 +35,6 @@
                 android:gravity="end|center"
                 android:layout_weight="1"
                 >
-                <!--TODO: create a mipmap for the lock instead of a drawable-->
                 <ImageView
                     android:id="@+id/lock"
                     android:layout_width="wrap_content"
