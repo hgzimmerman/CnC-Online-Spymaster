@@ -81,7 +81,7 @@
     <string name="receive_notifications">Receive Notifications</string>
     <string name="friends">Friends</string>
     <string name="cancel">Cancel</string>
-    <string name="player_is_you">Player is You</string>
+    <string name="player_is_you">Player is Yourself</string>
     <string name="reset_db_disclaimer">
         "This will reset the database that holds all of the players that you have marked as your friend, for you to receive notifications about their online status, and those you marked as yourself.
 

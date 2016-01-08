@@ -40,7 +40,7 @@
                     android:id="@+id/lock"
                     android:layout_width="wrap_content"
                     android:layout_height="15dp"
-                    android:src="@drawable/lock64"
+                    android:src="@mipmap/ic_action_lock_closed"
                     android:visibility="invisible"
                     android:contentDescription="@string/the_game_is_locked" />
 

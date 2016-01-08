@@ -81,7 +81,7 @@ public class NotificationMessage extends BroadcastReceiver {
 
                 // Set the info for the views that show in the notification panel.
                 Notification notification = new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.mipmap.ic_stat_gdi_original_transparent)  // the status icon
+                        .setSmallIcon(R.mipmap.ic_stat_gdi_cropped)  // the status icon
                         .setTicker("CnC Players Online")  // the status text
                         .setWhen(System.currentTimeMillis())  // the time stamp
                         .setContentTitle(context.getText(R.string.friends_online_service_label))  // the label of the entry
