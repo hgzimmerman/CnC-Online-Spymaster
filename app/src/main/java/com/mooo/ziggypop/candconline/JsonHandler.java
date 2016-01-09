@@ -31,6 +31,14 @@ public class JsonHandler {
 
     public static final String TAG = "JsonHandler";
 
+    public static final String KW_JSON = "cnc3kw";
+    public static final String CNC3_JSON = "cnc3";
+    public static final String GENERALS_JSON = "generals";
+    public static final String ZH_JSON = "generalszh";
+    public static final String RA3_JSON = "ra3";
+
+
+
     public static final String PROTOCOL = "http";
     public static final String HOST = "server.cnc-online.net";
     public static final int PORT = 29998;
@@ -139,11 +147,11 @@ public class JsonHandler {
         JSONObject playersObject;
         try {
             List<JSONObject> gameJSONs = new ArrayList<>();
-            gameJSONs.add(gameObject.getJSONObject(context.getString(R.string.KanesWrathJSON)));
-            gameJSONs.add(gameObject.getJSONObject(context.getString(R.string.CandC3JSON)));
-            gameJSONs.add(gameObject.getJSONObject(context.getString(R.string.GeneralsJSON)));
-            gameJSONs.add(gameObject.getJSONObject(context.getString(R.string.ZeroHourJSON)));
-            gameJSONs.add(gameObject.getJSONObject(context.getString(R.string.RedAlert3JSON)));
+            gameJSONs.add(gameObject.getJSONObject(KW_JSON));
+            gameJSONs.add(gameObject.getJSONObject(CNC3_JSON));
+            gameJSONs.add(gameObject.getJSONObject(GENERALS_JSON));
+            gameJSONs.add(gameObject.getJSONObject(ZH_JSON));
+            gameJSONs.add(gameObject.getJSONObject(RA3_JSON));
 
             List<Player> allOnlinePlayers = new ArrayList<>();
             for ( JSONObject gameJSON: gameJSONs) {
@@ -215,11 +223,11 @@ public class JsonHandler {
         try {
             //Initialize the array of queries to iterate through.
             ArrayList<String> gameQueries = new ArrayList<>();
-            gameQueries.add(myActivity.getString(R.string.KanesWrathJSON));
-            gameQueries.add(myActivity.getString(R.string.CandC3JSON));
-            gameQueries.add(myActivity.getString(R.string.GeneralsJSON));
-            gameQueries.add(myActivity.getString(R.string.ZeroHourJSON));
-            gameQueries.add(myActivity.getString(R.string.RedAlert3JSON));
+            gameQueries.add(KW_JSON);
+            gameQueries.add(CNC3_JSON);
+            gameQueries.add(GENERALS_JSON);
+            gameQueries.add(ZH_JSON);
+            gameQueries.add(RA3_JSON);
 
             // get create arrays of the players for each game and give
             for( String query : gameQueries){

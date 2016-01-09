@@ -7,18 +7,13 @@
     <string name="title_section3">In Game</string>
 
 
-
+    <!--Names of the games in question, Unsure if they need localization-->
     <string name="KanesWrath">Kane\'s Wrath</string>
     <string name="CandC3">C&amp;C 3</string>
     <string name="Generals">Generals</string>
     <string name="ZeroHour">Zero Hour</string>
     <string name="RedAlert3">Red Alert 3</string>
 
-    <string name="KanesWrathJSON">cnc3kw</string>
-    <string name="CandC3JSON">cnc3</string>
-    <string name="GeneralsJSON">generals</string>
-    <string name="ZeroHourJSON">generalszh</string>
-    <string name="RedAlert3JSON">ra3</string>
 
     <string name="connection_error">Connection Error</string>
 

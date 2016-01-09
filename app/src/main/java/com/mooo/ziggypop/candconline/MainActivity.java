@@ -249,23 +249,23 @@ public class MainActivity extends AppCompatActivity
                 mNavigationDrawerFragment.mDrawerLayout.closeDrawers();
                 break;
             case 1:
-                queryJsonString = getString(R.string.KanesWrathJSON);
+                queryJsonString = JsonHandler.KW_JSON;
                 mGameTitle = NavigationDrawerFragment.GameTitle.KW;
                 break;
             case 2:
-                queryJsonString = getString(R.string.CandC3JSON);
+                queryJsonString = JsonHandler.CNC3_JSON;
                 mGameTitle = NavigationDrawerFragment.GameTitle.CnC3;
                 break;
             case 3:
-                queryJsonString = getString(R.string.GeneralsJSON);
+                queryJsonString = JsonHandler.GENERALS_JSON;
                 mGameTitle = NavigationDrawerFragment.GameTitle.Generals;
                 break;
             case 4:
-                queryJsonString = getString(R.string.ZeroHourJSON);
+                queryJsonString = JsonHandler.ZH_JSON;
                 mGameTitle = NavigationDrawerFragment.GameTitle.ZH;
                 break;
             case 5:
-                queryJsonString = getString(R.string.RedAlert3JSON);
+                queryJsonString = JsonHandler.RA3_JSON;
                 mGameTitle = NavigationDrawerFragment.GameTitle.RA3;
                 break;
             case 6: //settings
