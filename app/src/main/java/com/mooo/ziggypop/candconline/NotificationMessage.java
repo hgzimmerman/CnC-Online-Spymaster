@@ -39,7 +39,7 @@ public class NotificationMessage extends BroadcastReceiver {
         boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
                 status == BatteryManager.BATTERY_STATUS_FULL;
         boolean userMustBeCharging = PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(context.getString(R.string.notify_if_charging_pref), false);
+                .getBoolean("notify_if_charging_pref", false);
 
         //  If the flag is set, the user must be charging
         if (!(userMustBeCharging && !isCharging)) {
@@ -58,7 +58,7 @@ public class NotificationMessage extends BroadcastReceiver {
             String separator = ",  ";
 
             boolean userMustBeOnline = PreferenceManager.getDefaultSharedPreferences(context)
-                    .getBoolean(context.getString(R.string.notify_if_online_pref), false);
+                    .getBoolean("notify_if_online_pref", false);
             boolean userIsOnline = false;
             for (Player player : players) {
                 contentText += player.getNickname() + separator;
@@ -68,7 +68,7 @@ public class NotificationMessage extends BroadcastReceiver {
 
             //If there are players and if the user must be online, the user is online
             if (players.size() > 0 && !(userMustBeOnline && !userIsOnline)) {
-                Log.d(TAG, "Actually showing the notification");
+                Log.d(TAG, "Actually showing the notification: usermustBeOnLine"+ userMustBeOnline + "userIsOnline" + userIsOnline);
 
                 contentText = contentText.substring(0, contentText.length() - separator.length());
 

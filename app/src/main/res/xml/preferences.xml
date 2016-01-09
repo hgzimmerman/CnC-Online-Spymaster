@@ -12,32 +12,32 @@
 
 
         <android.support.v7.preference.SwitchPreferenceCompat
-            android:key="@string/receive_notifications_pref"
+            android:key="receive_notifications_pref"
             android:title="@string/receive_notifications"
             android:summary="Start a background service that sends notifications when players are online. Warning, this will drain your battery more than usual."
             android:defaultValue="false"
             />
 
         <android.support.v7.preference.SwitchPreferenceCompat
-            android:key="@string/notify_if_online_pref"
+            android:key="notify_if_online_pref"
             android:title="Notify Only if You are Online"
             android:summary="Only send notifications if the player you marked as yourself is online. This will not improve battery drain."
             android:defaultValue="false"
-            android:dependency="@string/receive_notifications_pref"
+            android:dependency="receive_notifications_pref"
             />
         <android.support.v7.preference.SwitchPreferenceCompat
-            android:key="@string/notify_if_charging_pref"
+            android:key="notify_if_charging_pref"
             android:title="Notify Only if You are Charging"
             android:summary="Only send notifications if your phone is charging or fully charged. This will improve battery drain."
             android:defaultValue="false"
-            android:dependency="@string/receive_notifications_pref"
+            android:dependency="receive_notifications_pref"
             />
 
         <com.mooo.ziggypop.candconline.CustomSpinnerPreference
-            android:key="@string/time_interval_pref"
+            android:key="time_interval_pref"
             android:title="Notifications Interval"
             android:summary="Time in interval between updates. Warning, the shorter the interval, the more this app will drain your battery"
-            android:dependency="@string/receive_notifications_pref"
+            android:dependency="receive_notifications_pref"
             android:defaultValue="10"
             app:entries="@array/service_ping_interval_entries"
             app:entryValues="@array/service_ping_interval_values" />
@@ -56,13 +56,13 @@
             />
 
         <Preference
-            android:key="@string/manage_friends_pref"
+            android:key="manage_friends_pref"
             android:title="Manage Players"
             android:summary="Update or remove flags for players already in the database."
             />
 
         <android.support.v7.preference.SwitchPreferenceCompat
-            android:key="@string/sort_players_by_friendship_first_pref"
+            android:key="sort_players_friendship_pref"
             android:title="Sort Players by Friendship"
             android:summary="Sort the players by friendship status first, then alphabetically."
             android:defaultValue="true"
@@ -70,11 +70,11 @@
 
 
         <Preference
-            android:key="@string/licence_pref"
+            android:key="licence_pref"
             android:title="@string/licence"
             />
         <Preference
-            android:key="@string/donate_pref"
+            android:key="donate_pref"
             android:title="@string/donate"
             android:summary="@string/donate_summary"
             />

@@ -91,17 +91,6 @@
     <string name="help">Help</string>
     <string name="graph">Graph</string>
 
-    <!--Strings for tagging and retrieving preferences-->
-    <string name="licence_pref">license_preference</string>
-    <string name="notify_if_online_pref">notify_if_online</string>
-    <string name="receive_notifications_pref">receive_notifications</string>
-    <string name="time_interval_pref">time_interval</string>
-    <string name="manage_friends_pref">manage_friends</string>
-    <string name="notify_if_charging_pref">notify_if_charging</string>
-    <string name="sort_players_by_friendship_first_pref">sort_players_by_friendship</string>
-    <string name="donate_pref">donate</string>
-    <!-- END Strings for tagging and retrieving preferences-->
-
     <string name="reset_player_db">Reset Player Database</string>
     <string name="player_db_help_message">This page displays all of the players you have marked as a friend, marked to receive notifications or marked as yourself. You can alter their marks here. Note: removing all marks will cause the player to be removed from this list and you will have to wait for them to come online again to add them again.</string>
     <string name="friends_online_service_started">Service started</string>

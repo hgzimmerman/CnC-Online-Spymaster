@@ -111,8 +111,7 @@ public class Player implements Comparable{
         // to sort 100 elements (.0002s per compare) on a Nexus 5x, so this is /acceptable/. This is
         // instead of the .011 seconds without the logic, or .040 seconds if the preference is disabled.
         Context context = CnCSpymaster.getAppContext();
-        if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-                context.getString(R.string.sort_players_by_friendship_first_pref), true)){
+        if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("sort_players_friendship_pref", true)){
             Integer lPlayerValue = valueAdder(this);
             Integer rPlayerValue = valueAdder(rightPlayer);
             // we want the greater value of the two to be "Lesser", so this is opposite from normal.

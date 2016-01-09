@@ -86,7 +86,7 @@ public class SettingsActivity extends AppCompatActivity{
         dbViewIntent.putExtra("current_game", currentGame);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        Log.v(TAG, "Current interval = " + preferences.getString(getString(R.string.time_interval_pref), "15"));
+        Log.v(TAG, "Current interval = " + preferences.getString("time_interval_pref", "15"));
 
         //swap in the settings fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -131,7 +131,7 @@ public class SettingsActivity extends AppCompatActivity{
             super.onCreate(savedInstanceState);
 
             // Show the Licence
-            Preference licencePreference = getPreferenceScreen().findPreference(getString(R.string.licence_pref));
+            Preference licencePreference = getPreferenceScreen().findPreference("licence_pref");
             licencePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -156,7 +156,7 @@ public class SettingsActivity extends AppCompatActivity{
             // get pref early so receiveNotifications can interact with it and change its state.
 
             // Receive notifications
-            Preference receiveNotifications = getPreferenceScreen().findPreference(getString(R.string.receive_notifications_pref));
+            Preference receiveNotifications = getPreferenceScreen().findPreference("receive_notifications_pref");
             receiveNotifications.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -189,7 +189,7 @@ public class SettingsActivity extends AppCompatActivity{
 
 
             // Manage DB friends
-            Preference manageFriends = getPreferenceScreen().findPreference(getString(R.string.manage_friends_pref));
+            Preference manageFriends = getPreferenceScreen().findPreference("manage_friends_pref");
             manageFriends.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -200,7 +200,7 @@ public class SettingsActivity extends AppCompatActivity{
             });
 
             // Manage DB friends
-            Preference donate = getPreferenceScreen().findPreference(getString(R.string.donate_pref));
+            Preference donate = getPreferenceScreen().findPreference("donate_pref");
             donate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -232,7 +232,7 @@ public class SettingsActivity extends AppCompatActivity{
                 @Override
                 public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
                     //Preferences.sync(getPreferenceManager(), key);
-                    if (key.equals(getActivity().getString(R.string.time_interval_pref))) {
+                    if (key.equals("time_interval_pref")) {
                         Log.v(TAG, "Shared prefs changed time interval");
                         AlarmArmingBootReceiver.setAlarm(getContext());
                     } else if (key.equals("default_game")){
