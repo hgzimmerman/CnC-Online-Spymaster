@@ -205,6 +205,7 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
 
     /**
      * Given a list of players online with their flags unset, replace the players also found in the DB.
+     * This will be called when getting the list of players from the the remote website.
      * @param players The list of players currently online.
      * @return An ArrayList of Players that have their flags set.
      */
@@ -216,10 +217,29 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
             boolean isAdded = false;
             for (Player dbPlayer: dbPlayers){
                 if (player.getID() == dbPlayer.getID()){
-                    newPlayers.add(dbPlayer);
+                    // if the name has changed, update the name. NOTE: This is hard for me to test
+                    if ( ! player.getNickname().equals(dbPlayer.getNickname()) ) {
+                        Player replacementPlayer = new Player(
+                                player.getNickname(),
+                                dbPlayer.getID(),
+                                dbPlayer.getPID(),
+                                dbPlayer.getIsFriend(),
+                                dbPlayer.getIsRecieveNotifications(),
+                                dbPlayer.getIsYourself(),
+                                dbPlayer.getUserName()
+                        );
+                        updatePlayer(replacementPlayer);
+                        // add the db player with the correct name to the list
+                        newPlayers.add(replacementPlayer);
+                    } else {
+                        // add the database player to the list if the name is the same.
+                        newPlayers.add(dbPlayer);
+                    }
+                    // set a flag meaning that the player has been found in the db
                     isAdded = true;
                 }
             }
+            // if the player hasn't been found, add to the list
             if (!isAdded){
                 newPlayers.add(player);
             }
