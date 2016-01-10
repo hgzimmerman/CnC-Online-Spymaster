@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/small_player_layout"
+android:orientation="horizontal"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:clickable="false"
+android:background="?android:attr/selectableItemBackground"
+android:padding="12dp"
+android:layout_gravity="center_horizontal"
+    >
+
+<TextView
+    android:id="@+id/text"
+    android:textSize="22sp"
+    android:layout_gravity="start|center_vertical"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="10"/>
+
+
+<ImageView
+    android:contentDescription="@string/flag_for_marking_yourself"
+    android:id="@+id/yourself_marker"
+    android:visibility="invisible"
+    android:src="@mipmap/ic_action_user"
+    android:tint="@color/cnc3_green"
+    android:layout_width="40dp"
+    android:layout_height="35dp"
+    />
+
+
+<ImageView
+    android:contentDescription="@string/flag_if_you_want_to_receive_notifications_about_this_player"
+    android:id="@+id/notify_marker"
+    android:visibility="invisible"
+    android:src="@mipmap/ic_action_bell"
+    android:tint="@color/normal_blue"
+    android:layout_width="40dp"
+    android:layout_height="35dp"/>
+
+<ImageView
+    android:contentDescription="@string/flag_for_marking_friends"
+    android:id="@+id/friend_marker"
+    android:visibility="invisible"
+    android:src="@mipmap/ic_action_heart"
+    android:tint="@color/kw_red"
+    android:layout_width="40dp"
+    android:layout_height="35dp"
+    />
+
+
+
+
+
+</LinearLayout>

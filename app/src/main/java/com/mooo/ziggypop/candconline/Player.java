@@ -3,13 +3,9 @@ package com.mooo.ziggypop.candconline;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -57,6 +53,7 @@ public class Player implements Comparable{
     private boolean isYourself;
     private String game;
     private String userName;
+    private boolean isExpanded = false;
 
 
 
@@ -174,16 +171,28 @@ public class Player implements Comparable{
             notifyDataSetChanged();
         }
 
+        @Override
+        public int getViewTypeCount() {
+            return 2;
+        }
+
         public View getView(int position, View convertView, ViewGroup parent) {
 
 
             final ViewHolder holder;
 
+            final LayoutInflater vi = LayoutInflater.from(getContext());
+
+            final Player player = getItem(position);
             // Try fiddling around with this block here to see if I can prevent the notification states persisting
             if (convertView == null) { // The view does not exist and you need to set up and save it
 
-                LayoutInflater vi = LayoutInflater.from(getContext());
-                convertView = vi.inflate(R.layout.players_layout, null);
+                convertView = vi.inflate(R.layout.player_card, null);
+                LinearLayout dummyLayout = (LinearLayout) convertView.findViewById(R.id.dummy_layout);
+                dummyLayout.removeAllViews();
+                LinearLayout smallPlayerView = (LinearLayout) vi.inflate(R.layout.player_small_layout, null);
+                dummyLayout.addView(smallPlayerView);
+
                 holder = new ViewHolder();
                 holder.nickname = (TextView) convertView.findViewById(R.id.text);
                 holder.friendMarker = convertView.findViewById(R.id.friend_marker);
@@ -192,116 +201,90 @@ public class Player implements Comparable{
                 holder.notificationMarker.setVisibility(View.INVISIBLE);
                 holder.yourselfMarker = convertView.findViewById(R.id.yourself_marker);
                 holder.yourselfMarker.setVisibility(View.INVISIBLE);
-                holder.holderView = convertView.findViewById(R.id.players_layout);
-                holder.isExpanded = false; // by default, it should be small
+                holder.holderView = (ViewGroup) convertView.findViewById(R.id.dummy_layout);
+                player.isExpanded = false;
                 convertView.setTag(holder);
             } else { // The view already exists and you can reuse it.
                 holder = (ViewHolder) convertView.getTag();
+
+
+
+                if (! player.isExpanded) {
+                    LinearLayout dummyLayout = (LinearLayout) convertView.findViewById(R.id.dummy_layout);
+                    dummyLayout.removeAllViews();
+                    LinearLayout smallPlayerView = (LinearLayout) vi.inflate(R.layout.player_small_layout, null);
+                    dummyLayout.addView(smallPlayerView);
+                    holder.holderView = (ViewGroup) convertView.findViewById(R.id.dummy_layout);
+
+
+                    holder.nickname = (TextView) convertView.findViewById(R.id.text);
+                    holder.friendMarker = convertView.findViewById(R.id.friend_marker);
+                    holder.friendMarker.setVisibility(View.INVISIBLE);
+                    holder.notificationMarker = convertView.findViewById(R.id.notify_marker);
+                    holder.notificationMarker.setVisibility(View.INVISIBLE);
+                    holder.yourselfMarker = convertView.findViewById(R.id.yourself_marker);
+                    holder.yourselfMarker.setVisibility(View.INVISIBLE);
+                } else {
+                    //LinearLayout bigPlayerView = (LinearLayout) vi.inflate(R.layout.player_big_layout, null);
+                    //dummyLayout.addView(bigPlayerView);
+                    setUpLargeView(player, vi, holder, holder.holderView);
+                }
+
+
                 //When the View is being recycled later, set these to be invisible by default, they can be repopulated by the code below.
                 holder.notificationMarker.setVisibility(View.INVISIBLE);
                 holder.friendMarker.setVisibility(View.INVISIBLE);
                 holder.yourselfMarker.setVisibility(View.INVISIBLE);
+
+
+
+
             }
 
 
             //Set up the Player's card
-            final Player player = getItem(position);
 
 
 
             //Create the dialog
-            final LayoutInflater vi = LayoutInflater.from(getContext());
+           // final LayoutInflater vi = LayoutInflater.from(getContext());
             holder.holderView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View view) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    //AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-                    View dialogView = vi.inflate(R.layout.player_alert_dialog, null);
-                    TextView playerNickname = (TextView) dialogView.findViewById(R.id.players_name);
-                    playerNickname.setText(player.nickname);
+                    Log.v(TAG, "Onclick");
+                    if ( player.isExpanded ) {
+                        Log.v(TAG, "already expanded, shrinking");
+
+                        holder.holderView.removeAllViews();
+                        LinearLayout smallPlayerView = (LinearLayout) vi.inflate(R.layout.player_small_layout, null);
+                        holder.holderView.addView(smallPlayerView);
+
+                        holder.nickname = (TextView) holder.holderView.findViewById(R.id.text);
+                        holder.friendMarker = holder.holderView.findViewById(R.id.friend_marker);
+                        holder.notificationMarker = holder.holderView.findViewById(R.id.notify_marker);
+                        holder.yourselfMarker = holder.holderView.findViewById(R.id.yourself_marker);
 
 
-                    final String cncOnlineLink = PROFILE_PREFIX  + player.pid + "/";
-                    final TextView playerUserNameText = (TextView) dialogView.findViewById(R.id.players_user_name);
-                    /*
-                    Button statsButton = (Button) dialogView.findViewById(R.id.stats_link);
-                    String gameID = "kw";
-                    final String statsLink = "http://www.shatabrick.com/cco/"+ gameID +"/index.php?g=kw&a=sp&name=" + player.nickname;
-                    statsButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent statsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(statsLink));
-                            getContext().startActivity(statsIntent);
+                        holder.nickname.setText(player.nickname);
+                        if (player.isFriend){
+                            holder.friendMarker.setVisibility(View.VISIBLE);
                         }
-                    });
-                    */
-
-                    // Set the string to the username if the player is not found in the database.
-                    if (player.getUserName().equals("")
-                            || player.getUserName().equals(getContext().getString(R.string.profile))){
-                        Log.d(TAG, "Player IGN not found, getting from website");
-                        LinearLayout progBarView = (LinearLayout) dialogView.findViewById(R.id.name_loading_progress_bar);
-                        new RealUsernameHandler(
-                                cncOnlineLink,
-                                player.id + "",
-                                playerUserNameText,
-                                progBarView
-                        ).getUsername();
+                        if (player.isReceiveNotifications){
+                            holder.notificationMarker.setVisibility(View.VISIBLE);
+                        }
+                        if (player.isYourself){
+                            holder.yourselfMarker.setVisibility(View.VISIBLE);
+                        }
+                        player.isExpanded = false;
                     } else {
-                        playerUserNameText.setText(player.getUserName());
+                        Log.v(TAG, "small layout, growing");
+                        setUpLargeView(player, vi, holder, holder.holderView);
                     }
 
 
-                    final CheckBox friendsCheckbox = (CheckBox) dialogView.findViewById(R.id.friends_checkbox);
-                    if (player.isFriend){
-                        friendsCheckbox.setChecked(true);
-                    }
-                    final CheckBox notificationsCheckbox = (CheckBox) dialogView.findViewById(R.id.notifications_checkbox);
-                    if (player.isReceiveNotifications){
-                        notificationsCheckbox.setChecked(true);
-                    }
-                    final CheckBox yourselfCheckbox = (CheckBox) dialogView.findViewById(R.id.is_you_checkbox);
-                    if (player.isYourself){
-                        yourselfCheckbox.setChecked(true);
-                    }
-
-                    builder.setView(dialogView);
-                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            // construct a new player object to be committed to the DB
-                            // alter the new player and update ui to reflect its state
-                            if (friendsCheckbox.isChecked()) {
-                                player.setIsFriend(true);
-                                holder.friendMarker.setVisibility(View.VISIBLE);
-                            } else {
-                                player.setIsFriend(false);
-                                holder.friendMarker.setVisibility(View.INVISIBLE);
-                            }
-                            if (notificationsCheckbox.isChecked()) {
-                                player.setIsRecieveNotifications(true);
-                                holder.notificationMarker.setVisibility(View.VISIBLE);
-                            } else {
-                                player.setIsRecieveNotifications(false);
-                                holder.notificationMarker.setVisibility(View.INVISIBLE);
-                            }
-                            if (yourselfCheckbox.isChecked()) {
-                                player.setIsYourself(true);
-                                holder.yourselfMarker.setVisibility(View.VISIBLE);
-                            } else {
-                                player.setIsYourself(false);
-                                holder.yourselfMarker.setVisibility(View.INVISIBLE);
-                            }
-                            player.setUserName(playerUserNameText.getText() + "");
-
-                            // Commit the new player to the DB.
-                            if (!friendsCheckbox.isChecked() && !notificationsCheckbox.isChecked() && !yourselfCheckbox.isChecked()){
-                                db.deletePlayer(player);
-                            } else {
-                                db.addPlayer(player);
-                            }
-
-                        }
+/*
 
                     }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -320,7 +303,7 @@ public class Player implements Comparable{
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.material_blue_grey_500));
                     dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getContext().getResources().getColor(R.color.material_blue_grey_500));
                     dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(getContext().getResources().getColor(R.color.material_blue_grey_500));
-
+*/
 
                 }
             });
@@ -345,11 +328,117 @@ public class Player implements Comparable{
             View friendMarker;
             View notificationMarker;
             View yourselfMarker;
-            View holderView;
-            boolean isExpanded;
+            ViewGroup holderView;
         }
 
+
+        private void expandedViewUpdateDB(Player player, ViewHolder holder, ViewGroup vg){
+
+            CheckBox friendsCheckbox = (CheckBox) vg.findViewById(R.id.friends_checkbox);
+            CheckBox notificationsCheckbox = (CheckBox) vg.findViewById(R.id.notifications_checkbox);
+            CheckBox yourselfCheckbox = (CheckBox) vg.findViewById(R.id.is_you_checkbox);
+
+
+
+            if (friendsCheckbox.isChecked()) {
+                player.setIsFriend(true);
+                holder.friendMarker.setVisibility(View.VISIBLE);
+            } else {
+                player.setIsFriend(false);
+                holder.friendMarker.setVisibility(View.INVISIBLE);
+            }
+            if (notificationsCheckbox.isChecked()) {
+                player.setIsRecieveNotifications(true);
+                holder.notificationMarker.setVisibility(View.VISIBLE);
+            } else {
+                player.setIsRecieveNotifications(false);
+                holder.notificationMarker.setVisibility(View.INVISIBLE);
+            }
+            if (yourselfCheckbox.isChecked()) {
+                player.setIsYourself(true);
+                holder.yourselfMarker.setVisibility(View.VISIBLE);
+            } else {
+                player.setIsYourself(false);
+                holder.yourselfMarker.setVisibility(View.INVISIBLE);
+            }
+
+            player.setUserName(((TextView)vg.findViewById(R.id.players_user_name)).getText() + "");
+
+            // Commit the new player to the DB, or remove them if they are unchecked.
+            if (!friendsCheckbox.isChecked() && !notificationsCheckbox.isChecked() && !yourselfCheckbox.isChecked()){
+                db.deletePlayer(player);
+            } else {
+                db.addPlayer(player);
+            }
+        }
+
+        private void setUpLargeView(final Player player, LayoutInflater vi, final ViewHolder holder, final ViewGroup vg) {
+            View dialogView = vi.inflate(R.layout.player_big_layout, null);
+            TextView playerNickname = (TextView) dialogView.findViewById(R.id.players_name);
+            playerNickname.setText(player.nickname);
+
+
+            final String cncOnlineLink = PROFILE_PREFIX  + player.pid + "/";
+            final TextView playerUserNameText = (TextView) dialogView.findViewById(R.id.players_user_name);
+
+            // Set the string to the username if the player is not found in the database.
+            if (player.getUserName().equals("")
+                    || player.getUserName().equals(getContext().getString(R.string.profile))){
+                Log.d(TAG, "Player IGN not found, getting from website");
+                LinearLayout progBarView = (LinearLayout) dialogView.findViewById(R.id.name_loading_progress_bar);
+                new RealUsernameHandler(
+                        cncOnlineLink,
+                        player.id + "",
+                        playerUserNameText,
+                        progBarView
+                ).getUsername();
+            } else {
+                playerUserNameText.setText(player.getUserName());
+            }
+
+
+            CheckBox friendsCheckbox = (CheckBox) dialogView.findViewById(R.id.friends_checkbox);
+            if (player.isFriend){
+                friendsCheckbox.setChecked(true);
+            }
+            CheckBox notificationsCheckbox = (CheckBox) dialogView.findViewById(R.id.notifications_checkbox);
+            if (player.isReceiveNotifications){
+                notificationsCheckbox.setChecked(true);
+            }
+            CheckBox yourselfCheckbox = (CheckBox) dialogView.findViewById(R.id.is_you_checkbox);
+            if (player.isYourself){
+                yourselfCheckbox.setChecked(true);
+            }
+            friendsCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                expandedViewUpdateDB(player, holder, vg);
+                }
+            });
+            notificationsCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    expandedViewUpdateDB(player, holder, vg);
+                }
+            });
+            yourselfCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    expandedViewUpdateDB(player, holder, vg);
+                }
+            });
+
+
+
+            holder.holderView.removeAllViews();
+            holder.holderView.addView(dialogView);
+            player.isExpanded = true;
+        }
+
+
+
     }
+
 
 
 
@@ -384,7 +473,7 @@ public class Player implements Comparable{
                                  Bundle savedInstanceState) {
             super.onCreateView(inflater,container,savedInstanceState);
 
-            mAdapter = new PlayersAdapter(getActivity(), R.layout.players_layout, wordsArr);
+            mAdapter = new PlayersAdapter(getActivity(), R.layout.player_card, wordsArr);
             setListAdapter(mAdapter);
 
             this.inflater=inflater;
@@ -444,7 +533,7 @@ public class Player implements Comparable{
          */
         public void refreshData(final ArrayList<Player> data, final Activity activity ){
             if(!isAdded())
-                mAdapter = new PlayersAdapter(activity, R.layout.players_layout, wordsArr);
+                mAdapter = new PlayersAdapter(activity, R.layout.player_card, wordsArr);
 
             activity.runOnUiThread(new Runnable() {
                 public void run() {
