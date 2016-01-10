@@ -42,6 +42,13 @@ public class Player implements Comparable{
     private static int FRIEND_VALUE = 2;
     private static int YOURSELF_VALUE = 4;
 
+    // Assemble the stats link by: prefix + game_key + infix + player_name
+    private static String STATS_PREFIX = "http://www.shatabrick.com/cco/";
+    private static String STATS_INFIX = "/index.php?g=kw&a=sp&name=";
+
+    private static String PROFILE_PREFIX = "http://cnc-online.net/profiles/";
+
+
     private String nickname;
     private int id;
     private int pid;
@@ -211,18 +218,9 @@ public class Player implements Comparable{
                     View dialogView = vi.inflate(R.layout.player_alert_dialog, null);
                     TextView playerNickname = (TextView) dialogView.findViewById(R.id.players_name);
                     playerNickname.setText(player.nickname);
-                    /*
-                    TextView playerID = (TextView) dialogView.findViewById(R.id.players_id);
-                    String playerIDText = player.id + ""; // avoid the IDE complaining about creating a string in the setText method below.
-                    playerID.setText(playerIDText);
-                    TextView playerPID = (TextView) dialogView.findViewById(R.id.players_pid);
-                    String playerPIDText = player.pid + "";
-                    playerPID.setText(playerPIDText);
-                    */
-
-                    final String cncOnlineLink = "http://cnc-online.net/profiles/"  + player.pid + "/";
 
 
+                    final String cncOnlineLink = PROFILE_PREFIX  + player.pid + "/";
                     final TextView playerUserNameText = (TextView) dialogView.findViewById(R.id.players_user_name);
                     /*
                     Button statsButton = (Button) dialogView.findViewById(R.id.stats_link);
