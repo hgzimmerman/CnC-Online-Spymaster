@@ -42,7 +42,7 @@ public class Player implements Comparable{
     private static int FRIEND_VALUE = 2;
     private static int YOURSELF_VALUE = 4;
 
-    // Assemble the stats link by: prefix + game_key + infix + player_name
+    // Assemble the stats link: prefix + game_key + infix + player_name, MAYBE...
     private static String STATS_PREFIX = "http://www.shatabrick.com/cco/";
     private static String STATS_INFIX = "/index.php?g=kw&a=sp&name=";
 
@@ -180,7 +180,7 @@ public class Player implements Comparable{
             final ViewHolder holder;
 
             // Try fiddling around with this block here to see if I can prevent the notification states persisting
-            if (convertView == null) {
+            if (convertView == null) { // The view does not exist and you need to set up and save it
 
                 LayoutInflater vi = LayoutInflater.from(getContext());
                 convertView = vi.inflate(R.layout.players_layout, null);
@@ -193,8 +193,9 @@ public class Player implements Comparable{
                 holder.yourselfMarker = convertView.findViewById(R.id.yourself_marker);
                 holder.yourselfMarker.setVisibility(View.INVISIBLE);
                 holder.holderView = convertView.findViewById(R.id.players_layout);
+                holder.isExpanded = false; // by default, it should be small
                 convertView.setTag(holder);
-            } else {
+            } else { // The view already exists and you can reuse it.
                 holder = (ViewHolder) convertView.getTag();
                 //When the View is being recycled later, set these to be invisible by default, they can be repopulated by the code below.
                 holder.notificationMarker.setVisibility(View.INVISIBLE);
@@ -240,7 +241,12 @@ public class Player implements Comparable{
                             || player.getUserName().equals(getContext().getString(R.string.profile))){
                         Log.d(TAG, "Player IGN not found, getting from website");
                         LinearLayout progBarView = (LinearLayout) dialogView.findViewById(R.id.name_loading_progress_bar);
-                        new RealUsernameHandler(cncOnlineLink, player.id+"", playerUserNameText, progBarView).getUsername();
+                        new RealUsernameHandler(
+                                cncOnlineLink,
+                                player.id + "",
+                                playerUserNameText,
+                                progBarView
+                        ).getUsername();
                     } else {
                         playerUserNameText.setText(player.getUserName());
                     }
@@ -340,6 +346,7 @@ public class Player implements Comparable{
             View notificationMarker;
             View yourselfMarker;
             View holderView;
+            boolean isExpanded;
         }
 
     }
