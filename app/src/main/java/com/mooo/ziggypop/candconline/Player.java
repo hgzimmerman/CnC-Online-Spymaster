@@ -209,7 +209,7 @@ public class Player implements Comparable{
 
 
 
-                if (! player.isExpanded) {
+                if (! player.isExpanded) { // if the player is normal.
                     LinearLayout dummyLayout = (LinearLayout) convertView.findViewById(R.id.dummy_layout);
                     dummyLayout.removeAllViews();
                     LinearLayout smallPlayerView = (LinearLayout) vi.inflate(R.layout.player_small_layout, null);
@@ -224,10 +224,8 @@ public class Player implements Comparable{
                     holder.notificationMarker.setVisibility(View.INVISIBLE);
                     holder.yourselfMarker = convertView.findViewById(R.id.yourself_marker);
                     holder.yourselfMarker.setVisibility(View.INVISIBLE);
-                } else {
-                    //LinearLayout bigPlayerView = (LinearLayout) vi.inflate(R.layout.player_big_layout, null);
-                    //dummyLayout.addView(bigPlayerView);
-                    setUpLargeView(player, vi, holder, holder.holderView);
+                } else { // if the player has been set to expand by being clicked before.
+                    setUpLargeView(player, vi, holder);
                 }
 
 
@@ -280,16 +278,13 @@ public class Player implements Comparable{
                         player.isExpanded = false;
                     } else {
                         Log.v(TAG, "small layout, growing");
-                        setUpLargeView(player, vi, holder, holder.holderView);
+                        setUpLargeView(player, vi, holder);
                     }
 
 
 /*
 
-                    }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // do nothing
-                        }
+
                     }).setNeutralButton(R.string.profile, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -297,18 +292,12 @@ public class Player implements Comparable{
                             getContext().startActivity(browserIntent);
                         }
                     });
-                    AlertDialog dialog  = builder.create();
-
-                    dialog.show();
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.material_blue_grey_500));
-                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getContext().getResources().getColor(R.color.material_blue_grey_500));
-                    dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(getContext().getResources().getColor(R.color.material_blue_grey_500));
 */
 
                 }
             });
 
-
+            // set the views for the default layout.
             holder.nickname.setText(player.nickname);
             if (player.isFriend){
                 holder.friendMarker.setVisibility(View.VISIBLE);
@@ -332,13 +321,11 @@ public class Player implements Comparable{
         }
 
 
-        private void expandedViewUpdateDB(Player player, ViewHolder holder, ViewGroup vg){
+        private void expandedViewUpdateDB(Player player, ViewHolder holder){
 
-            CheckBox friendsCheckbox = (CheckBox) vg.findViewById(R.id.friends_checkbox);
-            CheckBox notificationsCheckbox = (CheckBox) vg.findViewById(R.id.notifications_checkbox);
-            CheckBox yourselfCheckbox = (CheckBox) vg.findViewById(R.id.is_you_checkbox);
-
-
+            CheckBox friendsCheckbox = (CheckBox) holder.holderView.findViewById(R.id.friends_checkbox);
+            CheckBox notificationsCheckbox = (CheckBox) holder.holderView.findViewById(R.id.notifications_checkbox);
+            CheckBox yourselfCheckbox = (CheckBox) holder.holderView.findViewById(R.id.is_you_checkbox);
 
             if (friendsCheckbox.isChecked()) {
                 player.setIsFriend(true);
@@ -362,7 +349,7 @@ public class Player implements Comparable{
                 holder.yourselfMarker.setVisibility(View.INVISIBLE);
             }
 
-            player.setUserName(((TextView)vg.findViewById(R.id.players_user_name)).getText() + "");
+            player.setUserName(((TextView)holder.holderView.findViewById(R.id.players_user_name)).getText() + "");
 
             // Commit the new player to the DB, or remove them if they are unchecked.
             if (!friendsCheckbox.isChecked() && !notificationsCheckbox.isChecked() && !yourselfCheckbox.isChecked()){
@@ -372,7 +359,7 @@ public class Player implements Comparable{
             }
         }
 
-        private void setUpLargeView(final Player player, LayoutInflater vi, final ViewHolder holder, final ViewGroup vg) {
+        private void setUpLargeView(final Player player, LayoutInflater vi, final ViewHolder holder) {
             View dialogView = vi.inflate(R.layout.player_big_layout, null);
             TextView playerNickname = (TextView) dialogView.findViewById(R.id.players_name);
             playerNickname.setText(player.nickname);
@@ -382,13 +369,14 @@ public class Player implements Comparable{
             final TextView playerUserNameText = (TextView) dialogView.findViewById(R.id.players_user_name);
 
             // Set the string to the username if the player is not found in the database.
+            Log.v(TAG, "USERNAME = " +player.getUserName());
             if (player.getUserName().equals("")
                     || player.getUserName().equals(getContext().getString(R.string.profile))){
                 Log.d(TAG, "Player IGN not found, getting from website");
                 LinearLayout progBarView = (LinearLayout) dialogView.findViewById(R.id.name_loading_progress_bar);
                 new RealUsernameHandler(
                         cncOnlineLink,
-                        player.id + "",
+                        player,
                         playerUserNameText,
                         progBarView
                 ).getUsername();
@@ -412,23 +400,21 @@ public class Player implements Comparable{
             friendsCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                expandedViewUpdateDB(player, holder, vg);
+                expandedViewUpdateDB(player, holder);
                 }
             });
             notificationsCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    expandedViewUpdateDB(player, holder, vg);
+                    expandedViewUpdateDB(player, holder);
                 }
             });
             yourselfCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    expandedViewUpdateDB(player, holder, vg);
+                    expandedViewUpdateDB(player, holder);
                 }
             });
-
-
 
             holder.holderView.removeAllViews();
             holder.holderView.addView(dialogView);

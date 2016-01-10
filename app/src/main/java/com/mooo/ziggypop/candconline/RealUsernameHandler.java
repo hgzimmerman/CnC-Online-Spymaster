@@ -21,12 +21,14 @@ public class RealUsernameHandler {
     TextView textView;
     String url;
     String id;
+    Player player;
 
-    public RealUsernameHandler(String url, String pid, TextView textView, LinearLayout progressBarLayout){
+    public RealUsernameHandler(String url, Player player, TextView textView, LinearLayout progressBarLayout){
         this.url = url;
-        this.id = pid;
+        this.id = player.getID()+"";
         this.textView = textView;
         this.progressBarLayout = progressBarLayout;
+        this.player = player;
     }
 
 
@@ -73,6 +75,7 @@ public class RealUsernameHandler {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             textView.setText(s);
+            player.setUserName(s);
             progressBarLayout.setVisibility(View.GONE);
         }
     }
