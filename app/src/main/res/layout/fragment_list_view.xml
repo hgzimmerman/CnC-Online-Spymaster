@@ -3,10 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="fill_parent" >
 
-    <ListView
-        android:id="@android:id/list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:divider="@null"
         android:dividerHeight="4dp"
         android:paddingLeft="10dp"
@@ -19,8 +19,6 @@
         android:clipToPadding="false"
         android:scrollbarStyle="outsideOverlay">
 
-
-
-        </ListView>
+        </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

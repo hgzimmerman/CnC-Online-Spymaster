@@ -12,7 +12,7 @@ android:layout_gravity="center_horizontal"
     >
 
 <TextView
-    android:id="@+id/text"
+    android:id="@+id/players_name"
     android:textSize="22sp"
     android:layout_gravity="start|center_vertical"
     android:layout_width="0dp"

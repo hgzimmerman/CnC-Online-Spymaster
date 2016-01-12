@@ -3,16 +3,14 @@ package com.mooo.ziggypop.candconline;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -66,16 +64,18 @@ public class Game {
 
 
 
-    public static class GamesAdapter extends ArrayAdapter<Game> {
+    public static class GamesAdapter extends RecyclerView.Adapter {
         public GamesAdapter(Context context, int textViewResourceId) {
-            super(context, textViewResourceId);
+            //super(context, textViewResourceId);
         }
 
         public GamesAdapter( Context context, int resource, ArrayList<Game> games) {
-            super(context, resource, games);
+            //super(context, resource, games);
         }
+        public GamesAdapter(ArrayList<Game> games){}
+        public GamesAdapter(Context context, ArrayList<Game> games){}
 
-
+/*
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -124,16 +124,32 @@ public class Game {
             return v;
 
         }
+        */
+
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return null;
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return 0;
+        }
     }
 
 
 
-    public static class GamesFragment extends ListFragment {
+    public static class GamesFragment extends RecyclerViewFragment {
         private static final String TAG = "GamesInLobbyFragment";
 
         private GamesAdapter mAdapter;
         private static ArrayList<Game> games = new ArrayList<>();
-        private ListView listView;
+        private RecyclerView recyclerView;
 
 
         public GamesFragment() {
@@ -145,14 +161,15 @@ public class Game {
             View rootView = inflater.inflate(R.layout.fragment_list_view, container, false);
 
             mAdapter = new GamesAdapter(getActivity(), R.layout.games_layout, games);
-            setListAdapter(mAdapter);
 
-            listView = (ListView) rootView.findViewById(android.R.id.list);
+            recyclerView = (RecyclerView) rootView.findViewById(android.R.id.list);
+
             View padding = inflater.inflate(R.layout.padding_layout, null, false);
-            listView.addHeaderView(padding);
+            /*
+            recyclerView.addHeaderView(padding);
 
 
-            listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            recyclerView.setOnScrollListener(new AbsListView.OnScrollListener() {
                 @Override
                 public void onScrollStateChanged(AbsListView view, int scrollState) { }
 
@@ -160,11 +177,11 @@ public class Game {
                 public void onScroll(AbsListView view, int firstVisibleItem,
                                      int visibleItemCount, int totalItemCount) {
                     boolean enable;
-                    if(listView != null && listView.getChildCount() > 0){
+                    if(recyclerView != null && recyclerView.getChildCount() > 0){
                         // check if the first item of the list is visible
-                        boolean firstItemVisible = listView.getFirstVisiblePosition() == 0;
+                        boolean firstItemVisible = recyclerView.getFirstVisiblePosition() == 0;
                         // check if the top of the first item is visible
-                        boolean topOfFirstItemVisible = listView.getChildAt(0).getTop() == 0;
+                        boolean topOfFirstItemVisible = recyclerView.getChildAt(0).getTop() == 0;
                         // enabling or disabling the refresh layout
                         enable = firstItemVisible && topOfFirstItemVisible;
                     }else {
@@ -174,17 +191,19 @@ public class Game {
                     activity.setSafeToRefresh(enable, 1);
                 }
             });
+            */
 
 
             return rootView;
         }
+
 
         public void refreshData(final ArrayList<Game> data){
             if (isAdded()) {
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
                         Log.v(TAG, "Refreshing");
-                        mAdapter.clear();
+                        //mAdapter.clear();
                         games.addAll(data);
                         mAdapter.notifyDataSetChanged();
                     }
@@ -196,7 +215,7 @@ public class Game {
 
 
 
-    public static class GamesInProgressFragment extends ListFragment {
+    public static class GamesInProgressFragment extends RecyclerViewFragment {
         private static final String TAG = "GamesInProgressFragment";
 
         private GamesAdapter mAdapter;
@@ -209,16 +228,17 @@ public class Game {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+            /*
             View rootView = inflater.inflate(R.layout.fragment_list_view, container, false);
 
             mAdapter = new GamesAdapter(getActivity(), R.layout.games_layout, games);
-            setListAdapter(mAdapter);
+            //setListAdapter(mAdapter);
 
-            listView = (ListView) rootView.findViewById(android.R.id.list);
+            recyclerView = (ListView) rootView.findViewById(android.R.id.list);
             View padding = inflater.inflate(R.layout.padding_layout, null, false);
-            listView.addHeaderView(padding);
+            recyclerView.addHeaderView(padding);
 
-            listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            recyclerView.setOnScrollListener(new AbsListView.OnScrollListener() {
                 @Override
                 public void onScrollStateChanged(AbsListView view, int scrollState) {
                     // Do nothing.
@@ -228,11 +248,11 @@ public class Game {
                 public void onScroll(AbsListView view, int firstVisibleItem,
                                      int visibleItemCount, int totalItemCount) {
                     boolean enable;
-                    if(listView != null && listView.getChildCount() > 0){
+                    if(recyclerView != null && recyclerView.getChildCount() > 0){
                         // check if the first item of the list is visible
-                        boolean firstItemVisible = listView.getFirstVisiblePosition() == 0;
+                        boolean firstItemVisible = recyclerView.getFirstVisiblePosition() == 0;
                         // check if the top of the first item is visible
-                        boolean topOfFirstItemVisible = listView.getChildAt(0).getTop() == 0;
+                        boolean topOfFirstItemVisible = recyclerView.getChildAt(0).getTop() == 0;
                         // enabling or disabling the refresh layout
                         enable = firstItemVisible && topOfFirstItemVisible;
                     } else {
@@ -243,7 +263,31 @@ public class Game {
                 }
             });
 
+*/
 
+            View rootView = inflater.inflate(R.layout.fragment_list_view, container, false);
+            rootView.setTag(TAG);
+
+            mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+
+            // LinearLayoutManager is used here, this will layout the elements in a similar fashion
+            // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
+            // elements are laid out.
+            mLayoutManager = new LinearLayoutManager(getActivity());
+
+            mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
+
+            if (savedInstanceState != null) {
+                // Restore saved layout manager type.
+                mCurrentLayoutManagerType = (LayoutManagerType) savedInstanceState
+                        .getSerializable(KEY_LAYOUT_MANAGER);
+            }
+            setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
+
+            mAdapter = new GamesAdapter(getActivity(), mDataset);
+            // Set CustomAdapter as the adapter for RecyclerView.
+            Log.v(TAG, "Setting adapter for game");
+            mRecyclerView.setAdapter(mAdapter);
 
             return rootView;
         }
@@ -262,7 +306,7 @@ public class Game {
             activity.runOnUiThread(new Runnable() {
                 public void run(){
                     Log.v(TAG, "refreshing");
-                    mAdapter.clear();
+                    //mAdapter.clear();
                     games.addAll(data);
                     mAdapter.notifyDataSetChanged();
                 }

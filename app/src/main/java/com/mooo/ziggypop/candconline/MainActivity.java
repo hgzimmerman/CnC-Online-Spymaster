@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Parcelable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
@@ -156,8 +157,9 @@ public class MainActivity extends AppCompatActivity
                 });
                 helpBuilder.setView(dialogView);
                 AlertDialog helpDialog = helpBuilder.create();
-                helpDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.material_blue_grey_500));
                 helpDialog.show();
+                helpDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.material_blue_grey_500));
+
 
                 return true;
             /*
@@ -197,6 +199,8 @@ public class MainActivity extends AppCompatActivity
             // handle the case where you animate on a transition away from a page with no items.
             // If the away and return animations are played in these cases, the new page automatically
             // populates with info, then slides away and slides back, when it should only return.
+
+            /*
             if (mViewPager.getCurrentItem() == 0
                     && mSectionsPagerAdapter.player.getListView().getChildCount() == 0 ){
                 updateViews();
@@ -232,6 +236,7 @@ public class MainActivity extends AppCompatActivity
                 pager.startAnimation(awayAnimation);
                 Log.v(TAG, "Animating transition between game titles");
             }
+            */
         }
         // Save which drawer was opened to prevent re-animating if you select the same one.
         if (position !=0 && position != 6)
@@ -369,9 +374,9 @@ public class MainActivity extends AppCompatActivity
         }
 
         @Override
-        public ListFragment getItem(int position) {
+        public RecyclerViewFragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            ListFragment fragment;
+            RecyclerViewFragment fragment;
             if(position == 2) {
                 fragment = inGame;
             } else if( position == 1) {
@@ -380,10 +385,12 @@ public class MainActivity extends AppCompatActivity
                 fragment = player;
             }
             Bundle args = new Bundle();
+            /*
             args.putInt(Player.PlayersFragment.ARG_SECTION_NUMBER, position+1);
             if (fragment.getArguments() == null) {
                 fragment.setArguments(args);
             }
+            */
             return fragment;
         }
 
