@@ -3,6 +3,7 @@ package com.mooo.ziggypop.candconline;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import static com.mooo.ziggypop.candconline.Player.PlayersAdapter.*;
 
 
 /**
@@ -316,6 +319,10 @@ public class Player implements Comparable{
             return convertView;
         }
 */
+
+
+
+
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -618,6 +625,9 @@ public class Player implements Comparable{
                         .getSerializable(KEY_LAYOUT_MANAGER);
             }
             setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
+
+            mRecyclerView.addItemDecoration(new RecyclerViewFragment.VerticalSpaceItemDecoration(
+                    (int) getResources().getDimension(R.dimen.recycle_spacing)));
 
             mAdapter = new PlayersAdapter(getContext(), mDataset);
             // Set CustomAdapter as the adapter for RecyclerView.

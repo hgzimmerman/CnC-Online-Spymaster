@@ -196,6 +196,8 @@ public class Game {
                         .getSerializable(KEY_LAYOUT_MANAGER);
             }
             setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
+            mRecyclerView.addItemDecoration(new RecyclerViewFragment.VerticalSpaceItemDecoration(
+                    (int) getResources().getDimension(R.dimen.recycle_spacing)));
 
             mAdapter = new GamesAdapter(getActivity(), mDataset);
             // Set CustomAdapter as the adapter for RecyclerView.
@@ -274,6 +276,9 @@ public class Game {
                         .getSerializable(KEY_LAYOUT_MANAGER);
             }
             setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
+            mRecyclerView.addItemDecoration(new RecyclerViewFragment.VerticalSpaceItemDecoration(
+                    (int) getResources().getDimension(R.dimen.recycle_spacing)));
+
 
             mAdapter = new GamesAdapter(getActivity(), mDataset);
             // Set CustomAdapter as the adapter for RecyclerView.
