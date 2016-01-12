@@ -200,21 +200,21 @@ public class MainActivity extends AppCompatActivity
             // If the away and return animations are played in these cases, the new page automatically
             // populates with info, then slides away and slides back, when it should only return.
 
-            /*
+
             if (mViewPager.getCurrentItem() == 0
-                    && mSectionsPagerAdapter.player.getListView().getChildCount() == 0 ){
+                    && mSectionsPagerAdapter.player.mRecyclerView.getChildCount() == 0 ){
                 updateViews();
                 pager.startAnimation(returnAnimation);
                 Log.v(TAG, "Animating return from a page with no data");
             }
             else if (mViewPager.getCurrentItem() == 1
-                    && mSectionsPagerAdapter.lobby.getListView().getChildCount() == 0 ){
+                    && mSectionsPagerAdapter.lobby.mRecyclerView.getChildCount() == 0 ){
                 updateViews();
                 pager.startAnimation(returnAnimation);
                 Log.v(TAG, "Animating return from a page with no data");
             }
             else if (mViewPager.getCurrentItem() == 2
-                    && mSectionsPagerAdapter.inGame.getListView().getChildCount() == 0 ){
+                    && mSectionsPagerAdapter.inGame.mRecyclerView.getChildCount() == 0 ){
                 updateViews();
                 pager.startAnimation(returnAnimation);
                 Log.v(TAG, "Animating return from a page with no data");
@@ -236,7 +236,7 @@ public class MainActivity extends AppCompatActivity
                 pager.startAnimation(awayAnimation);
                 Log.v(TAG, "Animating transition between game titles");
             }
-            */
+
         }
         // Save which drawer was opened to prevent re-animating if you select the same one.
         if (position !=0 && position != 6)

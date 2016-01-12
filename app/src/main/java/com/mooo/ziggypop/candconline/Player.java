@@ -388,6 +388,12 @@ public class Player implements Comparable{
                 notificationMarker = itemView.findViewById(R.id.notify_marker);
                 yourselfMarker = itemView.findViewById(R.id.yourself_marker);
                 holderView = (ViewGroup) itemView.findViewById(R.id.dummy_layout);
+                holderView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // swap to the big layout
+                    }
+                });
             }
         }
 
@@ -446,7 +452,7 @@ public class Player implements Comparable{
                 db.addPlayer(player);
             }
         }
-/*
+
         private View setUpLargeView(final Player player, LayoutInflater vi, final SmallViewHolder holder) {
             //TODO: 99% sure this breaks on build version < 19
             View dialogView =  holder.holderView;
@@ -459,8 +465,7 @@ public class Player implements Comparable{
             final TextView playerUserNameText = (TextView) dialogView.findViewById(R.id.players_user_name);
 
             // Set the string to the username if the player is not found in the database.
-            if (player.getUserName().equals("")
-                    || player.getUserName().equals(getContext().getString(R.string.profile))){
+            if (player.getUserName().equals("")){
                 Log.d(TAG, "Player IGN not found, getting from website");
                 LinearLayout progBarView = (LinearLayout) dialogView.findViewById(R.id.name_loading_progress_bar);
                 new RealUsernameHandler(
@@ -506,7 +511,7 @@ public class Player implements Comparable{
 
             return dialogView;
         }
-        */
+
 
         private void setUpSmallView(Player player, SmallViewHolder holder, LayoutInflater vi){
 
@@ -629,7 +634,6 @@ public class Player implements Comparable{
          */
         public void setRecyclerViewLayoutManager(LayoutManagerType layoutManagerType) {
             int scrollPosition = 0;
-
             // If a layout manager has already been set, get current scroll position.
             if (mRecyclerView.getLayoutManager() != null) {
                 scrollPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager())
