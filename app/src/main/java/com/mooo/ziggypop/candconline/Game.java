@@ -144,7 +144,6 @@ public class Game {
     }
 
 
-//TODO DOES NOT WORK
     public static class GamesFragment extends RecyclerViewFragment {
         private static final String TAG = "GamesInLobbyFragment";
 
@@ -223,7 +222,6 @@ public class Game {
     }
 
 
-//WORKS
     public static class GamesInProgressFragment extends RecyclerViewFragment {
         private static final String TAG = "GamesInProgressFragment";
 
