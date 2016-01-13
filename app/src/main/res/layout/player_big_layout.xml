@@ -150,8 +150,15 @@
             android:text="Stats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
     </RelativeLayout>
+
+
+    <ProgressBar
+        android:id="@+id/horizontal_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        style="?android:progressBarStyleHorizontal" />
 
 
 </LinearLayout>

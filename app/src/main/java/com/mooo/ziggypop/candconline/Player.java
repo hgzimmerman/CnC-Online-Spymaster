@@ -28,6 +28,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -196,6 +197,7 @@ public class Player implements Comparable{
             }
         }
 
+
         @Override
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
             final Player player = myPlayers.get(position);
@@ -278,7 +280,7 @@ public class Player implements Comparable{
                         @Override
                         public void onClick(View v) {
                             // Launch the statsHandler
-                            StatsHandler sh = new StatsHandler();
+                            StatsHandler sh = new StatsHandler(largeViewHolder);
                             sh.getStats(player);
                         }
                     });
@@ -294,6 +296,8 @@ public class Player implements Comparable{
                             largeViewHolder.yourselfCheckbox.setOnCheckedChangeListener(null);
                             largeViewHolder.notificationsCheckbox.setOnCheckedChangeListener(null);
                             largeViewHolder.friendsCheckbox.setOnCheckedChangeListener(null);
+                            largeViewHolder.progressBar.setProgress(0);
+                            largeViewHolder.progressBar.setVisibility(View.INVISIBLE);
                             //Let the RecyclerView recognize that player is no longer expanded, and cause the row to be redrawn.
                             notifyItemChanged(position);
 
@@ -340,7 +344,7 @@ public class Player implements Comparable{
 
         }
 
-        private static class LargeViewHolder extends RecyclerView.ViewHolder {
+        public static class LargeViewHolder extends RecyclerView.ViewHolder {
 
             TextView nickname;
             TextView username;
@@ -348,6 +352,7 @@ public class Player implements Comparable{
             CheckBox notificationsCheckbox;
             CheckBox yourselfCheckbox;
             Button statsButton;
+            ProgressBar progressBar;
             ViewGroup holderView;
 
             public LargeViewHolder(final View itemView) {
@@ -359,6 +364,7 @@ public class Player implements Comparable{
                 yourselfCheckbox = (CheckBox) itemView.findViewById(R.id.is_you_checkbox);
                 statsButton = (Button) itemView.findViewById(R.id.stats_button);
                 holderView = (ViewGroup) itemView.findViewById(R.id.player_card);
+                progressBar = (ProgressBar) itemView.findViewById(R.id.horizontal_progress);
             }
         }
 
