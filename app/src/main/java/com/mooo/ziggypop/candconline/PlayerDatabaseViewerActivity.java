@@ -82,7 +82,6 @@ public class PlayerDatabaseViewerActivity extends AppCompatActivity
         ArrayList<Player> players = dbHandler.getAllPlayers();
 
         Collections.sort(players);
-        playerFragment.refreshData(players, this);
 
         //set up swipe down to refresh
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.db_swipe_refresh_layout);
@@ -94,6 +93,9 @@ public class PlayerDatabaseViewerActivity extends AppCompatActivity
                 }
         });
         mSwipeRefreshLayout.setProgressBackgroundColor(R.color.light_grey);
+
+
+        //playerFragment.refreshData(players, this);
 
     }
 

@@ -379,12 +379,30 @@ public class Player implements Comparable{
                             player.isExpanded = true;
                             //TODO: animate a transformation.
                             notifyItemChanged(position);
+                            notifyDataSetChanged();
                         }
                     });
                     break;
                 case TYPE_LARGE:
-                    LargeViewHolder largeViewHolder = (LargeViewHolder) holder;
+                    final LargeViewHolder largeViewHolder = (LargeViewHolder) holder;
                     largeViewHolder.nickname.setText(player.nickname);
+                    //Set the username to invisible to make the prog bar look nice when the view is recycled.
+                    largeViewHolder.username.setText("");
+                    //Update the username
+                    if (player.getUserName().equals("")){
+                        String cncOnlineLink = PROFILE_PREFIX  + player.pid + "/";
+                        Log.d(TAG, "Player IGN not found, getting from website");
+                        LinearLayout progBarView =
+                                (LinearLayout) ((LargeViewHolder) holder).holderView.findViewById(R.id.name_loading_progress_bar);
+                        new RealUsernameHandler(
+                                cncOnlineLink,
+                                player,
+                                largeViewHolder.username,
+                                progBarView
+                        ).getUsername();
+                    } else {
+                        largeViewHolder.username.setText(player.getUserName());
+                    }
 
                     largeViewHolder.friendsCheckbox.setChecked(player.isFriend);
                     largeViewHolder.notificationsCheckbox.setChecked(player.isReceiveNotifications);
@@ -414,7 +432,13 @@ public class Player implements Comparable{
                             Log.v(TAG, "Large item clicked");
                             player.isExpanded = false;
                             //TODO: animate this transformation
+                            //prevent this viewHolder from having the onCheckedChanged() method called on other viewHolder instances.
+                            largeViewHolder.yourselfCheckbox.setOnCheckedChangeListener(null);
+                            largeViewHolder.notificationsCheckbox.setOnCheckedChangeListener(null);
+                            largeViewHolder.friendsCheckbox.setOnCheckedChangeListener(null);
+                            //Let the RecyclerView recognize that player is no longer expanded, and cause the row to be redrawn.
                             notifyItemChanged(position);
+
                         }
                     });
 
@@ -461,6 +485,7 @@ public class Player implements Comparable{
         private static class LargeViewHolder extends RecyclerView.ViewHolder {
 
             TextView nickname;
+            TextView username;
             CheckBox friendsCheckbox;
             CheckBox notificationsCheckbox;
             CheckBox yourselfCheckbox;
@@ -469,6 +494,7 @@ public class Player implements Comparable{
             public LargeViewHolder(final View itemView) {
                 super(itemView);
                 nickname = (TextView) itemView.findViewById(R.id.players_name);
+                username = (TextView) itemView.findViewById(R.id.players_user_name);
                 friendsCheckbox= (CheckBox) itemView.findViewById(R.id.friends_checkbox);
                 notificationsCheckbox = (CheckBox) itemView.findViewById(R.id.notifications_checkbox);
                 yourselfCheckbox = (CheckBox) itemView.findViewById(R.id.is_you_checkbox);
@@ -480,7 +506,7 @@ public class Player implements Comparable{
 
 
         private void expandedViewUpdateDB(Player player, LargeViewHolder holder){
-            Log.v(TAG, "Updating the db");
+            Log.v(TAG, "Updating the db for: " + player.nickname);
             CheckBox friendsCheckbox = (CheckBox) holder.holderView.findViewById(R.id.friends_checkbox);
             CheckBox notificationsCheckbox = (CheckBox) holder.holderView.findViewById(R.id.notifications_checkbox);
             CheckBox yourselfCheckbox = (CheckBox) holder.holderView.findViewById(R.id.is_you_checkbox);
@@ -739,7 +765,6 @@ public class Player implements Comparable{
             activity.runOnUiThread(new Runnable() {
                 public void run() {
                     Log.v(TAG, "Refreshing");
-                    //mAdapter.clear();
                     mDataset.clear();
                     mDataset.addAll(data);
                     mAdapter.notifyDataSetChanged();
