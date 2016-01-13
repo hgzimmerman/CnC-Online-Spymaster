@@ -12,8 +12,12 @@ import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Scene;
+import android.transition.TransitionManager;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -345,8 +349,8 @@ public class Player implements Comparable{
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            Player player = myPlayers.get(position);
+        public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+            final Player player = myPlayers.get(position);
             switch (holder.getItemViewType()){
                 //set up the view contents.
                 case TYPE_SMALL:
@@ -367,9 +371,63 @@ public class Player implements Comparable{
                     } else {
                         smallViewHolder.yourselfMarker.setVisibility(View.INVISIBLE);
                     }
+
+                    ((SmallViewHolder) holder).holderView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.v(TAG, "Small item clicked");
+                            player.isExpanded = true;
+                            //TODO: animate a transformation.
+                            notifyItemChanged(position);
+                        }
+                    });
                     break;
                 case TYPE_LARGE:
+                    LargeViewHolder largeViewHolder = (LargeViewHolder) holder;
+                    largeViewHolder.nickname.setText(player.nickname);
+
+                    largeViewHolder.friendsCheckbox.setChecked(player.isFriend);
+                    largeViewHolder.notificationsCheckbox.setChecked(player.isReceiveNotifications);
+                    largeViewHolder.yourselfCheckbox.setChecked(player.isYourself);
+
+                    largeViewHolder.friendsCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            expandedViewUpdateDB(player, (LargeViewHolder) holder);
+                        }
+                    });
+                    largeViewHolder.notificationsCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            expandedViewUpdateDB(player, (LargeViewHolder) holder);
+                        }
+                    });
+                    largeViewHolder.yourselfCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            expandedViewUpdateDB(player, (LargeViewHolder) holder);
+                        }
+                    });
+                    ((LargeViewHolder) holder).holderView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.v(TAG, "Large item clicked");
+                            player.isExpanded = false;
+                            //TODO: animate this transformation
+                            notifyItemChanged(position);
+                        }
+                    });
+
                     break;
+            }
+        }
+
+        @Override
+        public int getItemViewType(int position){
+            if (myPlayers.get(position).isExpanded){
+                return TYPE_LARGE;
+            } else{
+                return TYPE_SMALL;
             }
         }
 
@@ -387,67 +445,66 @@ public class Player implements Comparable{
             View notificationMarker;
             View yourselfMarker;
             ViewGroup holderView;
-            //Todo: actually fill this out.
+
             public SmallViewHolder(View itemView) {
+
                 super(itemView);
                 nickname = (TextView) itemView.findViewById(R.id.players_name);
                 friendMarker = itemView.findViewById(R.id.friend_marker);
                 notificationMarker = itemView.findViewById(R.id.notify_marker);
                 yourselfMarker = itemView.findViewById(R.id.yourself_marker);
-                holderView = (ViewGroup) itemView.findViewById(R.id.dummy_layout);
-                holderView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // swap to the big layout
-                    }
-                });
+                holderView = (ViewGroup) itemView.findViewById(R.id.player_card);
             }
+
         }
 
         private static class LargeViewHolder extends RecyclerView.ViewHolder {
+
             TextView nickname;
             CheckBox friendsCheckbox;
             CheckBox notificationsCheckbox;
             CheckBox yourselfCheckbox;
-            //Todo: actually fill this out.
-            public LargeViewHolder(View itemView) {
+            ViewGroup holderView;
+
+            public LargeViewHolder(final View itemView) {
                 super(itemView);
                 nickname = (TextView) itemView.findViewById(R.id.players_name);
                 friendsCheckbox= (CheckBox) itemView.findViewById(R.id.friends_checkbox);
                 notificationsCheckbox = (CheckBox) itemView.findViewById(R.id.notifications_checkbox);
                 yourselfCheckbox = (CheckBox) itemView.findViewById(R.id.is_you_checkbox);
+                holderView = (ViewGroup) itemView.findViewById(R.id.player_card);
             }
         }
 
 
 
 
-        private void expandedViewUpdateDB(Player player, SmallViewHolder holder){
-
+        private void expandedViewUpdateDB(Player player, LargeViewHolder holder){
+            Log.v(TAG, "Updating the db");
             CheckBox friendsCheckbox = (CheckBox) holder.holderView.findViewById(R.id.friends_checkbox);
             CheckBox notificationsCheckbox = (CheckBox) holder.holderView.findViewById(R.id.notifications_checkbox);
             CheckBox yourselfCheckbox = (CheckBox) holder.holderView.findViewById(R.id.is_you_checkbox);
 
             if (friendsCheckbox.isChecked()) {
                 player.setIsFriend(true);
-                holder.friendMarker.setVisibility(View.VISIBLE);
+                //holder.friendMarker.setVisibility(View.VISIBLE);
             } else {
                 player.setIsFriend(false);
-                holder.friendMarker.setVisibility(View.INVISIBLE);
+                //holder.friendMarker.setVisibility(View.INVISIBLE);
             }
             if (notificationsCheckbox.isChecked()) {
                 player.setIsRecieveNotifications(true);
-                holder.notificationMarker.setVisibility(View.VISIBLE);
+                //holder.notificationMarker.setVisibility(View.VISIBLE);
             } else {
                 player.setIsRecieveNotifications(false);
-                holder.notificationMarker.setVisibility(View.INVISIBLE);
+                //holder.notificationMarker.setVisibility(View.INVISIBLE);
             }
             if (yourselfCheckbox.isChecked()) {
                 player.setIsYourself(true);
-                holder.yourselfMarker.setVisibility(View.VISIBLE);
+                //holder.yourselfMarker.setVisibility(View.VISIBLE);
             } else {
                 player.setIsYourself(false);
-                holder.yourselfMarker.setVisibility(View.INVISIBLE);
+                //holder.yourselfMarker.setVisibility(View.INVISIBLE);
             }
 
             player.setUserName(((TextView)holder.holderView.findViewById(R.id.players_user_name)).getText() + "");
@@ -459,7 +516,7 @@ public class Player implements Comparable{
                 db.addPlayer(player);
             }
         }
-
+/*
         private View setUpLargeView(final Player player, LayoutInflater vi, final SmallViewHolder holder) {
             //TODO: 99% sure this breaks on build version < 19
             View dialogView =  holder.holderView;
@@ -518,7 +575,7 @@ public class Player implements Comparable{
 
             return dialogView;
         }
-
+*/
 
         private void setUpSmallView(Player player, SmallViewHolder holder, LayoutInflater vi){
 
@@ -541,7 +598,6 @@ public class Player implements Comparable{
 
 
     }
-
 
 
 
