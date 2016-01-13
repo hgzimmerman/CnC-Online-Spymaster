@@ -22,6 +22,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.CheckBox;
 
 import android.widget.CompoundButton;
@@ -48,9 +49,7 @@ public class Player implements Comparable{
     private static int FRIEND_VALUE = 2;
     private static int YOURSELF_VALUE = 4;
 
-    // Assemble the stats link: prefix + game_key + infix + player_name, MAYBE...
-    private static String STATS_PREFIX = "http://www.shatabrick.com/cco/";
-    private static String STATS_INFIX = "/index.php?g=kw&a=sp&name=";
+
 
     private static String PROFILE_PREFIX = "http://cnc-online.net/profiles/";
 
@@ -275,12 +274,22 @@ public class Player implements Comparable{
                             expandedViewUpdateDB(player, (LargeViewHolder) holder);
                         }
                     });
+                    largeViewHolder.statsButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Launch the statsHandler
+                            StatsHandler sh = new StatsHandler();
+                            sh.getStats(player);
+                        }
+                    });
+
+
                     ((LargeViewHolder) holder).holderView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Log.v(TAG, "Large item clicked");
                             player.isExpanded = false;
-                            //TODO: animate this transformation
+                            //TODO: fix bug: when multiple views are open, clicking on one may trigger another's listener.
                             //prevent this viewHolder from having the onCheckedChanged() method called on other viewHolder instances.
                             largeViewHolder.yourselfCheckbox.setOnCheckedChangeListener(null);
                             largeViewHolder.notificationsCheckbox.setOnCheckedChangeListener(null);
@@ -338,6 +347,7 @@ public class Player implements Comparable{
             CheckBox friendsCheckbox;
             CheckBox notificationsCheckbox;
             CheckBox yourselfCheckbox;
+            Button statsButton;
             ViewGroup holderView;
 
             public LargeViewHolder(final View itemView) {
@@ -347,6 +357,7 @@ public class Player implements Comparable{
                 friendsCheckbox= (CheckBox) itemView.findViewById(R.id.friends_checkbox);
                 notificationsCheckbox = (CheckBox) itemView.findViewById(R.id.notifications_checkbox);
                 yourselfCheckbox = (CheckBox) itemView.findViewById(R.id.is_you_checkbox);
+                statsButton = (Button) itemView.findViewById(R.id.stats_button);
                 holderView = (ViewGroup) itemView.findViewById(R.id.player_card);
             }
         }
