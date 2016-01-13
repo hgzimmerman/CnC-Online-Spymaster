@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -93,7 +94,7 @@ public class PlayerStats implements Parcelable {
         }
     };
 
-    public static class StatsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    public static class StatsAdapter extends RecyclerView.Adapter<StatsViewHolder> {
 
         public ArrayList<PlayerStats> myStats;
 
@@ -103,14 +104,31 @@ public class PlayerStats implements Parcelable {
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return null;
+        public StatsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            ViewGroup cardView = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(R.layout.player_card, null);
+            RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            cardView.setLayoutParams(lp);
+            View statsView = LayoutInflater.from(parent.getContext()).inflate(R.layout.stats_layout, null);
+            cardView.addView(statsView);
+            return new StatsViewHolder(cardView);
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        public void onBindViewHolder(StatsViewHolder holder, int position) {
+            final PlayerStats playerStats = myStats.get(position);
+            holder.nameView.setText(playerStats.nickname);
+            holder.totalGamesView.setText(playerStats.totalGames + "");
+            holder.rankedOneVsOneWinsView.setText(playerStats.rankedOneVsOneWins + "");
+            holder.rankedOneVsOneLossesView.setText(playerStats.rankedOneVsOneLosses + "");
+            holder.rankedOneVsOneDisconnectsView.setText(playerStats.rankedOneVsOneDisconnects + "");
+            holder.rankedOneVsOneDesyncsView.setText(playerStats.rankedOneVsOneDesyncs + "");
+            holder.rankedTwoVsTwoGamesView.setText(playerStats.rankedTwoVsTwoGames + "");
+            holder.totalWinsView.setText(playerStats.totalWins + "");
+            holder.totalLossesView.setText(playerStats.totalLosses + "");
+            holder.totalDisconnectsView.setText(playerStats.totalDisconnects + "");
+            holder.totalDesyncsView.setText(playerStats.totalDesyncs + "");
         }
+
 
         @Override
         public int getItemCount() {
@@ -118,88 +136,117 @@ public class PlayerStats implements Parcelable {
         }
     }
 
-        public static class StatsFragment extends RecyclerViewFragment {
+    private static class StatsViewHolder extends RecyclerView.ViewHolder {
+        TextView nameView;
+        TextView totalGamesView;
+        TextView rankedOneVsOneWinsView;
+        TextView rankedOneVsOneLossesView;
+        TextView rankedOneVsOneDisconnectsView;
+        TextView rankedOneVsOneDesyncsView;
+        TextView rankedTwoVsTwoGamesView;
+        TextView totalWinsView;
+        TextView totalLossesView;
+        TextView totalDisconnectsView;
+        TextView totalDesyncsView;
 
-            private static final String TAG = "StatsFragment";
-
-            protected RecyclerView mRecyclerView;
-            protected StatsAdapter mAdapter;
-            protected RecyclerView.LayoutManager mLayoutManager;
-            protected ArrayList<PlayerStats> mDataset;
-
-
-            @Override
-            public void onCreate(Bundle bundle){
-                super.onCreate(bundle);
-                Log.v(TAG, "onCreate called");
-                LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-                llm.setOrientation(LinearLayoutManager.VERTICAL);
-                View rootView = getActivity().getLayoutInflater().inflate(R.layout.fragment_list_view, null, false);
-
-                mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-
-                mRecyclerView.setLayoutManager(llm);
-                mDataset = new ArrayList<>();
-
-                mAdapter = new StatsAdapter(mDataset);
-                Log.v(TAG, "setting the adapter for player");
-                mRecyclerView.setAdapter( mAdapter );
-            }
-
-            @Override
-            public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                     Bundle savedInstanceState) {
-                super.onCreateView(inflater, container, savedInstanceState);
-
-                mDataset = new ArrayList<>();
-
-                Log.v(TAG, "onCreateView Called");
-                View rootView = inflater.inflate(R.layout.fragment_list_view, container, false);
-                rootView.setTag(TAG);
-
-                mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-
-                // LinearLayoutManager is used here, this will layout the elements in a similar fashion
-                // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
-                // elements are laid out.
-                mLayoutManager = new LinearLayoutManager(getActivity());
-
-                mRecyclerView.setHasFixedSize(true);
+        public StatsViewHolder(View itemView) {
+            super(itemView);
+            nameView = (TextView) itemView.findViewById(R.id.player_stat_name);
+            totalGamesView = (TextView) itemView.findViewById(R.id.player_stat_total_games);
+            rankedOneVsOneWinsView = (TextView) itemView.findViewById(R.id.player_stat_ranked_1_vs_1_wins);
+            rankedOneVsOneLossesView = (TextView) itemView.findViewById(R.id.player_stat_ranked_1_vs_1_losses);
+            rankedOneVsOneDisconnectsView = (TextView) itemView.findViewById(R.id.player_stat_ranked_1_vs_1_disconnects);
+            rankedOneVsOneDesyncsView = (TextView) itemView.findViewById(R.id.player_stat_ranked_1_vs_1_desyncs);
+            rankedTwoVsTwoGamesView = (TextView) itemView.findViewById(R.id.player_stat_ranked_2_vs_2_games);
+            totalWinsView = (TextView) itemView.findViewById(R.id.player_stat_total_wins);
+            totalLossesView = (TextView) itemView.findViewById(R.id.player_stat_total_losses);
+            totalDisconnectsView = (TextView) itemView.findViewById(R.id.player_stat_total_disconnects);
+            totalDesyncsView = (TextView) itemView.findViewById(R.id.player_stat_total_desyncs);
+        }
+    }
 
 
-                setRecyclerViewLayoutManager(mRecyclerView);
+    public static class StatsFragment extends RecyclerViewFragment {
+        private static final String TAG = "StatsFragment";
 
-                mRecyclerView.addItemDecoration(new RecyclerViewFragment.VerticalSpaceItemDecoration(
-                        (int) getResources().getDimension(R.dimen.recycle_spacing)));
+        protected RecyclerView mRecyclerView;
+        protected StatsAdapter mAdapter;
+        protected RecyclerView.LayoutManager mLayoutManager;
+        protected ArrayList<PlayerStats> mDataset;
 
-                mAdapter = new StatsAdapter(mDataset);
-                // Set CustomAdapter as the adapter for RecyclerView.
-                Log.v(TAG, "setting the adapter for player");
-                mRecyclerView.setAdapter(mAdapter);
 
-                return rootView;
+        @Override
+        public void onCreate(Bundle bundle){
+            super.onCreate(bundle);
+            Log.v(TAG, "onCreate called");
+            LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+            llm.setOrientation(LinearLayoutManager.VERTICAL);
+            View rootView = getActivity().getLayoutInflater().inflate(R.layout.fragment_list_view, null, false);
 
-            }
+            mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
-            public void setData(final ArrayList<PlayerStats> data, final Activity activity){
-                if(!isAdded())
-                    mAdapter = new StatsAdapter(mDataset);
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.v(TAG, "Setting data");
-                        if (mDataset == null){
-                            mDataset = new ArrayList<>();
-                        }
-                        mDataset.clear();
-                        mDataset.addAll(data);
-                        mAdapter.notifyDataSetChanged();
-                    }
-                });
+            mRecyclerView.setLayoutManager(llm);
+            mDataset = new ArrayList<>();
 
-            }
+            mAdapter = new StatsAdapter(mDataset);
+            Log.v(TAG, "setting the adapter for player");
+            mRecyclerView.setAdapter( mAdapter );
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            super.onCreateView(inflater, container, savedInstanceState);
+
+            mDataset = new ArrayList<>();
+
+            Log.v(TAG, "onCreateView Called");
+            View rootView = inflater.inflate(R.layout.fragment_list_view, container, false);
+            rootView.setTag(TAG);
+
+            mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+
+            // LinearLayoutManager is used here, this will layout the elements in a similar fashion
+            // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
+            // elements are laid out.
+            mLayoutManager = new LinearLayoutManager(getActivity());
+
+            mRecyclerView.setHasFixedSize(true);
+
+
+            setRecyclerViewLayoutManager(mRecyclerView);
+
+            mRecyclerView.addItemDecoration(new RecyclerViewFragment.VerticalSpaceItemDecoration(
+                    (int) getResources().getDimension(R.dimen.recycle_spacing)));
+
+            mAdapter = new StatsAdapter(mDataset);
+            // Set CustomAdapter as the adapter for RecyclerView.
+            Log.v(TAG, "setting the adapter for player");
+            mRecyclerView.setAdapter(mAdapter);
+
+            return rootView;
 
         }
+
+        public void setData(final ArrayList<PlayerStats> data, final Activity activity){
+            if(!isAdded())
+                mAdapter = new StatsAdapter(mDataset);
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.v(TAG, "Setting data");
+                    if (mDataset == null){
+                        mDataset = new ArrayList<>();
+                    }
+                    mDataset.clear();
+                    mDataset.addAll(data);
+                    mAdapter.notifyDataSetChanged();
+                }
+            });
+
+        }
+
+    }
 
 
 

@@ -225,7 +225,6 @@ public class Game {
         private GamesAdapter mAdapter;
         private static ArrayList<Game> mDataset = new ArrayList<>();
 
-
         public GamesInProgressFragment() {
         }
 
