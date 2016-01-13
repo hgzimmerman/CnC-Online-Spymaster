@@ -99,6 +99,15 @@ public class PlayerDatabaseViewerActivity extends AppCompatActivity
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        //For some reason, if this is done in onCreate, players is null, causing a crash.
+        ArrayList<Player> players = dbHandler.getAllPlayers();
+        Collections.sort(players);
+        playerFragment.refreshData(players, this);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
