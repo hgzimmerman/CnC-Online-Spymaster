@@ -4,6 +4,7 @@ package com.mooo.ziggypop.candconline;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -186,6 +187,9 @@ public class Player implements Comparable{
                 case TYPE_LARGE:
                     View largeView = LayoutInflater.from(parent.getContext()).inflate(R.layout.player_big_layout, null);
                     cardView.addView(largeView);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        cardView.setElevation(16);
+                    }
                     return new LargeViewHolder(cardView);
                 default:
                     cardView.addView(smallView);
