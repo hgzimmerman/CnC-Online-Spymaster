@@ -3,7 +3,7 @@ package com.mooo.ziggypop.candconline;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Created by ziggypop on 1/13/16.
@@ -87,7 +86,6 @@ public class StatsViewerActivity extends AppCompatActivity
 
     @Override
     public void onRefresh() {
-        //Collections.sort(playerStats);
         statsFragment.setData(playerStats, this);
         mSwipeRefreshLayout.setRefreshing(false);
     }

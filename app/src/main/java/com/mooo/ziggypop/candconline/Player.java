@@ -44,6 +44,71 @@ import static com.mooo.ziggypop.candconline.Player.PlayersAdapter.*;
  *
  */
 public class Player implements Comparable{
+
+    public enum GameEnum{
+        None,
+        KanesWrath,
+        CnC3,
+        Generals,
+        ZeroHour,
+        RedAlert3
+    }
+    public static int gameEnumToInt(GameEnum gameEnum){
+        switch (gameEnum) {
+            case None:
+                return 0;
+            case KanesWrath:
+                return 1;
+            case CnC3:
+                return 2;
+            case Generals:
+                return 3;
+            case ZeroHour:
+                return 4;
+            case RedAlert3:
+                return 5;
+            default:
+                return 0;
+        }
+    }
+    public static GameEnum intToGameEnum(int integer){
+        switch (integer){
+            case 1:
+                return GameEnum.KanesWrath;
+            case 2:
+                return GameEnum.CnC3;
+            case 3:
+                return GameEnum.Generals;
+            case 4:
+                return GameEnum.ZeroHour;
+            case 5:
+                return GameEnum.RedAlert3;
+            default:
+                return GameEnum.None;
+        }
+    }
+    public static String gameEnumToQueryString(GameEnum gameEnum){
+        switch (gameEnum) {
+            case None:
+                return "";
+            case KanesWrath:
+                return "kw";
+            case CnC3:
+                return "tw";
+            case Generals:
+                return "ccg";
+            case ZeroHour:
+                return "zh";
+            case RedAlert3:
+                return "ra3";
+            default:
+                return "";
+        }
+    }
+
+
+
+
     private static final String TAG = "Player";
 
     private static int NOTIFICATION_VALUE = 1;
@@ -64,25 +129,26 @@ public class Player implements Comparable{
     private boolean isFriend;
     private boolean isReceiveNotifications;
     private boolean isYourself;
-    private String game;
+    private GameEnum game;
     private String userName;
     private boolean isExpanded;
 
 
 
-    public Player(String nickname, int id, int pid){
+    public Player(String nickname, int id, int pid, GameEnum game){
         this.nickname = nickname;
         this.id = id;
         this.pid = pid;
         this.isFriend = false;
         this.isReceiveNotifications = false;
         this.isYourself = false;
-        this.game = "";
+        this.game = game;
         this.userName = "";
     }
 
     public Player(String nickname, int id, int pid, boolean isFriend,
-                  boolean isReceiveNotifications, boolean isYourself, String userName) {
+                  boolean isReceiveNotifications, boolean isYourself,
+                  String userName, GameEnum game) {
         this.nickname = nickname;
         this.id = id;
         this.pid = pid;
@@ -90,6 +156,7 @@ public class Player implements Comparable{
         this.isReceiveNotifications = isReceiveNotifications;
         this.isYourself = isYourself;
         this.userName = userName;
+        this.game = GameEnum.None;
     }
 
 
@@ -105,6 +172,7 @@ public class Player implements Comparable{
     public boolean getIsRecieveNotifications(){return isReceiveNotifications;}
     public boolean getIsYourself(){return isYourself;}
     public String getUserName(){ return userName;}
+    public GameEnum getGame(){return game;}
 
     public void setIsFriend(boolean isFriend){
         this.isFriend = isFriend;

@@ -5,9 +5,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -30,8 +33,9 @@ public class StatsHandler {
     public static final String TAG = "StatsHandler";
 
     // Assemble the stats link: prefix + game_key + infix + player_name, MAYBE...
-    private static String STATS_PREFIX = "http://www.shatabrick.com/cco/";
-    private static String STATS_INFIX = "/index.php?g=kw&a=sp&name=";
+    private static final String STATS_PREFIX = "http://www.shatabrick.com/cco/";
+    private static final String STATS_INFIX_1 = "/index.php?g=";
+    private static final String STATS_INFIX_2 = "&a=sp&name=";
 
     Player.PlayersAdapter.LargeViewHolder viewHolder;
 
@@ -47,7 +51,14 @@ public class StatsHandler {
         protected ArrayList<PlayerStats> doInBackground(Player... players) {
             ArrayList<PlayerStats> allAccounts = new ArrayList<>();
             try {
-                String address = STATS_PREFIX + "kw" + STATS_INFIX + players[0].getNickname();
+                String gameKey = Player.gameEnumToQueryString(players[0].getGame());
+                String address = STATS_PREFIX
+                        + gameKey
+                        + STATS_INFIX_1
+                        + gameKey
+                        + STATS_INFIX_2
+                        + players[0].getNickname();
+
                 Log.d("JSwa", "Connecting to [" + address+ "]");
                 Document doc = Jsoup.connect(address).get();
                 Log.d("JSwa", "Connected to [" + address + "]");
@@ -113,11 +124,32 @@ public class StatsHandler {
         @Override
         protected void onPostExecute(ArrayList<PlayerStats> s) {
             super.onPostExecute(s);
-            //Todo: probably launch an activity using the PlayerStats objects to construct it's views
-            //viewHolder.progressBar.setProgress(0);
-            Intent statsIntent = new Intent(viewHolder.holderView.getContext(), StatsViewerActivity.class);
-            statsIntent.putParcelableArrayListExtra("statsPlayers", s);
-            viewHolder.holderView.getContext().startActivity(statsIntent);
+
+            if (s.size() == 0){
+                viewHolder.progressBar.setProgress(0);
+                viewHolder.progressBar.setVisibility(View.INVISIBLE);
+                //TODO: send a toast or something
+                Toast toast = Toast.makeText(viewHolder.holderView.getContext(),
+                        "Error Getting Stats",
+                        Toast.LENGTH_SHORT);
+                toast.show();
+            } else {
+                //viewHolder.progressBar.setProgress(0);
+                Intent statsIntent = new Intent(viewHolder.holderView.getContext(), StatsViewerActivity.class);
+                statsIntent.putParcelableArrayListExtra("statsPlayers", s);
+
+            /*
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    // the context of the activity
+                    Pair<View, String>viewHolder.name
+
+
+            )
+            */
+
+
+                viewHolder.holderView.getContext().startActivity(statsIntent);
+            }
         }
     }
 }

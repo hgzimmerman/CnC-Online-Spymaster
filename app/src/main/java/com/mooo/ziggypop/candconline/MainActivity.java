@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
 
     public NavigationDrawerFragment mNavigationDrawerFragment;
     private NavigationDrawerFragment.GameTitle mGameTitle;
-    private String queryJsonString = "";// String used to choose what game to sample from the JSON
+    private Player.GameEnum queryJsonString = Player.GameEnum.None;// String used to choose what game to sample from the JSON
     private JsonHandler jsonHandler;
     public SwipeRefreshLayout mSwipeRefreshLayout;
     private int currentNavDrawerIndex = 0;
@@ -254,23 +254,23 @@ public class MainActivity extends AppCompatActivity
                 mNavigationDrawerFragment.mDrawerLayout.closeDrawers();
                 break;
             case 1:
-                queryJsonString = JsonHandler.KW_JSON;
+                queryJsonString = Player.GameEnum.KanesWrath;
                 mGameTitle = NavigationDrawerFragment.GameTitle.KW;
                 break;
             case 2:
-                queryJsonString = JsonHandler.CNC3_JSON;
+                queryJsonString = Player.GameEnum.CnC3;
                 mGameTitle = NavigationDrawerFragment.GameTitle.CnC3;
                 break;
             case 3:
-                queryJsonString = JsonHandler.GENERALS_JSON;
+                queryJsonString = Player.GameEnum.Generals;
                 mGameTitle = NavigationDrawerFragment.GameTitle.Generals;
                 break;
             case 4:
-                queryJsonString = JsonHandler.ZH_JSON;
+                queryJsonString = Player.GameEnum.ZeroHour;
                 mGameTitle = NavigationDrawerFragment.GameTitle.ZH;
                 break;
             case 5:
-                queryJsonString = JsonHandler.RA3_JSON;
+                queryJsonString = Player.GameEnum.RedAlert3;
                 mGameTitle = NavigationDrawerFragment.GameTitle.RA3;
                 break;
             case 6: //settings
@@ -420,7 +420,7 @@ public class MainActivity extends AppCompatActivity
      * Returns the string used to query individual games.
      * This string will be changed based upon the selection in the nav-drawer.
      */
-    public String getQueryJsonString(){
+    public Player.GameEnum getQueryJsonString(){
         return queryJsonString;
     }
 

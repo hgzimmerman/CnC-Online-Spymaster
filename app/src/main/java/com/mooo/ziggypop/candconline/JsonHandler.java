@@ -29,6 +29,8 @@ import java.util.List;
 public class JsonHandler {
 
 
+
+
     public static final String TAG = "JsonHandler";
 
     public static final String KW_JSON = "cnc3kw";
@@ -65,9 +67,31 @@ public class JsonHandler {
                 Log.v(TAG, "query String = " + mainActivity.getQueryJsonString());
 
                 /*===Get_Base_Game_Json===*/
-                JSONObject game = jsonCache.getJSONObject(mainActivity.getQueryJsonString());
+                String gameQueryString = "";
+                Player.GameEnum gameType = mainActivity.getQueryJsonString();
+                switch (gameType){
+                    case None:
+                        break;
+                    case KanesWrath:
+                        gameQueryString = KW_JSON;
+                        break;
+                    case CnC3:
+                        gameQueryString = CNC3_JSON;
+                        break;
+                    case Generals:
+                        gameQueryString = GENERALS_JSON;
+                        break;
+                    case ZeroHour:
+                        gameQueryString = ZH_JSON;
+                        break;
+                    case RedAlert3:
+                        gameQueryString = RA3_JSON;
+                }
+                JSONObject game = jsonCache.getJSONObject(gameQueryString);
+
+
                 /*===START_PLAYERS===*/
-                ArrayList<Player> usersArray = getAndAugmentPlayers(game);
+                ArrayList<Player> usersArray = getAndAugmentPlayers(game, gameType);
                 Log.v(TAG, "NUM_OF_PLAYERS: " + usersArray.size());
 
                 /*===START_LOBBIES===*/
@@ -106,7 +130,7 @@ public class JsonHandler {
      * Helper method for onPostExecute()
      * This gets and assembles the json data into an ArrayList of Player objects.
      */
-    public static ArrayList<Player> getPlayers(JSONObject gameObject){
+    public static ArrayList<Player> getPlayers(JSONObject gameObject, Player.GameEnum game){
         ArrayList<Player> returnArr = new ArrayList<>();
 
         JSONObject usersObject;
@@ -120,7 +144,8 @@ public class JsonHandler {
                     JSONObject value = (JSONObject) usersObject.get(key);
                     Player newPlayer = new Player(value.getString("nickname"),
                             Integer.parseInt(value.getString("id")),
-                            Integer.parseInt(value.getString("pid")));
+                            Integer.parseInt(value.getString("pid"))
+                            ,game);
                     returnArr.add(newPlayer);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -133,8 +158,8 @@ public class JsonHandler {
         return returnArr;
     }
 
-    public static ArrayList<Player> getAndAugmentPlayers(JSONObject gameObject){
-        ArrayList<Player> players = getPlayers(gameObject);
+    public static ArrayList<Player> getAndAugmentPlayers(JSONObject gameObject, Player.GameEnum game){
+        ArrayList<Player> players = getPlayers(gameObject, game);
         players = db.augmentPlayers(players);
         Collections.sort(players);
 
@@ -155,7 +180,7 @@ public class JsonHandler {
 
             List<Player> allOnlinePlayers = new ArrayList<>();
             for ( JSONObject gameJSON: gameJSONs) {
-                allOnlinePlayers.addAll(getPlayers(gameJSON));
+                allOnlinePlayers.addAll(getPlayers(gameJSON, Player.GameEnum.None)); // Do not care what game we are dealing with
             }
             // For some reason, the service was crashing on a null reference here.
             if (db == null){
@@ -232,7 +257,7 @@ public class JsonHandler {
             // get create arrays of the players for each game and give
             for( String query : gameQueries){
                 JSONObject game = jsonAll.getJSONObject(query);
-                ArrayList<Player> playerArray = getPlayers(game);
+                ArrayList<Player> playerArray = getPlayers(game, Player.GameEnum.None); // do not care about what game they come from.
                 returnArr.add(playerArray.size());
             }
 
