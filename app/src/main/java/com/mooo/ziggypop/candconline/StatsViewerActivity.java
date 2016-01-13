@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -62,6 +63,26 @@ public class StatsViewerActivity extends AppCompatActivity
         mSwipeRefreshLayout.setProgressBackgroundColor(R.color.light_grey);
 
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        onRefresh();
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // go to previous screen when app icon in action bar is clicked
+                finish();
+                return true;
+            default:
+                return true;
+        }
+    }
+
 
 
     @Override
