@@ -188,14 +188,9 @@ public class Game {
             // elements are laid out.
             mLayoutManager = new LinearLayoutManager(getActivity());
 
-            mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
 
-            if (savedInstanceState != null) {
-                // Restore saved layout manager type.
-                mCurrentLayoutManagerType = (LayoutManagerType) savedInstanceState
-                        .getSerializable(KEY_LAYOUT_MANAGER);
-            }
-            setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
+
+            setRecyclerViewLayoutManager(mRecyclerView);
             mRecyclerView.addItemDecoration(new RecyclerViewFragment.VerticalSpaceItemDecoration(
                     (int) getResources().getDimension(R.dimen.recycle_spacing)));
 
@@ -268,14 +263,8 @@ public class Game {
             // elements are laid out.
             mLayoutManager = new LinearLayoutManager(getActivity());
 
-            mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
 
-            if (savedInstanceState != null) {
-                // Restore saved layout manager type.
-                mCurrentLayoutManagerType = (LayoutManagerType) savedInstanceState
-                        .getSerializable(KEY_LAYOUT_MANAGER);
-            }
-            setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
+            setRecyclerViewLayoutManager(mRecyclerView);
             mRecyclerView.addItemDecoration(new RecyclerViewFragment.VerticalSpaceItemDecoration(
                     (int) getResources().getDimension(R.dimen.recycle_spacing)));
 

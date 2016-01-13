@@ -1,6 +1,10 @@
 package com.mooo.ziggypop.candconline;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +22,10 @@ import java.util.ArrayList;
  * Handles getting stats
  */
 public class StatsHandler {
-
-    Player.PlayersAdapter.LargeViewHolder viewHolder;
-
     public StatsHandler(Player.PlayersAdapter.LargeViewHolder viewHolder){
         this.viewHolder = viewHolder;
 
     }
-
 
     public static final String TAG = "StatsHandler";
 
@@ -33,37 +33,9 @@ public class StatsHandler {
     private static String STATS_PREFIX = "http://www.shatabrick.com/cco/";
     private static String STATS_INFIX = "/index.php?g=kw&a=sp&name=";
 
-    private class PlayerStats{
-        private String nickname;
-        private int totalGames;
-        private int rankedOneVsOneWins;
-        private int rankedOneVsOneLosses;
-        private int rankedOneVsOneDisconnects;
-        private int rankedOneVsOneDesyncs;
-        private int rankedTwoVsTwoGames;
-        private int totalWins;
-        private int totalLosses;
-        private int totalDisconnects;
-        private int totalDesyncs;
+    Player.PlayersAdapter.LargeViewHolder viewHolder;
 
-        public PlayerStats(String nickname, int totalGames, int rankedOneVsOneWins,
-                           int rankedOneVsOneLosses, int rankedOneVsOneDisconnects,
-                           int rankedOneVsOneDesyncs, int rankedTwoVsTwoGames, int totalWins,
-                           int totalLosses, int totalDisconnects, int totalDesyncs){
-            this.nickname = nickname;
-            this.totalGames = totalGames;
-            this.rankedOneVsOneWins = rankedOneVsOneWins;
-            this.rankedOneVsOneLosses = rankedOneVsOneLosses;
-            this.rankedOneVsOneDisconnects = rankedOneVsOneDisconnects;
-            this.rankedOneVsOneDesyncs = rankedOneVsOneDesyncs;
-            this.rankedTwoVsTwoGames = rankedTwoVsTwoGames;
-            this.totalWins = totalWins;
-            this.totalLosses = totalLosses;
-            this.totalDisconnects = totalDisconnects;
-            this.totalDesyncs = totalDesyncs;
-        }
 
-    }
 
     public void getStats(Player player){
         new StatsGetter().execute(player);
@@ -134,7 +106,6 @@ public class StatsHandler {
 
         @Override
         protected void onProgressUpdate(Integer... progress) {
-            //Todo: update a progressbar setting at the bottom of the card.
             viewHolder.progressBar.setProgress(progress[0]);
         }
 
@@ -144,21 +115,12 @@ public class StatsHandler {
             super.onPostExecute(s);
             //Todo: probably launch an activity using the PlayerStats objects to construct it's views
             //viewHolder.progressBar.setProgress(0);
+            Intent statsIntent = new Intent(viewHolder.holderView.getContext(), StatsViewerActivity.class);
+            statsIntent.putParcelableArrayListExtra("statsPlayers", s);
+            viewHolder.holderView.getContext().startActivity(statsIntent);
         }
     }
-
-
-       /*
-                    Button statsButton = (Button) dialogView.findViewById(R.id.stats_link);
-                    String gameID = "kw";
-                    final String statsLink = "http://www.shatabrick.com/cco/"+ gameID +"/index.php?g=kw&a=sp&name=" + player.nickname;
-                    statsButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent statsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(statsLink));
-                            getContext().startActivity(statsIntent);
-                        }
-                    });
-                    */
-
 }
+
+
+

@@ -31,6 +31,11 @@
             android:name=".PlayerDatabaseViewerActivity"
             android:parentActivityName=".SettingsActivity"
             />
+        <activity
+            android:name=".StatsViewerActivity"
+            android:parentActivityName=".SettingsActivity"
+            />
+
 
         <receiver
             android:name=".AlarmArmingBootReceiver"
