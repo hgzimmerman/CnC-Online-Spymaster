@@ -126,6 +126,22 @@ public class StatsHandler {
                             }
                             break;
                         case Generals:
+                            if (tables.size() == 0){
+                                Log.e(TAG, "No tables found, the URL was probably malformed");
+                                errorMessage = "Malformed URL";
+                            } else if ( tables.size() == 1){
+                                Log.e(TAG, "One table found, the player probably hasn't played a game");
+                                errorMessage = "No Stats Available";
+                            } else if (tables.size() == 2) {
+
+                                //NOT SURE IF THIS IS RIGHT.
+
+                                errorMessage = "two tables";
+                                table = tables.get(1);
+                                tableBody = table.select("tbody").get(0);
+                                generalsParcer(tableBody);
+
+                            }
                             break;
                         case ZeroHour:
                             if (tables.size() == 0){
@@ -140,6 +156,8 @@ public class StatsHandler {
                                     table = tables.get(0);
                                 } else {
                                     table = tables.get(1);
+                                    tableBody = table.select("tbody").get(0);
+                                    generalsParcer(tableBody);
                                 }
 
                                 tableBody = table.select("tbody").get(0);
@@ -222,9 +240,15 @@ public class StatsHandler {
             return accounts;
         }
 
+        private ArrayList<PlayerStats.GeneralsStats> generalsParcer(Element tableBody){
+            ArrayList<PlayerStats.GeneralsStats> arr = new ArrayList<PlayerStats.GeneralsStats>();
+            return arr;
+        }
+
+
+
         @Override
         protected void onPreExecute() {
-            //Todo: maybe hide some views or show a progress bar
             viewHolder.progressBar.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }

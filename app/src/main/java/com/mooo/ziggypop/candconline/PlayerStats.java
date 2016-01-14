@@ -249,6 +249,13 @@ public class PlayerStats implements Parcelable {
     }
 
 
+    //Todo, implement this class for generals
+    //I may want to make this a separate class and implement another statsHandler
+    public static class GeneralsStats {
+        public GeneralsStats(){
+
+        }
+    }
 
 
 
