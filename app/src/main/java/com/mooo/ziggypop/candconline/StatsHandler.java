@@ -67,6 +67,12 @@ public class StatsHandler {
                 String title = doc.title();
                 Log.d("JSwA", "Title [" + title + "]");
 
+                //Do game specific parsing actions here
+                switch (players[0].getGame()){
+                    case KanesWrath:
+                        break;
+                }
+
                 Element table = doc.select("#calendar_wrap").get(1); // for some awful reason they use multiple id's
                 Element tableBody = table.select("tbody").get(0);
 
