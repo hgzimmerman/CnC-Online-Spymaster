@@ -59,7 +59,8 @@ public class StatsHandler {
                         + STATS_INFIX_2
                         + players[0].getNickname();
 
-                Log.d("JSwa", "Connecting to [" + address+ "]");
+
+                Log.d("JSwa", "Connecting to [" + address + "]");
                 Document doc = Jsoup.connect(address).get();
                 Log.d("JSwa", "Connected to [" + address + "]");
                 // Get document (HTML page) title
@@ -128,7 +129,7 @@ public class StatsHandler {
             if (s.size() == 0){
                 viewHolder.progressBar.setProgress(0);
                 viewHolder.progressBar.setVisibility(View.INVISIBLE);
-                //TODO: send a toast or something
+                // send a toast indicating failure
                 Toast toast = Toast.makeText(viewHolder.holderView.getContext(),
                         "Error Getting Stats",
                         Toast.LENGTH_SHORT);

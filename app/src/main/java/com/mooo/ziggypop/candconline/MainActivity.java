@@ -117,6 +117,11 @@ public class MainActivity extends AppCompatActivity
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
+        //Set the queryString so players created are not set to NONE on first load.
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        queryJsonString = Player.intToGameEnum(Integer.parseInt(sp.getString("default_game", "1")));
+
+
         //set up swipe down to refresh
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
