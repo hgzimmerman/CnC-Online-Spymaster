@@ -322,6 +322,17 @@ public class Player implements Comparable{
                         largeViewHolder.username.setText(player.getUserName());
                     }
 
+                    //Reassign the checkbox every time the viewholder is bound
+                    //This does not work
+//
+//                    largeViewHolder.friendsCheckbox = .findViewById(R.id.friends_checkbox);
+//                    largeViewHolder.notificationsCheckbox = (CheckBox) ((LargeViewHolder) holder).holderView.findViewById(R.id.notifications_checkbox);
+//                    largeViewHolder.yourselfCheckbox = (CheckBox) ((LargeViewHolder) holder).holderView.findViewById(R.id.is_you_checkbox);
+//
+                    //TODO Try to do this with just one type, and make the relevant parts GONE or VISIBLE based on circumstance.
+                    // ^^^ This is probably much easier.
+
+
                     largeViewHolder.friendsCheckbox.setChecked(player.isFriend);
                     largeViewHolder.notificationsCheckbox.setChecked(player.isReceiveNotifications);
                     largeViewHolder.yourselfCheckbox.setChecked(player.isYourself);
