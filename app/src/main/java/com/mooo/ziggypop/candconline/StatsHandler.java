@@ -34,11 +34,39 @@ public class StatsHandler {
     Player.PlayerViewHolder viewHolder;
 
 
-
-    public void getStats(Player player){
+    //grab data for players and launch an activity showing them
+    public void getPlayerStats(Player player){
         new StatsGetter().execute(player);
     }
+    //grab data for ladders and launch an activity showing them
+    public void getLadderStats(Player player){ new LadderStatsGetter().execute(player);}
 
+
+
+    private String addressBuilder(Player.GameEnum gameEnum, String nickname){
+        String address;
+        //red alert three url slightly inconsistent.
+        if (gameEnum != Player.GameEnum.RedAlert3) {
+            String gameKey = Player.gameEnumToQueryString(gameEnum);
+            address = STATS_PREFIX
+                    + gameKey
+                    + STATS_INFIX_1
+                    + gameKey
+                    + STATS_INFIX_2
+                    + nickname;
+        } else {
+            address = STATS_PREFIX
+                    + "ra3"
+                    + STATS_INFIX_1
+                    + "ra"
+                    + STATS_INFIX_2
+                    + nickname;
+        }
+        return address;
+    }
+    /**
+     * Gets the stats for the general table.
+     */
     public class StatsGetter extends AsyncTask<Player, Integer, ArrayList<PlayerStats>> {
 
         private static final int TIMEOUT = 10000; // ten seconds
@@ -48,27 +76,9 @@ public class StatsHandler {
         protected ArrayList<PlayerStats> doInBackground(Player... players) {
             ArrayList<PlayerStats> allAccounts = new ArrayList<>();
             try {
-                String address;
-                //red alert three url slightly inconsistent.
-                if (players[0].getGame() != Player.GameEnum.RedAlert3) {
-                    String gameKey = Player.gameEnumToQueryString(players[0].getGame());
-                     address = STATS_PREFIX
-                            + gameKey
-                            + STATS_INFIX_1
-                            + gameKey
-                            + STATS_INFIX_2
-                            + players[0].getNickname();
-                } else {
-                    address = STATS_PREFIX
-                            + "ra3"
-                            + STATS_INFIX_1
-                            + "ra"
-                            + STATS_INFIX_2
-                            + players[0].getNickname();
-                }
-
-
+                String address = addressBuilder(players[0].getGame(), players[0].getNickname());
                 Log.d("JSwa", "Connecting to [" + address + "]");
+
                 try {
                     Document doc = Jsoup.connect(address).timeout(TIMEOUT).get();
 
@@ -103,11 +113,11 @@ public class StatsHandler {
                                     table = tables.get(1);
                                 }
                                 tableBody = table.select("tbody").get(0);
-                                allAccounts = parse(tableBody);
+                                allAccounts = parsePlayerStats(tableBody);
                             } else if (tables.size() == 3){
                                 table = tables.get(1);
                                 tableBody = table.select("tbody").get(0);
-                                allAccounts = parse(tableBody);
+                                allAccounts = parsePlayerStats(tableBody);
                             }
                             break;
                         case CnC3:
@@ -127,11 +137,11 @@ public class StatsHandler {
                                 }
 
                                 tableBody = table.select("tbody").get(0);
-                                allAccounts = parse(tableBody);
+                                allAccounts = parsePlayerStats(tableBody);
                             } else if (tables.size() == 3){
                                 table = tables.get(1);
                                 tableBody = table.select("tbody").get(0);
-                                allAccounts = parse(tableBody);
+                                allAccounts = parsePlayerStats(tableBody);
                             }
                             break;
                         case Generals:
@@ -143,12 +153,11 @@ public class StatsHandler {
                                 errorMessage = "No Stats Available";
                             } else if (tables.size() == 2) {
 
-                                //NOT SURE IF THIS IS RIGHT.
 
-                                errorMessage = "two tables";
                                 table = tables.get(1);
                                 tableBody = table.select("tbody").get(0);
-                                generalsParcer(tableBody);
+                                errorMessage = "Generals does not support Player Statistics";
+                                //generalsParcer(tableBody);
 
                             }
                             break;
@@ -160,17 +169,16 @@ public class StatsHandler {
                                 Log.e(TAG, "One table found, the player probably hasn't played a game");
                                 errorMessage = "No Stats Available";
                             } else if (tables.size() == 2){
-                                errorMessage = "two tables";
+                                errorMessage = "Zero Hour does not support Player Statistics";
                                 if (doc.getElementsContainingText(   "Not found in Generals" ).size() > 0) {
                                     table = tables.get(0);
                                 } else {
                                     table = tables.get(1);
                                     tableBody = table.select("tbody").get(0);
-                                    generalsParcer(tableBody);
                                 }
                                 // TODO: create another parser and stats type for generals and ZH
                                 // TODO: just remove the button for those games.
-                                //allAccounts = parse(tableBody);
+                                //allAccounts = parsePlayerStats(tableBody);
                             }
                             break;
                         case RedAlert3:
@@ -186,12 +194,12 @@ public class StatsHandler {
                                 case 2:
                                     table = tables.get(0);
                                     tableBody = table.select("tbody").get(0);
-                                    allAccounts = parse(tableBody);
+                                    allAccounts = parsePlayerStats(tableBody);
                                     break;
                                 case 3:
                                     table = tables.get(1);
                                     tableBody = table.select("tbody").get(0);
-                                    allAccounts = parse(tableBody);
+                                    allAccounts = parsePlayerStats(tableBody);
                             }
 
                             break;
@@ -202,13 +210,6 @@ public class StatsHandler {
                     errorMessage = "Request Timed Out";
                 }
 
-
-
-
-
-
-
-
             } catch (Throwable t) {
                 t.printStackTrace();
             }
@@ -216,7 +217,7 @@ public class StatsHandler {
             return allAccounts;
         }
 
-        private ArrayList<PlayerStats> parse(Element tableBody){
+        private ArrayList<PlayerStats> parsePlayerStats(Element tableBody){
             Log.v(TAG, "parsing the table");
             ArrayList<PlayerStats> accounts = new ArrayList<>();
             int numberOfAliases =  tableBody.select("tr").size();
@@ -248,11 +249,6 @@ public class StatsHandler {
             return accounts;
         }
 
-        private ArrayList<PlayerStats.GeneralsStats> generalsParcer(Element tableBody){
-            ArrayList<PlayerStats.GeneralsStats> arr = new ArrayList<PlayerStats.GeneralsStats>();
-            return arr;
-        }
-
 
 
         @Override
@@ -271,6 +267,7 @@ public class StatsHandler {
         protected void onPostExecute(ArrayList<PlayerStats> s) {
             super.onPostExecute(s);
 
+            //It returns an empty ArrayList
             if (s.size() == 0){
                 viewHolder.progressBar.setProgress(0);
                 viewHolder.progressBar.setVisibility(View.INVISIBLE);
@@ -279,6 +276,8 @@ public class StatsHandler {
                         errorMessage,
                         Toast.LENGTH_SHORT);
                 toast.show();
+
+                // The ArrayList contains items
             } else {
                 //viewHolder.progressBar.setProgress(0);
                 Intent statsIntent = new Intent(viewHolder.bigView.getContext(), StatsViewerActivity.class);
@@ -288,17 +287,241 @@ public class StatsHandler {
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                     // the context of the activity
                     Pair<View, String>viewHolder.name
-
-
-            )
-            */
-
-
+            ) */
                 viewHolder.bigView.getContext().startActivity(statsIntent);
             }
         }
     }
+
+    /**
+     * Gets the stats for the ladder table.
+     */
+    public class LadderStatsGetter extends AsyncTask<Player, Integer, ArrayList<LadderStats>> {
+        private static final int TIMEOUT = 10000; // ten seconds
+        protected String errorMessage = "";
+
+        @Override
+        protected ArrayList<LadderStats> doInBackground(Player... players) {
+            ArrayList<LadderStats> allAccounts = new ArrayList<>();
+            try {
+                String address = addressBuilder(players[0].getGame(), players[0].getNickname());
+                Log.d("JSwa", "Connecting to [" + address + "]");
+
+                try {
+                    Document doc = Jsoup.connect(address).timeout(TIMEOUT).get();
+
+                    Log.d("JSwa", "Connected to [" + address + "]");
+                    // Get document (HTML page) title
+                    String title = doc.title();
+                    Log.d("JSwA", "Title [" + title + "]");
+
+                    Element tableBody;
+                    if (players[0].getGame() == Player.GameEnum.None){
+                        errorMessage = "Player Stored incorrectly";
+                    }
+
+                    Elements tables = doc.select("#calendar_wrap"); // there may be multiple
+                    Element table = null;
+                    //Do game specific parsing actions here
+                    // Find the most populated table, avoid empty tables.
+                    switch (players[0].getGame()){
+                        case KanesWrath:
+                            Log.d(TAG, "tables size = " + tables.size());
+                            if (tables.size() == 0){
+                                Log.e(TAG, "No tables found, the URL was probably malformed");
+                                errorMessage = "Malformed URL";
+                            } else if (tables.size() == 1) {
+                                Log.e(TAG, "One table found, the player probably hasn't played a game");
+                                errorMessage = "No Stats Available";
+                            } else if (tables.size() == 2){
+                                // The first possible table is non-existent, so get the first possible one
+                                if (doc.getElementsContainingText("   Not found in Kanes Wrath Ladders ").size() > 0){
+                                    table = tables.get(0);
+                                } else {
+                                    table = tables.get(1);
+                                }
+                                tableBody = table.select("tbody").get(0);
+                                allAccounts = parseLadderStats(tableBody);
+                            } else if (tables.size() == 3){
+                                table = tables.get(1);
+                                tableBody = table.select("tbody").get(0);
+                                allAccounts = parseLadderStats(tableBody);
+                            }
+                            break;
+                        case CnC3:
+                            Log.d(TAG, "tables size = " + tables.size());
+                            if (tables.size() == 0){
+                                Log.e(TAG, "No tables found, the URL was probably malformed");
+                                errorMessage = "Malformed URL";
+                            } else if (tables.size() == 1) {
+                                Log.e(TAG, "One table found, the player probably hasn't played a game");
+                                errorMessage = "No Stats Available";
+                            } else if (tables.size() == 2){
+                                // The first possible table is non-existent, so get the first possible one
+                                if (doc.getElementsContainingText("   Not found in Tiberium Wars Ladders ").size() > 0){
+                                    table = tables.get(0);
+                                } else {
+                                    table = tables.get(1);
+                                }
+
+                                tableBody = table.select("tbody").get(0);
+                                allAccounts = parseLadderStats(tableBody);
+                            } else if (tables.size() == 3){
+                                table = tables.get(1);
+                                tableBody = table.select("tbody").get(0);
+                                allAccounts = parseLadderStats(tableBody);
+                            }
+                            break;
+                        case Generals:
+                            if (tables.size() == 0){
+                                Log.e(TAG, "No tables found, the URL was probably malformed");
+                                errorMessage = "Malformed URL";
+                            } else if ( tables.size() == 1){
+                                Log.e(TAG, "One table found, the player probably hasn't played a game");
+                                errorMessage = "No Stats Available";
+                            } else if (tables.size() == 2) {
+
+                                //NOT SURE IF THIS IS RIGHT.
+
+                                errorMessage = "two tables";
+                                table = tables.get(1);
+                                tableBody = table.select("tbody").get(0);
+                                parseLadderStats(tableBody);
+
+                            }
+                            break;
+                        case ZeroHour:
+                            if (tables.size() == 0){
+                                Log.e(TAG, "No tables found, the URL was probably malformed");
+                                errorMessage = "Malformed URL";
+                            } else if ( tables.size() == 1){
+                                Log.e(TAG, "One table found, the player probably hasn't played a game");
+                                errorMessage = "No Stats Available";
+                            } else if (tables.size() == 2){
+                                errorMessage = "two tables";
+                                if (doc.getElementsContainingText(   "Not found in Generals" ).size() > 0) {
+                                    table = tables.get(0);
+                                } else {
+                                    table = tables.get(1);
+                                    tableBody = table.select("tbody").get(0);
+                                    parseLadderStats(tableBody);
+                                }
+                            }
+                            break;
+                        case RedAlert3:
+                            switch (tables.size()){
+                                case 0:
+                                    Log.e(TAG, "No tables found, the URL was probably malformed");
+                                    errorMessage = "Malformed URL";
+                                    break;
+                                case 1:
+                                    Log.e(TAG, "One table found, the player probably hasn't played a game");
+                                    errorMessage = "No Stats Available";
+                                    break;
+                                case 2:
+                                    table = tables.get(0);
+                                    tableBody = table.select("tbody").get(0);
+                                    allAccounts = parseLadderStats(tableBody);
+                                    break;
+                                case 3:
+                                    table = tables.get(1);
+                                    tableBody = table.select("tbody").get(0);
+                                    allAccounts = parseLadderStats(tableBody);
+                            }
+
+                            break;
+                    }
+
+
+                } catch (SocketTimeoutException e){
+                    errorMessage = "Request Timed Out";
+                }
+
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+
+            return allAccounts;
+        }
+
+        private ArrayList<LadderStats> parseLadderStats(Element tableBody){
+            Log.v(TAG, "parsing the table");
+            ArrayList<LadderStats> accounts = new ArrayList<>();
+
+            int numberOfAliases =  tableBody.select("tr").size();
+            int index = 0;
+
+            for (Element tr: tableBody.select("tr")) {
+                index++;
+                Elements tds = tr.select("td");
+                String nickname = tds.get(1).text();
+                int rank = Integer.parseInt(tds.get(2).text());
+                String ladderWL = tds.get(3).text();
+                int elo = Integer.parseInt(tds.get(4).text());
+                int games = Integer.parseInt(tds.get(5).text());
+                int wins = Integer.parseInt(tds.get(6).text());
+                int losses = Integer.parseInt(tds.get(7).text());
+                int disconnects = Integer.parseInt(tds.get(8).text());
+                int desyncs = Integer.parseInt(tds.get(9).text());
+
+                Log.v(TAG, nickname + " : " + ladderWL);
+                LadderStats playerAlias = new LadderStats(nickname,
+                        rank,
+                        ladderWL,
+                        elo,
+                        games,
+                        wins,
+                        losses,
+                        disconnects,
+                        desyncs);
+                accounts.add(playerAlias);
+                //update the progressbar
+                publishProgress((int) (( index/ (float) numberOfAliases) * 100));
+            }
+            return accounts;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            viewHolder.progressBar.setVisibility(View.VISIBLE);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... progress) {
+            viewHolder.progressBar.setProgress(progress[0]);
+        }
+
+
+        @Override
+        protected void onPostExecute(ArrayList<LadderStats> s) {
+            super.onPostExecute(s);
+
+            //It returns an empty ArrayList
+            if (s.size() == 0){
+                viewHolder.progressBar.setProgress(0);
+                viewHolder.progressBar.setVisibility(View.INVISIBLE);
+                // send a toast indicating failure
+                Toast toast = Toast.makeText(viewHolder.bigView.getContext(),
+                        errorMessage,
+                        Toast.LENGTH_SHORT);
+                toast.show();
+
+                // The ArrayList contains items
+            } else {
+                //viewHolder.progressBar.setProgress(0);
+                Intent statsIntent = new Intent(viewHolder.bigView.getContext(), StatsViewerActivity.class);
+                statsIntent.putParcelableArrayListExtra("statsLadder", s);
+
+            /*
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    // the context of the activity
+                    Pair<View, String>viewHolder.name
+            ) */
+                viewHolder.bigView.getContext().startActivity(statsIntent);
+            }
+        }
+
+
+    }
 }
-
-
-

@@ -23,8 +23,10 @@ public class StatsViewerActivity extends AppCompatActivity
     Toolbar toolbar;
     SwipeRefreshLayout mSwipeRefreshLayout;
     ArrayList<PlayerStats> playerStats;
+    ArrayList<LadderStats> ladderStats;
 
     PlayerStats.StatsFragment statsFragment;
+    LadderStats.LadderStatsFragment ladderStatsFragment;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -40,14 +42,28 @@ public class StatsViewerActivity extends AppCompatActivity
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
         playerStats = getIntent().getExtras().getParcelableArrayList("statsPlayers");
+        ladderStats = getIntent().getExtras().getParcelableArrayList("statsLadder");
+
+        //Set up the activity depending on which stats type was sent
+        if (playerStats != null) {
+            statsFragment = new PlayerStats.StatsFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.db_players_fragment, statsFragment);
+            ft.commit();
+
+            statsFragment.setData(playerStats, this);
+        } else if (ladderStats != null){
+            ladderStatsFragment = new LadderStats.LadderStatsFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.db_players_fragment, statsFragment);
+            ft.commit();
+
+            ladderStatsFragment.setData(ladderStats, this);
+        }
 
 
-        statsFragment = new PlayerStats.StatsFragment();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.db_players_fragment, statsFragment);
-        ft.commit();
 
-        statsFragment.setData(playerStats, this);
+
 
 
 

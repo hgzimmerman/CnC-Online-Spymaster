@@ -1,50 +1,31 @@
 package com.mooo.ziggypop.candconline;
 
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
 import android.animation.LayoutTransition;
-import android.animation.TimeInterpolator;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.transition.ChangeBounds;
-import android.transition.ChangeTransform;
-import android.transition.Fade;
-import android.transition.Scene;
 import android.transition.Slide;
 import android.transition.TransitionManager;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.CheckBox;
 
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.sql.BatchUpdateException;
 import java.util.ArrayList;
-
-import static com.mooo.ziggypop.candconline.Player.PlayersAdapter.*;
 
 
 /**
@@ -134,7 +115,7 @@ public class Player implements Comparable{
         Button statsButton;
         ProgressBar progressBar;
         ViewGroup bigView;
-
+        //the top level layout that holds both smaller layouts
         ViewGroup rootView;
 
 
@@ -444,7 +425,7 @@ public class Player implements Comparable{
                 public void onClick(View v) {
                     // Launch the statsHandler
                     StatsHandler sh = new StatsHandler(holder);
-                    sh.getStats(player);
+                    sh.getPlayerStats(player);
                 }
             });
 
