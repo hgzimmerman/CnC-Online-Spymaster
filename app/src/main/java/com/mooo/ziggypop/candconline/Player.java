@@ -313,20 +313,26 @@ public class Player implements Comparable{
 
         private void setCheckboxes(final PlayerViewHolder holder, final Player player) {
             holder.friendsCheckbox.setOnCheckedChangeListener(null);
+            holder.notificationsCheckbox.setOnCheckedChangeListener(null);
+            holder.yourselfCheckbox.setOnCheckedChangeListener(null);
+
+
+            holder.friendsCheckbox.setChecked(player.isFriend);
+            holder.notificationsCheckbox.setChecked(player.isReceiveNotifications);
+            holder.yourselfCheckbox.setChecked(player.isYourself);
+
             holder.friendsCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     expandedViewUpdateDB(player,  holder);
                 }
             });
-            holder.notificationsCheckbox.setOnCheckedChangeListener(null);
             holder.notificationsCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     expandedViewUpdateDB(player,  holder);
                 }
             });
-            holder.yourselfCheckbox.setOnCheckedChangeListener(null);
             holder.yourselfCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -335,9 +341,7 @@ public class Player implements Comparable{
             });
 
 
-            holder.friendsCheckbox.setChecked(player.isFriend);
-            holder.notificationsCheckbox.setChecked(player.isReceiveNotifications);
-            holder.yourselfCheckbox.setChecked(player.isYourself);
+
         }
         private void setFlagIcons(PlayerViewHolder holder, Player player){
             if (player.isFriend) {
@@ -381,7 +385,7 @@ public class Player implements Comparable{
             //Animator animator = AnimationUtils.loadAnimation(holder.rootView.getContext(), R.anim.grow);
 
             LayoutTransition transition = new LayoutTransition();
-            transition.setDuration(610, LayoutTransition.CHANGE_DISAPPEARING); // this is a quick fix, I would like to set the priorities of how the view is expanded, > 150 feels the most natural but 110 hides the odd sliding
+            transition.setDuration(410, LayoutTransition.CHANGE_DISAPPEARING); // this is a quick fix, I would like to set the priorities of how the view is expanded, > 150 feels the most natural but 110 hides the odd sliding
             //transition.setAnimator(LayoutTransition.CHANGING, animator);
             transition.setAnimateParentHierarchy(true);
             ((RelativeLayout)holder.smallView.getParent()).setLayoutTransition(transition);
@@ -398,7 +402,6 @@ public class Player implements Comparable{
                 holder.bigView.setVisibility(View.VISIBLE);
 
                 setUsername(holder, player);
-
                 setCheckboxes(holder, player);
 
             }
@@ -462,9 +465,6 @@ public class Player implements Comparable{
 
 
                     //prevent this viewHolder from having the onCheckedChanged() method called on other viewHolder instances.
-                    holder.yourselfCheckbox.setOnCheckedChangeListener(null);
-                    holder.notificationsCheckbox.setOnCheckedChangeListener(null);
-                    holder.friendsCheckbox.setOnCheckedChangeListener(null);
                     holder.progressBar.setProgress(0);
                     holder.progressBar.setVisibility(View.INVISIBLE);
 
@@ -487,14 +487,9 @@ public class Player implements Comparable{
 
 
 
-
         private void expandedViewUpdateDB(Player player, PlayerViewHolder holder){
             Log.v(TAG, "Updating the db for: " + player.nickname);
-            /*
-            CheckBox friendsCheckbox = (CheckBox) holder.holderView.findViewById(R.id.friends_checkbox);
-            CheckBox notificationsCheckbox = (CheckBox) holder.holderView.findViewById(R.id.notifications_checkbox);
-            CheckBox yourselfCheckbox = (CheckBox) holder.holderView.findViewById(R.id.is_you_checkbox);
-*/
+
 
             player.setIsFriend(holder.friendsCheckbox.isChecked());
             player.setIsRecieveNotifications(holder.notificationsCheckbox.isChecked());

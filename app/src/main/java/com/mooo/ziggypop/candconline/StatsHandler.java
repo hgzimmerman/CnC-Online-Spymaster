@@ -97,7 +97,11 @@ public class StatsHandler {
                                 errorMessage = "No Stats Available";
                             } else if (tables.size() == 2){
                                 // The first possible table is non-existent, so get the first possible one
-                                table = tables.get(0);
+                                if (doc.getElementsContainingText("   Not found in Kanes Wrath Ladders ").size() > 0){
+                                    table = tables.get(0);
+                                } else {
+                                    table = tables.get(1);
+                                }
                                 tableBody = table.select("tbody").get(0);
                                 allAccounts = parse(tableBody);
                             } else if (tables.size() == 3){
@@ -116,7 +120,12 @@ public class StatsHandler {
                                 errorMessage = "No Stats Available";
                             } else if (tables.size() == 2){
                                 // The first possible table is non-existent, so get the first possible one
-                                table = tables.get(0);
+                                if (doc.getElementsContainingText("   Not found in Tiberium Wars Ladders ").size() > 0){
+                                    table = tables.get(0);
+                                } else {
+                                    table = tables.get(1);
+                                }
+
                                 tableBody = table.select("tbody").get(0);
                                 allAccounts = parse(tableBody);
                             } else if (tables.size() == 3){
