@@ -46,8 +46,10 @@ public class Player implements Comparable{
         RedAlert3
     }
     public static int gameEnumToInt(GameEnum gameEnum){
+        Log.v(TAG, "converting to int: " + gameEnum.toString());
         switch (gameEnum) {
             case None:
+                Log.e(TAG, "Converting None gameEnum to 0 ");
                 return 0;
             case KanesWrath:
                 return 1;
@@ -60,6 +62,7 @@ public class Player implements Comparable{
             case RedAlert3:
                 return 5;
             default:
+                Log.e(TAG, "Converting None gameEnum to 0, (default)");
                 return 0;
         }
     }
@@ -76,12 +79,14 @@ public class Player implements Comparable{
             case 5:
                 return GameEnum.RedAlert3;
             default:
+                Log.e(TAG, "Converting int to None GameEnum");
                 return GameEnum.None;
         }
     }
     public static String gameEnumToQueryString(GameEnum gameEnum){
         switch (gameEnum) {
             case None:
+                Log.e(TAG, "Converting None gameEnum to empty string");
                 return "";
             case KanesWrath:
                 return "kw";
@@ -94,6 +99,7 @@ public class Player implements Comparable{
             case RedAlert3:
                 return "ra3";
             default:
+                Log.e(TAG, "Converting None gameEnum to empty string, (default)");
                 return "";
         }
     }
@@ -194,7 +200,7 @@ public class Player implements Comparable{
         this.isReceiveNotifications = isReceiveNotifications;
         this.isYourself = isYourself;
         this.userName = userName;
-        this.game = GameEnum.None;
+        this.game = game;
     }
 
 

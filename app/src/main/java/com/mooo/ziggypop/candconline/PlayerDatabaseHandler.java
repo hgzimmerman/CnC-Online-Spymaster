@@ -15,9 +15,10 @@ import java.util.List;
  * Handles the Database
  */
 public class PlayerDatabaseHandler extends SQLiteOpenHelper {
+    private static final String TAG = "Player Database Handler";
 
     // Database Version
-    private static final int DATABASE_VERSION = 11;
+    private static final int DATABASE_VERSION = 12;
 
     // Database Name
     private static final String DATABASE_NAME = "playerDB";
@@ -97,16 +98,15 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-
                 Player player = new Player(
-                        cursor.getString(nicknameIndex),
-                        cursor.getInt(idIndex),
-                        cursor.getInt(pidIndex),
-                        (cursor.getInt(friendIndex) == 1),
-                        (cursor.getInt(notificationIndex) == 1),
-                        (cursor.getInt(yourselfIndex) == 1),
-                        cursor.getString(ignIndex),
-                        Player.intToGameEnum(cursor.getInt(gameIndex))
+                    cursor.getString(nicknameIndex),
+                    cursor.getInt(idIndex),
+                    cursor.getInt(pidIndex),
+                    (cursor.getInt(friendIndex) == 1),
+                    (cursor.getInt(notificationIndex) == 1),
+                    (cursor.getInt(yourselfIndex) == 1),
+                    cursor.getString(ignIndex),
+                    Player.intToGameEnum(cursor.getInt(gameIndex))
                 );
                 // Adding contact to list
                 playerList.add(player);

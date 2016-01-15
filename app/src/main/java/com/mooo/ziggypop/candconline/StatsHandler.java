@@ -457,7 +457,6 @@ public class StatsHandler {
             } catch (Throwable t) {
                 t.printStackTrace();
             }
-
             return allAccounts;
         }
 
