@@ -1,6 +1,10 @@
 package com.mooo.ziggypop.candconline;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.LayoutTransition;
+import android.animation.TimeInterpolator;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
@@ -13,7 +17,11 @@ import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.ChangeBounds;
+import android.transition.ChangeTransform;
+import android.transition.Fade;
 import android.transition.Scene;
+import android.transition.Slide;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -21,6 +29,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -126,12 +135,14 @@ public class Player implements Comparable{
         ProgressBar progressBar;
         ViewGroup bigView;
 
+        ViewGroup rootView;
 
 
         public PlayerViewHolder(View itemView) {
 
             super(itemView);
             //root views
+            rootView = (ViewGroup) itemView.findViewById(R.id.player_root);
             smallView = (ViewGroup) itemView.findViewById(R.id.small_player_layout);
             bigView = (ViewGroup) itemView.findViewById(R.id.big_player_layout);
             //small views
@@ -363,10 +374,19 @@ public class Player implements Comparable{
             }
         }
 
-        //TODO: write this to expand to the big view based on the player.isExpanded variable
         @Override
         public void onBindViewHolder(final PlayerViewHolder holder, final int position) {
             final Player player = myPlayers.get(position);
+
+            //Animator animator = AnimationUtils.loadAnimation(holder.rootView.getContext(), R.anim.grow);
+
+            LayoutTransition transition = new LayoutTransition();
+            transition.setDuration(610, LayoutTransition.CHANGE_DISAPPEARING); // this is a quick fix, I would like to set the priorities of how the view is expanded, > 150 feels the most natural but 110 hides the odd sliding
+            //transition.setAnimator(LayoutTransition.CHANGING, animator);
+            transition.setAnimateParentHierarchy(true);
+            ((RelativeLayout)holder.smallView.getParent()).setLayoutTransition(transition);
+
+
             if (! player.isExpanded) {
                 holder.bigView.setVisibility(View.GONE);
                 holder.smallView.setVisibility(View.VISIBLE);
@@ -376,7 +396,6 @@ public class Player implements Comparable{
             } else {
                 holder.smallView.setVisibility(View.GONE);
                 holder.bigView.setVisibility(View.VISIBLE);
-                // Set the username on expand, so it doesn't make a bunch of requests whenever scrolling
 
                 setUsername(holder, player);
 
@@ -389,7 +408,6 @@ public class Player implements Comparable{
 
             setFlagIcons(holder, player);
 
-            //TODO actually animate the change
             holder.smallView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -397,16 +415,20 @@ public class Player implements Comparable{
                     player.isExpanded = true;
                     //TODO: animate a transformation.
 
+//                    final Scene bigScene = Scene.getSceneForLayout(holder.rootView, R.layout.player_big_layout, holder.rootView.getContext());
+//                    TransitionManager.go(bigScene);
+
+
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        Slide slide = new Slide();
+                        TransitionManager.beginDelayedTransition(holder.rootView, slide);
+                    }
+
                     holder.smallView.setVisibility(View.GONE);
                     holder.bigView.setVisibility(View.VISIBLE);
 
-
-
                     setUsername(holder, player);
-
                     setCheckboxes(holder, player);
-
-
                 }
             });
 
@@ -429,8 +451,13 @@ public class Player implements Comparable{
                 public void onClick(View v) {
                     Log.v(TAG, "Large item clicked");
                     player.isExpanded = false;
-                    holder.smallView.setVisibility(View.VISIBLE);
 
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        Slide slide = new Slide();
+                        TransitionManager.beginDelayedTransition(holder.rootView, slide);
+                    }
+
+                    holder.smallView.setVisibility(View.VISIBLE);
                     holder.bigView.setVisibility(View.GONE);
 
 
