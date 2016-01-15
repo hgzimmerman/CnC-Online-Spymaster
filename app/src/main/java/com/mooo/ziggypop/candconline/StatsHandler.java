@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * Handles getting stats
  */
 public class StatsHandler {
-    public StatsHandler(Player.PlayersAdapter.LargeViewHolder viewHolder){
+    public StatsHandler(Player.PlayerViewHolder viewHolder){
         this.viewHolder = viewHolder;
 
     }
@@ -31,7 +31,7 @@ public class StatsHandler {
     private static final String STATS_INFIX_1 = "/index.php?g=";
     private static final String STATS_INFIX_2 = "&a=sp&name=";
 
-    Player.PlayersAdapter.LargeViewHolder viewHolder;
+    Player.PlayerViewHolder viewHolder;
 
 
 
@@ -159,8 +159,6 @@ public class StatsHandler {
                                     tableBody = table.select("tbody").get(0);
                                     generalsParcer(tableBody);
                                 }
-
-                                tableBody = table.select("tbody").get(0);
                                 // TODO: create another parser and stats type for generals and ZH
                                 //allAccounts = parse(tableBody);
                             }
@@ -267,13 +265,13 @@ public class StatsHandler {
                 viewHolder.progressBar.setProgress(0);
                 viewHolder.progressBar.setVisibility(View.INVISIBLE);
                 // send a toast indicating failure
-                Toast toast = Toast.makeText(viewHolder.holderView.getContext(),
+                Toast toast = Toast.makeText(viewHolder.bigView.getContext(),
                         errorMessage,
                         Toast.LENGTH_SHORT);
                 toast.show();
             } else {
                 //viewHolder.progressBar.setProgress(0);
-                Intent statsIntent = new Intent(viewHolder.holderView.getContext(), StatsViewerActivity.class);
+                Intent statsIntent = new Intent(viewHolder.bigView.getContext(), StatsViewerActivity.class);
                 statsIntent.putParcelableArrayListExtra("statsPlayers", s);
 
             /*
@@ -286,7 +284,7 @@ public class StatsHandler {
             */
 
 
-                viewHolder.holderView.getContext().startActivity(statsIntent);
+                viewHolder.bigView.getContext().startActivity(statsIntent);
             }
         }
     }

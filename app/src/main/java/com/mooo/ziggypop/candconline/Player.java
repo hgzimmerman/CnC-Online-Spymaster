@@ -29,8 +29,10 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.sql.BatchUpdateException;
 import java.util.ArrayList;
 
 import static com.mooo.ziggypop.candconline.Player.PlayersAdapter.*;
@@ -107,6 +109,51 @@ public class Player implements Comparable{
     }
 
 
+    public static class PlayerViewHolder extends RecyclerView.ViewHolder {
+        //small Layout
+        TextView nickname;
+        View friendMarker;
+        View notificationMarker;
+        View yourselfMarker;
+        ViewGroup smallView;
+        //big layout
+        TextView bigNickname;
+        TextView username;
+        CheckBox friendsCheckbox;
+        CheckBox notificationsCheckbox;
+        CheckBox yourselfCheckbox;
+        Button statsButton;
+        ProgressBar progressBar;
+        ViewGroup bigView;
+
+
+
+        public PlayerViewHolder(View itemView) {
+
+            super(itemView);
+            //root views
+            smallView = (ViewGroup) itemView.findViewById(R.id.small_player_layout);
+            bigView = (ViewGroup) itemView.findViewById(R.id.big_player_layout);
+            //small views
+            nickname = (TextView) itemView.findViewById(R.id.players_name);
+            friendMarker = itemView.findViewById(R.id.friend_marker);
+            notificationMarker = itemView.findViewById(R.id.notify_marker);
+            yourselfMarker = itemView.findViewById(R.id.yourself_marker);
+            //big views
+            bigNickname = (TextView) itemView.findViewById(R.id.players_name_big);
+            username = (TextView) itemView.findViewById(R.id.players_user_name);
+            friendsCheckbox = (CheckBox) itemView.findViewById(R.id.friends_checkbox);
+            notificationsCheckbox = (CheckBox) itemView.findViewById(R.id.notifications_checkbox);
+            yourselfCheckbox = (CheckBox) itemView.findViewById(R.id.is_you_checkbox);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.horizontal_progress);
+            statsButton = (Button) itemView.findViewById(R.id.stats_button);
+
+
+
+        }
+
+    }
+
 
 
     private static final String TAG = "Player";
@@ -119,8 +166,6 @@ public class Player implements Comparable{
 
     private static String PROFILE_PREFIX = "http://cnc-online.net/profiles/";
 
-    private static final int TYPE_SMALL = 0;
-    private static final int TYPE_LARGE = 1;
 
 
     private String nickname;
@@ -230,7 +275,7 @@ public class Player implements Comparable{
     /**
      * Adapter used with the PlayersFragment
      */
-    public static class PlayersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    public static class PlayersAdapter extends RecyclerView.Adapter<PlayerViewHolder> {
 
 
 
@@ -243,158 +288,166 @@ public class Player implements Comparable{
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public PlayerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             ViewGroup cardView = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(R.layout.player_card, null);
             RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             cardView.setLayoutParams(lp);
             View smallView = LayoutInflater.from(parent.getContext()).inflate(R.layout.player_small_layout, null);
-            switch (viewType){
-                case TYPE_SMALL:
-                    cardView.addView(smallView);
-                    return new SmallViewHolder(cardView);
-                case TYPE_LARGE:
-                    View largeView = LayoutInflater.from(parent.getContext()).inflate(R.layout.player_big_layout, null);
-                    cardView.addView(largeView);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        cardView.setElevation(16);
-                    }
-                    return new LargeViewHolder(cardView);
-                default:
-                    cardView.addView(smallView);
-                    return new SmallViewHolder(cardView);
-            }
+
+            cardView.addView(smallView);
+            return new PlayerViewHolder(cardView);
+
         }
 
 
+        private void setCheckboxes(final PlayerViewHolder holder, final Player player) {
+            holder.friendsCheckbox.setOnCheckedChangeListener(null);
+            holder.friendsCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    expandedViewUpdateDB(player,  holder);
+                }
+            });
+            holder.notificationsCheckbox.setOnCheckedChangeListener(null);
+            holder.notificationsCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    expandedViewUpdateDB(player,  holder);
+                }
+            });
+            holder.yourselfCheckbox.setOnCheckedChangeListener(null);
+            holder.yourselfCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    expandedViewUpdateDB(player,  holder);
+                }
+            });
+
+
+            holder.friendsCheckbox.setChecked(player.isFriend);
+            holder.notificationsCheckbox.setChecked(player.isReceiveNotifications);
+            holder.yourselfCheckbox.setChecked(player.isYourself);
+        }
+        private void setFlagIcons(PlayerViewHolder holder, Player player){
+            if (player.isFriend) {
+                holder.friendMarker.setVisibility(View.VISIBLE);
+            } else {
+                holder.friendMarker.setVisibility(View.INVISIBLE);
+            }
+            if (player.isReceiveNotifications) {
+                holder.notificationMarker.setVisibility(View.VISIBLE);
+            } else {
+                holder.notificationMarker.setVisibility(View.INVISIBLE);
+            }
+            if (player.isYourself) {
+                holder.yourselfMarker.setVisibility(View.VISIBLE);
+            } else {
+                holder.yourselfMarker.setVisibility(View.INVISIBLE);
+            }
+        }
+
+        private void setUsername(PlayerViewHolder holder, Player player){
+            if (player.getUserName().equals("")){
+                String cncOnlineLink = PROFILE_PREFIX  + player.pid + "/";
+                Log.d(TAG, "Player IGN not found, getting from website");
+                LinearLayout progBarView =
+                        (LinearLayout)  holder.bigView.findViewById(R.id.name_loading_progress_bar);
+                new RealUsernameHandler(
+                        cncOnlineLink,
+                        player,
+                        holder.username, //big username
+                        progBarView
+                ).getUsername();
+            } else {
+                holder.username.setText(player.getUserName());
+            }
+        }
+
+        //TODO: write this to expand to the big view based on the player.isExpanded variable
         @Override
-        public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+        public void onBindViewHolder(final PlayerViewHolder holder, final int position) {
             final Player player = myPlayers.get(position);
-            switch (holder.getItemViewType()){
-                //set up the view contents.
-                case TYPE_SMALL:
-                    SmallViewHolder smallViewHolder = (SmallViewHolder) holder;
-                    smallViewHolder.nickname.setText(player.nickname);
-                    if (player.isFriend){
-                        smallViewHolder.friendMarker.setVisibility(View.VISIBLE);
-                    } else {
-                        smallViewHolder.friendMarker.setVisibility(View.INVISIBLE);
-                    }
-                    if (player.isReceiveNotifications){
-                        smallViewHolder.notificationMarker.setVisibility(View.VISIBLE);
-                    } else {
-                        smallViewHolder.notificationMarker.setVisibility(View.INVISIBLE);
-                    }
-                    if (player.isYourself){
-                        smallViewHolder.yourselfMarker.setVisibility(View.VISIBLE);
-                    } else {
-                        smallViewHolder.yourselfMarker.setVisibility(View.INVISIBLE);
-                    }
+            if (! player.isExpanded) {
+                holder.bigView.setVisibility(View.GONE);
+                holder.smallView.setVisibility(View.VISIBLE);
 
-                    ((SmallViewHolder) holder).holderView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Log.v(TAG, "Small item clicked");
-                            player.isExpanded = true;
-                            //TODO: animate a transformation.
-                            notifyItemChanged(position);
-                            notifyDataSetChanged();
-                        }
-                    });
-                    break;
-                case TYPE_LARGE:
-                    final LargeViewHolder largeViewHolder = (LargeViewHolder) holder;
-                    largeViewHolder.nickname.setText(player.nickname);
-                    //Set the username to invisible to make the prog bar look nice when the view is recycled.
-                    largeViewHolder.username.setText("");
-                    //Update the username
-                    if (player.getUserName().equals("")){
-                        String cncOnlineLink = PROFILE_PREFIX  + player.pid + "/";
-                        Log.d(TAG, "Player IGN not found, getting from website");
-                        LinearLayout progBarView =
-                                (LinearLayout) ((LargeViewHolder) holder).holderView.findViewById(R.id.name_loading_progress_bar);
-                        new RealUsernameHandler(
-                                cncOnlineLink,
-                                player,
-                                largeViewHolder.username,
-                                progBarView
-                        ).getUsername();
-                    } else {
-                        largeViewHolder.username.setText(player.getUserName());
-                    }
+                setFlagIcons(holder, player);
 
-                    //Reassign the checkbox every time the viewholder is bound
-                    //This does not work
-//
-//                    largeViewHolder.friendsCheckbox = .findViewById(R.id.friends_checkbox);
-//                    largeViewHolder.notificationsCheckbox = (CheckBox) ((LargeViewHolder) holder).holderView.findViewById(R.id.notifications_checkbox);
-//                    largeViewHolder.yourselfCheckbox = (CheckBox) ((LargeViewHolder) holder).holderView.findViewById(R.id.is_you_checkbox);
-//
-                    //TODO Try to do this with just one type, and make the relevant parts GONE or VISIBLE based on circumstance.
-                    // ^^^ This is probably much easier.
+            } else {
+                holder.smallView.setVisibility(View.GONE);
+                holder.bigView.setVisibility(View.VISIBLE);
+                // Set the username on expand, so it doesn't make a bunch of requests whenever scrolling
 
+                setUsername(holder, player);
 
-                    largeViewHolder.friendsCheckbox.setChecked(player.isFriend);
-                    largeViewHolder.notificationsCheckbox.setChecked(player.isReceiveNotifications);
-                    largeViewHolder.yourselfCheckbox.setChecked(player.isYourself);
+                setCheckboxes(holder, player);
 
-                    largeViewHolder.friendsCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            expandedViewUpdateDB(player, (LargeViewHolder) holder);
-                        }
-                    });
-                    largeViewHolder.notificationsCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            expandedViewUpdateDB(player, (LargeViewHolder) holder);
-                        }
-                    });
-                    largeViewHolder.yourselfCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            expandedViewUpdateDB(player, (LargeViewHolder) holder);
-                        }
-                    });
-                    largeViewHolder.statsButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // Launch the statsHandler
-                            StatsHandler sh = new StatsHandler(largeViewHolder);
-                            sh.getStats(player);
-                        }
-                    });
-
-
-                    ((LargeViewHolder) holder).holderView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Log.v(TAG, "Large item clicked");
-                            player.isExpanded = false;
-                            //TODO: fix bug: when multiple views are open, clicking on one may trigger another's listener.
-                            //prevent this viewHolder from having the onCheckedChanged() method called on other viewHolder instances.
-                            largeViewHolder.yourselfCheckbox.setOnCheckedChangeListener(null);
-                            largeViewHolder.notificationsCheckbox.setOnCheckedChangeListener(null);
-                            largeViewHolder.friendsCheckbox.setOnCheckedChangeListener(null);
-                            largeViewHolder.progressBar.setProgress(0);
-                            largeViewHolder.progressBar.setVisibility(View.INVISIBLE);
-                            //Let the RecyclerView recognize that player is no longer expanded, and cause the row to be redrawn.
-                            notifyItemChanged(position);
-
-                        }
-                    });
-
-                    break;
             }
+
+            //====Small View Stuff====
+            holder.nickname.setText(player.nickname);
+
+            setFlagIcons(holder, player);
+
+            //TODO actually animate the change
+            holder.smallView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.v(TAG, "Small item clicked");
+                    player.isExpanded = true;
+                    //TODO: animate a transformation.
+
+                    holder.smallView.setVisibility(View.GONE);
+                    holder.bigView.setVisibility(View.VISIBLE);
+
+
+
+                    setUsername(holder, player);
+
+                    setCheckboxes(holder, player);
+
+
+                }
+            });
+
+            //====Big View Stuff====
+            holder.bigNickname.setText(player.nickname);
+            //Set the username to invisible to make the prog bar look nice when the view is recycled.
+
+            holder.statsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Launch the statsHandler
+                    StatsHandler sh = new StatsHandler(holder);
+                    sh.getStats(player);
+                }
+            });
+
+
+            holder.bigView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.v(TAG, "Large item clicked");
+                    player.isExpanded = false;
+                    holder.smallView.setVisibility(View.VISIBLE);
+
+                    holder.bigView.setVisibility(View.GONE);
+
+
+                    //prevent this viewHolder from having the onCheckedChanged() method called on other viewHolder instances.
+                    holder.yourselfCheckbox.setOnCheckedChangeListener(null);
+                    holder.notificationsCheckbox.setOnCheckedChangeListener(null);
+                    holder.friendsCheckbox.setOnCheckedChangeListener(null);
+                    holder.progressBar.setProgress(0);
+                    holder.progressBar.setVisibility(View.INVISIBLE);
+
+
+                    setFlagIcons(holder, player);
+                    holder.username.setText("");
+                }
+            });
         }
 
-        @Override
-        public int getItemViewType(int position){
-            if (myPlayers.get(position).isExpanded){
-                return TYPE_LARGE;
-            } else{
-                return TYPE_SMALL;
-            }
-        }
 
         @Override
         public int getItemCount() {
@@ -404,66 +457,30 @@ public class Player implements Comparable{
                 return 0;
         }
 
-        private static class SmallViewHolder extends RecyclerView.ViewHolder {
-            TextView nickname;
-            View friendMarker;
-            View notificationMarker;
-            View yourselfMarker;
-            ViewGroup holderView;
-
-            public SmallViewHolder(View itemView) {
-
-                super(itemView);
-                nickname = (TextView) itemView.findViewById(R.id.players_name);
-                friendMarker = itemView.findViewById(R.id.friend_marker);
-                notificationMarker = itemView.findViewById(R.id.notify_marker);
-                yourselfMarker = itemView.findViewById(R.id.yourself_marker);
-                holderView = (ViewGroup) itemView.findViewById(R.id.player_card);
-            }
-
-        }
-
-        public static class LargeViewHolder extends RecyclerView.ViewHolder {
-
-            TextView nickname;
-            TextView username;
-            CheckBox friendsCheckbox;
-            CheckBox notificationsCheckbox;
-            CheckBox yourselfCheckbox;
-            Button statsButton;
-            ProgressBar progressBar;
-            ViewGroup holderView;
-
-            public LargeViewHolder(final View itemView) {
-                super(itemView);
-                nickname = (TextView) itemView.findViewById(R.id.players_name);
-                username = (TextView) itemView.findViewById(R.id.players_user_name);
-                friendsCheckbox= (CheckBox) itemView.findViewById(R.id.friends_checkbox);
-                notificationsCheckbox = (CheckBox) itemView.findViewById(R.id.notifications_checkbox);
-                yourselfCheckbox = (CheckBox) itemView.findViewById(R.id.is_you_checkbox);
-                statsButton = (Button) itemView.findViewById(R.id.stats_button);
-                holderView = (ViewGroup) itemView.findViewById(R.id.player_card);
-                progressBar = (ProgressBar) itemView.findViewById(R.id.horizontal_progress);
-            }
-        }
 
 
-        private void expandedViewUpdateDB(Player player, LargeViewHolder holder){
+
+
+        private void expandedViewUpdateDB(Player player, PlayerViewHolder holder){
             Log.v(TAG, "Updating the db for: " + player.nickname);
+            /*
             CheckBox friendsCheckbox = (CheckBox) holder.holderView.findViewById(R.id.friends_checkbox);
             CheckBox notificationsCheckbox = (CheckBox) holder.holderView.findViewById(R.id.notifications_checkbox);
             CheckBox yourselfCheckbox = (CheckBox) holder.holderView.findViewById(R.id.is_you_checkbox);
+*/
+
+            player.setIsFriend(holder.friendsCheckbox.isChecked());
+            player.setIsRecieveNotifications(holder.notificationsCheckbox.isChecked());
+            player.setIsYourself(holder.yourselfCheckbox.isChecked());
 
 
-            player.setIsFriend(friendsCheckbox.isChecked());
-            player.setIsRecieveNotifications(notificationsCheckbox.isChecked());
-            player.setIsYourself(yourselfCheckbox.isChecked());
-
-
-            player.setUserName(((TextView)holder.holderView.findViewById(R.id.players_user_name)).getText() + "");
+            player.setUserName(((TextView)holder.bigView.findViewById(R.id.players_user_name)).getText() + "");
 
             // Commit the new player to the DB, or remove them if they are unchecked.
-            if (!friendsCheckbox.isChecked() && !notificationsCheckbox.isChecked() && !yourselfCheckbox.isChecked()){
+            if (!holder.friendsCheckbox.isChecked()
+                    && !holder.notificationsCheckbox.isChecked()
+                    && !holder.yourselfCheckbox.isChecked()
+                    ){
                 db.deletePlayer(player);
             } else {
                 db.addPlayer(player);
@@ -483,11 +500,6 @@ public class Player implements Comparable{
     public static class PlayersFragment extends RecyclerViewFragment {
 
         private static final String TAG = "RecyclerViewFragment";
-        private static final String KEY_LAYOUT_MANAGER = "layoutManager";
-        private static final int SPAN_COUNT = 2;
-
-
-
 
         protected RecyclerView mRecyclerView;
         protected PlayersAdapter mAdapter;
