@@ -169,6 +169,7 @@ public class StatsHandler {
                                     generalsParcer(tableBody);
                                 }
                                 // TODO: create another parser and stats type for generals and ZH
+                                // TODO: just remove the button for those games.
                                 //allAccounts = parse(tableBody);
                             }
                             break;
