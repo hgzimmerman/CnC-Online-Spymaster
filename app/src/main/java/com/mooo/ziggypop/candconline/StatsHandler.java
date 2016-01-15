@@ -107,10 +107,12 @@ public class StatsHandler {
                                 errorMessage = "No Stats Available";
                             } else if (tables.size() == 2){
                                 // The first possible table is non-existent, so get the first possible one
-                                if (doc.getElementsContainingText("   Not found in Kanes Wrath Ladders ").size() > 0){
+                                if (doc.getElementsContainingText("   Not found in Kanes Wrath Ladders").size() > 0){
+                                    Log.v(TAG, "Ladder table not found, selecting first table");
                                     table = tables.get(0);
                                 } else {
-                                    table = tables.get(1);
+                                    Log.v(TAG, "Ladder table found, selecting the second table");
+                                    table = tables.get(0);
                                 }
                                 tableBody = table.select("tbody").get(0);
                                 allAccounts = parsePlayerStats(tableBody);
@@ -322,91 +324,107 @@ public class StatsHandler {
 
                     Elements tables = doc.select("#calendar_wrap"); // there may be multiple
                     Element table = null;
+                    Log.d(TAG, "tables size = " + tables.size());
                     //Do game specific parsing actions here
                     // Find the most populated table, avoid empty tables.
                     switch (players[0].getGame()){
                         case KanesWrath:
-                            Log.d(TAG, "tables size = " + tables.size());
-                            if (tables.size() == 0){
-                                Log.e(TAG, "No tables found, the URL was probably malformed");
-                                errorMessage = "Malformed URL";
-                            } else if (tables.size() == 1) {
-                                Log.e(TAG, "One table found, the player probably hasn't played a game");
-                                errorMessage = "No Stats Available";
-                            } else if (tables.size() == 2){
-                                // The first possible table is non-existent, so get the first possible one
-                                if (doc.getElementsContainingText("   Not found in Kanes Wrath Ladders ").size() > 0){
-                                    table = tables.get(0);
-                                } else {
+                            switch (tables.size()){
+                                case 0:
+                                    Log.e(TAG, "No tables found, the URL was probably malformed");
+                                    errorMessage = "Malformed URL";
+                                    break;
+                                case 1:
+                                    Log.e(TAG, "One table found, the player probably hasn't played a game");
+                                    errorMessage = "No Ladder Stats Available";
+                                    break;
+                                case 2:
+                                    Log.e(TAG, "Ladder Table not found");
+                                    errorMessage = "Ladder Stats not Available";
+                                    break;
+                                case 3:
                                     table = tables.get(1);
-                                }
-                                tableBody = table.select("tbody").get(0);
-                                allAccounts = parseLadderStats(tableBody);
-                            } else if (tables.size() == 3){
-                                table = tables.get(1);
-                                tableBody = table.select("tbody").get(0);
-                                allAccounts = parseLadderStats(tableBody);
+                                    tableBody = table.select("tbody").get(0);
+                                    allAccounts = parseLadderStats(tableBody, Player.GameEnum.KanesWrath);
+                                    break;
                             }
                             break;
                         case CnC3:
-                            Log.d(TAG, "tables size = " + tables.size());
-                            if (tables.size() == 0){
-                                Log.e(TAG, "No tables found, the URL was probably malformed");
-                                errorMessage = "Malformed URL";
-                            } else if (tables.size() == 1) {
-                                Log.e(TAG, "One table found, the player probably hasn't played a game");
-                                errorMessage = "No Stats Available";
-                            } else if (tables.size() == 2){
-                                // The first possible table is non-existent, so get the first possible one
-                                if (doc.getElementsContainingText("   Not found in Tiberium Wars Ladders ").size() > 0){
-                                    table = tables.get(0);
-                                } else {
+                            switch (tables.size()){
+                                case 0:
+                                    Log.e(TAG, "No tables found, the URL was probably malformed");
+                                    errorMessage = "Malformed URL";
+                                    break;
+                                case 1:
+                                    Log.e(TAG, "One table found, the player probably hasn't played a game");
+                                    errorMessage = "No Ladder Stats Available";
+                                    break;
+                                case 2:
+                                    Log.e(TAG, "Ladder Table not found");
+                                    errorMessage = "Ladder Stats not Available";
+                                    break;
+                                case 3:
                                     table = tables.get(1);
-                                }
-
-                                tableBody = table.select("tbody").get(0);
-                                allAccounts = parseLadderStats(tableBody);
-                            } else if (tables.size() == 3){
-                                table = tables.get(1);
-                                tableBody = table.select("tbody").get(0);
-                                allAccounts = parseLadderStats(tableBody);
+                                    tableBody = table.select("tbody").get(0);
+                                    allAccounts = parseLadderStats(tableBody, Player.GameEnum.CnC3);
+                                    break;
                             }
                             break;
                         case Generals:
-                            if (tables.size() == 0){
-                                Log.e(TAG, "No tables found, the URL was probably malformed");
-                                errorMessage = "Malformed URL";
-                            } else if ( tables.size() == 1){
-                                Log.e(TAG, "One table found, the player probably hasn't played a game");
-                                errorMessage = "No Stats Available";
-                            } else if (tables.size() == 2) {
-
-                                //NOT SURE IF THIS IS RIGHT.
-
-                                errorMessage = "two tables";
-                                table = tables.get(1);
-                                tableBody = table.select("tbody").get(0);
-                                parseLadderStats(tableBody);
-
+                            switch (tables.size()){
+                                case 0:
+                                    Log.e(TAG, "No tables found, the URL was probably malformed");
+                                    errorMessage = "Malformed URL";
+                                    break;
+                                case 1:
+                                    Log.e(TAG, "One table found, the player probably hasn't played a game");
+                                    errorMessage = "No Ladder Stats Available";
+                                    break;
+                                case 2:
+                                    //Todo: verify that this handles missing tables correctly
+                                    if (doc.getElementsContainingText("Not found in Generals").size() > 0){
+                                        errorMessage = "Ladder Stats not available";
+                                    } else {
+                                        table = tables.get(0);
+                                        tableBody = table.select("tbody").get(0);
+                                        allAccounts = parseLadderStats(tableBody, Player.GameEnum.Generals);
+                                    }
+                                    break;
+                                case 3:
+                                    Log.v(TAG, "Three tables");
+                                    table = tables.get(1);
+                                    tableBody = table.select("tbody").get(0);
+                                    allAccounts = parseLadderStats(tableBody, Player.GameEnum.Generals);
                             }
                             break;
                         case ZeroHour:
-                            if (tables.size() == 0){
-                                Log.e(TAG, "No tables found, the URL was probably malformed");
-                                errorMessage = "Malformed URL";
-                            } else if ( tables.size() == 1){
-                                Log.e(TAG, "One table found, the player probably hasn't played a game");
-                                errorMessage = "No Stats Available";
-                            } else if (tables.size() == 2){
-                                errorMessage = "two tables";
-                                if (doc.getElementsContainingText(   "Not found in Generals" ).size() > 0) {
-                                    table = tables.get(0);
-                                } else {
-                                    table = tables.get(1);
+                            switch (tables.size()){
+                                case 0:
+                                    Log.e(TAG, "No tables found, the URL was probably malformed");
+                                    errorMessage = "Malformed URL";
+                                    break;
+                                case 1:
+                                    Log.e(TAG, "One table found, the player probably hasn't played a game");
+                                    errorMessage = "No Ladder Stats Available";
+                                    break;
+                                case 2:
+                                    //Todo: verify that this handles missing tables correctly
+                                    if (doc.getElementsContainingText("Not found in Generals").size() > 0){
+                                        table = tables.get(0);
+                                        tableBody = table.select("tbody").get(0);
+                                        allAccounts = parseLadderStats(tableBody, Player.GameEnum.Generals);
+                                    } else {
+                                        errorMessage = "Ladder Stats not available";
+                                    }
+
+                                    break;
+                                case 3:
+                                    Log.v(TAG, "Three tables");
+                                    table = tables.get(2);
                                     tableBody = table.select("tbody").get(0);
-                                    parseLadderStats(tableBody);
-                                }
+                                    allAccounts = parseLadderStats(tableBody, Player.GameEnum.Generals);
                             }
+
                             break;
                         case RedAlert3:
                             switch (tables.size()){
@@ -416,17 +434,16 @@ public class StatsHandler {
                                     break;
                                 case 1:
                                     Log.e(TAG, "One table found, the player probably hasn't played a game");
-                                    errorMessage = "No Stats Available";
+                                    errorMessage = "Ladder Stats Not Available";
                                     break;
                                 case 2:
-                                    table = tables.get(0);
-                                    tableBody = table.select("tbody").get(0);
-                                    allAccounts = parseLadderStats(tableBody);
+                                    Log.e(TAG, "Ladder Table not found");
+                                    errorMessage = "Ladder Stats Not Available";
                                     break;
                                 case 3:
                                     table = tables.get(1);
                                     tableBody = table.select("tbody").get(0);
-                                    allAccounts = parseLadderStats(tableBody);
+                                    allAccounts = parseLadderStats(tableBody, Player.GameEnum.RedAlert3);
                             }
 
                             break;
@@ -444,9 +461,16 @@ public class StatsHandler {
             return allAccounts;
         }
 
-        private ArrayList<LadderStats> parseLadderStats(Element tableBody){
+        private ArrayList<LadderStats> parseLadderStats(Element tableBody, Player.GameEnum gameEnum){
             Log.v(TAG, "parsing the table");
             ArrayList<LadderStats> accounts = new ArrayList<>();
+
+            // The tables do not have a Rank Icon at the beginning for Generals or ZH.
+            // So to get the same stats, the index of the table must be one less for those games.
+            int offset = 0;
+            if (gameEnum == Player.GameEnum.Generals || gameEnum == Player.GameEnum.ZeroHour){
+                offset = 1;
+            }
 
             int numberOfAliases =  tableBody.select("tr").size();
             int index = 0;
@@ -454,15 +478,15 @@ public class StatsHandler {
             for (Element tr: tableBody.select("tr")) {
                 index++;
                 Elements tds = tr.select("td");
-                String nickname = tds.get(1).text();
-                int rank = Integer.parseInt(tds.get(2).text());
-                String ladderWL = tds.get(3).text();
-                int elo = Integer.parseInt(tds.get(4).text());
-                int games = Integer.parseInt(tds.get(5).text());
-                int wins = Integer.parseInt(tds.get(6).text());
-                int losses = Integer.parseInt(tds.get(7).text());
-                int disconnects = Integer.parseInt(tds.get(8).text());
-                int desyncs = Integer.parseInt(tds.get(9).text());
+                String nickname = tds.get(1 - offset).text();
+                int rank = Integer.parseInt(tds.get(2 - offset).text());
+                String ladderWL = tds.get(3 - offset).text();
+                int elo = Integer.parseInt(tds.get(4 - offset).text());
+                int games = Integer.parseInt(tds.get(5 - offset).text());
+                int wins = Integer.parseInt(tds.get(6 - offset).text());
+                int losses = Integer.parseInt(tds.get(7 - offset).text());
+                int disconnects = Integer.parseInt(tds.get(8 - offset).text());
+                int desyncs = Integer.parseInt(tds.get(9 -offset).text());
 
                 Log.v(TAG, nickname + " : " + ladderWL);
                 LadderStats playerAlias = new LadderStats(nickname,
