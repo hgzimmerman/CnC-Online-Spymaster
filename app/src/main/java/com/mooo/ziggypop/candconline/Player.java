@@ -113,6 +113,7 @@ public class Player implements Comparable{
         CheckBox notificationsCheckbox;
         CheckBox yourselfCheckbox;
         Button statsButton;
+        Button ladderButton;
         ProgressBar progressBar;
         ViewGroup bigView;
         //the top level layout that holds both smaller layouts
@@ -139,7 +140,7 @@ public class Player implements Comparable{
             yourselfCheckbox = (CheckBox) itemView.findViewById(R.id.is_you_checkbox);
             progressBar = (ProgressBar) itemView.findViewById(R.id.horizontal_progress);
             statsButton = (Button) itemView.findViewById(R.id.stats_button);
-
+            ladderButton = (Button) itemView.findViewById(R.id.ladder_button);
 
 
         }
@@ -426,6 +427,14 @@ public class Player implements Comparable{
                     // Launch the statsHandler
                     StatsHandler sh = new StatsHandler(holder);
                     sh.getPlayerStats(player);
+                }
+            });
+
+            holder.ladderButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    StatsHandler sh = new StatsHandler(holder);
+                    sh.getLadderStats(player);
                 }
             });
 

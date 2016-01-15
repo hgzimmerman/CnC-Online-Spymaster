@@ -213,7 +213,16 @@
             android:layout_height="wrap_content">
             <Button
                 android:id="@+id/stats_button"
-                android:text="Stats"
+                android:text="Player Statistics"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/ladder_button"
+                android:text="Ladder Statistics"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RelativeLayout>

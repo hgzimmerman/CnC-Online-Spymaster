@@ -55,15 +55,11 @@ public class StatsViewerActivity extends AppCompatActivity
         } else if (ladderStats != null){
             ladderStatsFragment = new LadderStats.LadderStatsFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.db_players_fragment, statsFragment);
+            ft.replace(R.id.db_players_fragment, ladderStatsFragment);
             ft.commit();
 
             ladderStatsFragment.setData(ladderStats, this);
         }
-
-
-
-
 
 
 
@@ -102,7 +98,11 @@ public class StatsViewerActivity extends AppCompatActivity
 
     @Override
     public void onRefresh() {
-        statsFragment.setData(playerStats, this);
+        if (playerStats != null){
+            statsFragment.setData(playerStats, this);
+        } else if (ladderStats != null){
+            ladderStatsFragment.setData(ladderStats, this);
+        }
         mSwipeRefreshLayout.setRefreshing(false);
     }
 }
