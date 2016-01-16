@@ -457,9 +457,11 @@ public class Player implements Comparable{
                         TransitionManager.beginDelayedTransition(holder.rootView, slide);
                     }
 
-                    holder.smallView.setVisibility(View.VISIBLE);
-                    holder.bigView.setVisibility(View.GONE);
-
+                    //holder.smallView.setVisibility(View.VISIBLE);
+                    //holder.bigView.setVisibility(View.GONE);
+                    //Todo: Actually find a way to animate this
+                    // Cheap way of animating the view back to the default size
+                    notifyItemChanged(position);
 
                     //prevent this viewHolder from having the onCheckedChanged() method called on other viewHolder instances.
                     holder.progressBar.setProgress(0);
@@ -468,6 +470,7 @@ public class Player implements Comparable{
 
                     setFlagIcons(holder, player);
                     holder.username.setText("");
+
                 }
             });
         }

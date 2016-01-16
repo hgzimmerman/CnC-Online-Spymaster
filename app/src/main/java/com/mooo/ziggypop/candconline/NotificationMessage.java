@@ -62,7 +62,7 @@ public class NotificationMessage extends BroadcastReceiver {
             // The PendingIntent to launch our activity if the user selects this notification
             PendingIntent appIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
 
-            String contentText = new String();
+            String contentText = "";
             String separator = ",  ";
 
             boolean userMustBeOnline = PreferenceManager.getDefaultSharedPreferences(context)
