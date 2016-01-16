@@ -24,195 +24,164 @@
         android:layout_height="10dp"
         />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textSize="@dimen/text_size_stats"
             android:text="@string/total_games"/>
         <TextView
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:id="@+id/player_stat_total_games"
             android:textSize="@dimen/text_size_stats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textSize="@dimen/text_size_stats"
             android:text="@string/ranked_one_vs_one_wins"/>
         <TextView
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:id="@+id/player_stat_ranked_1_vs_1_wins"
             android:textSize="@dimen/text_size_stats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </RelativeLayout>
-    <RelativeLayout
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textSize="@dimen/text_size_stats"
             android:text="@string/ranked_one_vs_one_losses"/>
         <TextView
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:id="@+id/player_stat_ranked_1_vs_1_losses"
             android:textSize="@dimen/text_size_stats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </RelativeLayout>
+    </LinearLayout>
 
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textSize="@dimen/text_size_stats"
             android:text="@string/ranked_one_vs_one_disconnects"/>
         <TextView
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:id="@+id/player_stat_ranked_1_vs_1_disconnects"
             android:textSize="@dimen/text_size_stats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textSize="@dimen/text_size_stats"
             android:text="@string/ranked_one_vs_one_desyncs"/>
         <TextView
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:id="@+id/player_stat_ranked_1_vs_1_desyncs"
             android:textSize="@dimen/text_size_stats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textSize="@dimen/text_size_stats"
             android:text="@string/ranked_two_vs_two_games"/>
         <TextView
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:id="@+id/player_stat_ranked_2_vs_2_games"
             android:textSize="@dimen/text_size_stats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textSize="@dimen/text_size_stats"
             android:text="@string/total_wins"/>
         <TextView
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:id="@+id/player_stat_total_wins"
             android:textSize="@dimen/text_size_stats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textSize="@dimen/text_size_stats"
             android:text="@string/total_losses"/>
         <TextView
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:id="@+id/player_stat_total_losses"
             android:textSize="@dimen/text_size_stats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textSize="@dimen/text_size_stats"
             android:text="@string/total_disconnects"/>
         <TextView
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:id="@+id/player_stat_total_disconnects"
             android:textSize="@dimen/text_size_stats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textSize="@dimen/text_size_stats"
             android:text="@string/total_desyncs"/>
         <TextView
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:id="@+id/player_stat_total_desyncs"
             android:textSize="@dimen/text_size_stats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </RelativeLayout>
+    </LinearLayout>
 
 
 

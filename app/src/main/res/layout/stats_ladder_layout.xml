@@ -24,71 +24,61 @@ android:padding="10dp"
     android:layout_height="10dp"
     />
 
-<RelativeLayout
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:textSize="@dimen/text_size_stats"
         android:text="@string/rank_one_vs_one"/>
     <TextView
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:id="@+id/ladder_stat_rank_one_vs_one"
         android:textSize="@dimen/text_size_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</RelativeLayout>
+</LinearLayout>
 
-<RelativeLayout
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:textSize="@dimen/text_size_stats"
         android:text="@string/ladder_win_loss"/>
     <TextView
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:id="@+id/ladder_stat_win_over_loss"
         android:textSize="@dimen/text_size_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</RelativeLayout>
-<RelativeLayout
+</LinearLayout>
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:textSize="@dimen/text_size_stats"
         android:text="@string/elo"/>
     <TextView
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:id="@+id/ladder_stat_elo"
         android:textSize="@dimen/text_size_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</RelativeLayout>
+</LinearLayout>
 
 
-<RelativeLayout
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:textSize="@dimen/text_size_stats"
         android:text="@string/games"/>
     <TextView
@@ -98,83 +88,71 @@ android:padding="10dp"
         android:textSize="@dimen/text_size_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</RelativeLayout>
+</LinearLayout>
 
-<RelativeLayout
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:textSize="@dimen/text_size_stats"
         android:text="@string/wins"/>
     <TextView
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:id="@+id/ladder_stat_wins"
         android:textSize="@dimen/text_size_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</RelativeLayout>
+</LinearLayout>
 
-<RelativeLayout
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:textSize="@dimen/text_size_stats"
         android:text="@string/losses"/>
     <TextView
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:id="@+id/ladder_stat_losses"
         android:textSize="@dimen/text_size_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</RelativeLayout>
+</LinearLayout>
 
-<RelativeLayout
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:textSize="@dimen/text_size_stats"
         android:text="@string/disconnects"/>
     <TextView
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:id="@+id/ladder_stat_disconnects"
         android:textSize="@dimen/text_size_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</RelativeLayout>
+</LinearLayout>
 
-<RelativeLayout
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:textSize="@dimen/text_size_stats"
         android:text="@string/desyncs"/>
     <TextView
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:id="@+id/ladder_stat_desyncs"
         android:textSize="@dimen/text_size_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</RelativeLayout>
+</LinearLayout>
 
 
 
