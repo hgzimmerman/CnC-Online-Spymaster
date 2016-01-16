@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 /**
  * Created by ziggypop on 3/31/15.
- *
+ * Adapts Drawers
  */
 public class DrawerAdapter extends ArrayAdapter<DrawerItem> {
 
@@ -31,24 +31,19 @@ public class DrawerAdapter extends ArrayAdapter<DrawerItem> {
             vi = LayoutInflater.from(getContext());
             v = vi.inflate(R.layout.drawer_item_layout, null);
 
-
         }
 
-
         DrawerItem p = getItem(position);
-
 
         if (p != null) {
             TextView title = (TextView) v.findViewById(R.id.drawer_game_title);
             TextView playerCount = (TextView) v.findViewById(R.id.drawer_player_count);
 
             title.setText(p.getGameTitle());
-            String playerCountText = "("+p.getPlayerCount()+")";
+            String playerCountText = String.format("(%s)",p.getPlayerCount());
             playerCount.setText(playerCountText);
 
         }
-
-
         return v;
     }
 }
