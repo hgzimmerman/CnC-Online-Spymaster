@@ -32,14 +32,19 @@ public class StatsHandler {
     private static final String STATS_INFIX_2 = "&a=sp&name=";
 
     Player.PlayerViewHolder viewHolder;
+    Player mPlayer;
 
 
     //grab data for players and launch an activity showing them
     public void getPlayerStats(Player player){
+        mPlayer = player;
         new StatsGetter().execute(player);
     }
     //grab data for ladders and launch an activity showing them
-    public void getLadderStats(Player player){ new LadderStatsGetter().execute(player);}
+    public void getLadderStats(Player player){
+        mPlayer = player;
+        new LadderStatsGetter().execute(player);
+    }
 
 
 
@@ -135,7 +140,7 @@ public class StatsHandler {
                                     break;
                                 case 2:
                                     // The first possible table is non-existent, so get the first possible one
-                                    if (doc.getElementsContainingText("   Not found in Tiberium Wars Ladders ").size() > 0){
+                                    if (doc.getElementsContainingText("Not found in Tiberium Wars Ladders").size() > 0){
                                         table = tables.get(0);
                                     } else {
                                         table = tables.get(1);
@@ -257,6 +262,7 @@ public class StatsHandler {
                 //viewHolder.progressBar.setProgress(0);
                 Intent statsIntent = new Intent(viewHolder.bigView.getContext(), StatsViewerActivity.class);
                 statsIntent.putParcelableArrayListExtra("statsPlayers", s);
+                statsIntent.putExtra("current_game", Player.gameEnumToInt(mPlayer.getGame()));
 
             /*
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
@@ -502,7 +508,7 @@ public class StatsHandler {
                 //viewHolder.progressBar.setProgress(0);
                 Intent statsIntent = new Intent(viewHolder.bigView.getContext(), StatsViewerActivity.class);
                 statsIntent.putParcelableArrayListExtra("statsLadder", s);
-
+                statsIntent.putExtra("current_game", Player.gameEnumToInt(mPlayer.getGame()));
             /*
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                     // the context of the activity
