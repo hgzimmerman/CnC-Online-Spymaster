@@ -89,8 +89,7 @@
 
     <string name="reset_player_db">Reset Player Database</string>
     <string name="player_db_help_message">This page displays all of the players you have marked as a friend, marked to receive notifications or marked as yourself. You can alter their marks here. Note: removing all marks will cause the player to be removed from this list and you will have to wait for them to come online again to add them again.</string>
-    <string name="friends_online_service_started">Service started</string>
-    <string name="friends_online_service_stopped">Service stopped</string>
+
     <string name="friends_online_service_label">CnC Players Online</string>
     <string name="flag_for_marking_friends">Flag for marking friends.</string>
     <string name="flag_if_you_want_to_receive_notifications_about_this_player">Flag if you want to receive notifications about this player.</string>
@@ -139,6 +138,10 @@
     <string name="disconnects">Disconnects</string>
     <string name="desyncs">Desyncs</string>
     <!--End statistics viewing activities-->
+
+    <!--Player Card-->
+    <string name="player_statistics">Player Statistics</string>
+    <string name="ladder_statistics">Ladder Statistics</string>
 
 
 </resources>
