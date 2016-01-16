@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  * Created by ziggypop on 1/13/16.
@@ -117,16 +118,16 @@ public class PlayerStats implements Parcelable {
         public void onBindViewHolder(StatsViewHolder holder, int position) {
             final PlayerStats playerStats = myStats.get(position);
             holder.nameView.setText(playerStats.nickname);
-            holder.totalGamesView.setText(playerStats.totalGames + "");
-            holder.rankedOneVsOneWinsView.setText(playerStats.rankedOneVsOneWins + "");
-            holder.rankedOneVsOneLossesView.setText(playerStats.rankedOneVsOneLosses + "");
-            holder.rankedOneVsOneDisconnectsView.setText(playerStats.rankedOneVsOneDisconnects + "");
-            holder.rankedOneVsOneDesyncsView.setText(playerStats.rankedOneVsOneDesyncs + "");
-            holder.rankedTwoVsTwoGamesView.setText(playerStats.rankedTwoVsTwoGames + "");
-            holder.totalWinsView.setText(playerStats.totalWins + "");
-            holder.totalLossesView.setText(playerStats.totalLosses + "");
-            holder.totalDisconnectsView.setText(playerStats.totalDisconnects + "");
-            holder.totalDesyncsView.setText(playerStats.totalDesyncs + "");
+            holder.totalGamesView.setText(String.format("%d", playerStats.totalGames));
+            holder.rankedOneVsOneWinsView.setText(String.format("%d", playerStats.rankedOneVsOneWins));
+            holder.rankedOneVsOneLossesView.setText(String.format("%d", playerStats.rankedOneVsOneLosses));
+            holder.rankedOneVsOneDisconnectsView.setText(String.format("%d", playerStats.rankedOneVsOneDisconnects));
+            holder.rankedOneVsOneDesyncsView.setText(String.format("%d", playerStats.rankedOneVsOneDesyncs));
+            holder.rankedTwoVsTwoGamesView.setText(String.format("%d", playerStats.rankedTwoVsTwoGames ));
+            holder.totalWinsView.setText(String.format("%d", playerStats.totalWins ));
+            holder.totalLossesView.setText(String.format("%d", playerStats.totalLosses ));
+            holder.totalDisconnectsView.setText(String.format("%d", playerStats.totalDisconnects ));
+            holder.totalDesyncsView.setText(String.format("%d", playerStats.totalDesyncs ));
         }
 
 
