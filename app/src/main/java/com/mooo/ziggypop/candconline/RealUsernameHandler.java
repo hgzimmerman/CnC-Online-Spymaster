@@ -11,6 +11,7 @@ import org.jsoup.nodes.Document;
 
 /**
  * Created by ziggypop on 1/6/16.
+ * Handles the getting of the username for a given player
  */
 
 public class RealUsernameHandler {
@@ -39,12 +40,9 @@ public class RealUsernameHandler {
 
     private class RealUsernameGetter extends AsyncTask<String, Void, String> {
 
-
-
-
         @Override
         protected String doInBackground(String... strings) {
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             try {
                 Log.d("JSwa", "Connecting to [" + strings[0] + "]");
                 Document doc = Jsoup.connect(strings[0]).get();

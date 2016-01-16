@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 /**
  * Created by ziggypop on 1/2/16.
+ * Sends a notification to the system
  */
 public class NotificationMessage extends BroadcastReceiver {
     public static final String TAG = "NotificationMessage";

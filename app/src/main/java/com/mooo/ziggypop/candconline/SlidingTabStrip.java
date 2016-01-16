@@ -18,14 +18,14 @@ package com.mooo.ziggypop.candconline;
 
 //package com.google.samples.apps.iosched.ui.widget;
 
-        import android.content.Context;
-        import android.graphics.Canvas;
-        import android.graphics.Color;
-        import android.graphics.Paint;
-        import android.util.AttributeSet;
-        import android.util.TypedValue;
-        import android.view.View;
-        import android.widget.LinearLayout;
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.util.AttributeSet;
+import android.util.TypedValue;
+import android.view.View;
+import android.widget.LinearLayout;
 
 class SlidingTabStrip extends LinearLayout {
 
@@ -55,8 +55,6 @@ class SlidingTabStrip extends LinearLayout {
     SlidingTabStrip(Context context, AttributeSet attrs) {
         super(context, attrs);
         setWillNotDraw(false);
-
-
 
         final float density = getResources().getDisplayMetrics().density;
 

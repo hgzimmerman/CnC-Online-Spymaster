@@ -3,9 +3,8 @@
 android:orientation="vertical" android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:background="?android:attr/selectableItemBackground"
-android:padding="10dp"
-    >
-<LinearLayout
+android:padding="10dp">
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
@@ -16,15 +15,15 @@ android:padding="10dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
 
-</LinearLayout>
+    </LinearLayout>
 
-<!--Spacing-->
-<View
+    <!--Spacing-->
+    <View
     android:layout_width="fill_parent"
     android:layout_height="10dp"
     />
 
-<LinearLayout
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
@@ -38,9 +37,9 @@ android:padding="10dp"
         android:textSize="@dimen/text_size_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</LinearLayout>
+    </LinearLayout>
 
-<LinearLayout
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
@@ -54,8 +53,8 @@ android:padding="10dp"
         android:textSize="@dimen/text_size_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</LinearLayout>
-<LinearLayout
+    </LinearLayout>
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
@@ -69,10 +68,10 @@ android:padding="10dp"
         android:textSize="@dimen/text_size_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</LinearLayout>
+    </LinearLayout>
 
 
-<LinearLayout
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
@@ -82,15 +81,13 @@ android:padding="10dp"
         android:textSize="@dimen/text_size_stats"
         android:text="@string/games"/>
     <TextView
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:id="@+id/ladder_stat_games"
         android:textSize="@dimen/text_size_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</LinearLayout>
+    </LinearLayout>
 
-<LinearLayout
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
@@ -104,9 +101,9 @@ android:padding="10dp"
         android:textSize="@dimen/text_size_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</LinearLayout>
+    </LinearLayout>
 
-<LinearLayout
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
@@ -120,9 +117,9 @@ android:padding="10dp"
         android:textSize="@dimen/text_size_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</LinearLayout>
+    </LinearLayout>
 
-<LinearLayout
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
@@ -136,9 +133,9 @@ android:padding="10dp"
         android:textSize="@dimen/text_size_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</LinearLayout>
+    </LinearLayout>
 
-<LinearLayout
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
@@ -152,8 +149,6 @@ android:padding="10dp"
         android:textSize="@dimen/text_size_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</LinearLayout>
-
-
+    </LinearLayout>
 
 </LinearLayout>

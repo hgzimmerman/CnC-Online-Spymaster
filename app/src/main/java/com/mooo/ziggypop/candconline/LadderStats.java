@@ -240,7 +240,4 @@ public class LadderStats implements Parcelable {
 
     }
 
-
-
-
 }

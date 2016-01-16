@@ -1,30 +1,22 @@
 package com.mooo.ziggypop.candconline;
 
 import android.graphics.Rect;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import java.util.ArrayList;
+
 
 /**
  * Created by ziggypop on 1/12/16.
+ * Abstract class for RecyclerViewFragments
  */
 public abstract class RecyclerViewFragment extends Fragment {
 
     private static final String TAG = "RecyclerViewFragment";
-    public static final String KEY_LAYOUT_MANAGER = "layoutManager";
-    private static final int SPAN_COUNT = 2;
-    private static final int DATASET_COUNT = 60;
-
-
-
 
     protected RecyclerView mRecyclerView;
-    protected RecyclerView.Adapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-    protected ArrayList mDataset;
 
 
     /**

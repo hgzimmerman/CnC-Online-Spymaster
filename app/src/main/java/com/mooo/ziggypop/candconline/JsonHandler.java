@@ -48,12 +48,11 @@ class JsonHandler {
 
     private JSONObject jsonCache;
     //private MainActivity mainActivity;
-    Context context;
+
     private static PlayerDatabaseHandler db;
 
 
     public JsonHandler(Context context){
-        this.context = context;
         db = new PlayerDatabaseHandler(context);
     }
 

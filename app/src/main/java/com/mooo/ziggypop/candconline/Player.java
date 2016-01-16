@@ -107,23 +107,23 @@ public class Player implements Comparable{
 
     public static class PlayerViewHolder extends RecyclerView.ViewHolder {
         //small Layout
-        TextView nickname;
-        View friendMarker;
-        View notificationMarker;
-        View yourselfMarker;
-        ViewGroup smallView;
+        final TextView nickname;
+        final View friendMarker;
+        final View notificationMarker;
+        final View yourselfMarker;
+        final ViewGroup smallView;
         //big layout
-        TextView bigNickname;
-        TextView username;
-        CheckBox friendsCheckbox;
-        CheckBox notificationsCheckbox;
-        CheckBox yourselfCheckbox;
-        Button statsButton;
-        Button ladderButton;
-        ProgressBar progressBar;
-        ViewGroup bigView;
+        final TextView bigNickname;
+        final TextView username;
+        final CheckBox friendsCheckbox;
+        final CheckBox notificationsCheckbox;
+        final CheckBox yourselfCheckbox;
+        final Button statsButton;
+        final Button ladderButton;
+        final ProgressBar progressBar;
+        final ViewGroup bigView;
         //the top level layout that holds both smaller layouts
-        ViewGroup rootView;
+        final ViewGroup rootView;
 
 
         public PlayerViewHolder(View itemView) {
