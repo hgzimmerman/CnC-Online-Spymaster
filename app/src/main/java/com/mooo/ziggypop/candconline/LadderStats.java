@@ -19,15 +19,15 @@ import java.util.ArrayList;
  * LadderStats are used to display data from the ladder view
  */
 public class LadderStats implements Parcelable {
-    private String nickname;
-    private int rankOneVsOne;
-    private String ladderWinOverLoss;
-    private int elo;
-    private int games;
-    private int wins;
-    private int losses;
-    private int disconnects;
-    private int desyncs;
+    private final String nickname;
+    private final int rankOneVsOne;
+    private final String ladderWinOverLoss;
+    private final int elo;
+    private final int games;
+    private final int wins;
+    private final int losses;
+    private final int disconnects;
+    private final int desyncs;
 
     public LadderStats(String nickname, int rankOneVsOne, String ladderWinOverLoss, int elo,
                        int games, int wins, int losses, int disconnects, int desyncs){
@@ -89,15 +89,15 @@ public class LadderStats implements Parcelable {
 
 
     private static class LadderStatsViewHolder extends RecyclerView.ViewHolder {
-        TextView nameView;
-        TextView rankOneVsOneView;
-        TextView ladderWinOverLossView;
-        TextView eloView;
-        TextView gamesView;
-        TextView winsView;
-        TextView lossesView;
-        TextView disconnectsView;
-        TextView desyncsView;
+        final TextView nameView;
+        final TextView rankOneVsOneView;
+        final TextView ladderWinOverLossView;
+        final TextView eloView;
+        final TextView gamesView;
+        final TextView winsView;
+        final TextView lossesView;
+        final TextView disconnectsView;
+        final TextView desyncsView;
 
 
         public LadderStatsViewHolder(View itemView) {

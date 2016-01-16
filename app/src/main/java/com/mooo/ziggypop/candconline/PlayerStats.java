@@ -18,17 +18,17 @@ import java.util.ArrayList;
  * Deals with the Statistics
  */
 public class PlayerStats implements Parcelable {
-    private String nickname;
-    private int totalGames;
-    private int rankedOneVsOneWins;
-    private int rankedOneVsOneLosses;
-    private int rankedOneVsOneDisconnects;
-    private int rankedOneVsOneDesyncs;
-    private int rankedTwoVsTwoGames;
-    private int totalWins;
-    private int totalLosses;
-    private int totalDisconnects;
-    private int totalDesyncs;
+    private final String nickname;
+    private final int totalGames;
+    private final int rankedOneVsOneWins;
+    private final int rankedOneVsOneLosses;
+    private final int rankedOneVsOneDisconnects;
+    private final int rankedOneVsOneDesyncs;
+    private final int rankedTwoVsTwoGames;
+    private final int totalWins;
+    private final int totalLosses;
+    private final int totalDisconnects;
+    private final int totalDesyncs;
 
     public PlayerStats(String nickname, int totalGames, int rankedOneVsOneWins,
                        int rankedOneVsOneLosses, int rankedOneVsOneDisconnects,
@@ -136,17 +136,17 @@ public class PlayerStats implements Parcelable {
     }
 
     private static class StatsViewHolder extends RecyclerView.ViewHolder {
-        TextView nameView;
-        TextView totalGamesView;
-        TextView rankedOneVsOneWinsView;
-        TextView rankedOneVsOneLossesView;
-        TextView rankedOneVsOneDisconnectsView;
-        TextView rankedOneVsOneDesyncsView;
-        TextView rankedTwoVsTwoGamesView;
-        TextView totalWinsView;
-        TextView totalLossesView;
-        TextView totalDisconnectsView;
-        TextView totalDesyncsView;
+        final TextView nameView;
+        final TextView totalGamesView;
+        final TextView rankedOneVsOneWinsView;
+        final TextView rankedOneVsOneLossesView;
+        final TextView rankedOneVsOneDisconnectsView;
+        final TextView rankedOneVsOneDesyncsView;
+        final TextView rankedTwoVsTwoGamesView;
+        final TextView totalWinsView;
+        final TextView totalLossesView;
+        final TextView totalDisconnectsView;
+        final TextView totalDesyncsView;
 
         public StatsViewHolder(View itemView) {
             super(itemView);
