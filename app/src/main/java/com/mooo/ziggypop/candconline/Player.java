@@ -408,8 +408,6 @@ public class Player implements Comparable{
 
 //                    final Scene bigScene = Scene.getSceneForLayout(holder.rootView, R.layout.player_big_layout, holder.rootView.getContext());
 //                    TransitionManager.go(bigScene);
-
-
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                         Slide slide = new Slide();
                         TransitionManager.beginDelayedTransition(holder.rootView, slide);
@@ -426,6 +424,12 @@ public class Player implements Comparable{
             //====Big View Stuff====
             holder.bigNickname.setText(player.nickname);
             //Set the username to invisible to make the prog bar look nice when the view is recycled.
+
+            // disable the stats button if the game is Generals or ZH
+            holder.statsButton.setEnabled(true);
+            if (player.getGame() == GameEnum.Generals || player.getGame() == GameEnum.ZeroHour){
+                holder.statsButton.setEnabled(false);
+            }
 
             holder.statsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
