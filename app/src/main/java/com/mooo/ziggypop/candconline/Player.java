@@ -157,14 +157,11 @@ public class Player implements Comparable{
 
     private static final String TAG = "Player";
 
-    private static int NOTIFICATION_VALUE = 1;
-    private static int FRIEND_VALUE = 2;
-    private static int YOURSELF_VALUE = 4;
+    private static final int NOTIFICATION_VALUE = 1;
+    private static final int FRIEND_VALUE = 2;
+    private static final int YOURSELF_VALUE = 4;
 
-
-
-    private static String PROFILE_PREFIX = "http://cnc-online.net/profiles/";
-
+    private static final String PROFILE_PREFIX = "http://cnc-online.net/profiles/";
 
 
     private String nickname;
@@ -213,7 +210,7 @@ public class Player implements Comparable{
     public int getID(){return id;}
     public int getPID(){return pid;}
     public boolean getIsFriend(){return isFriend;}
-    public boolean getIsRecieveNotifications(){return isReceiveNotifications;}
+    public boolean getIsReceiveNotifications(){return isReceiveNotifications;}
     public boolean getIsYourself(){return isYourself;}
     public String getUserName(){ return userName;}
     public GameEnum getGame(){return game;}
@@ -221,7 +218,7 @@ public class Player implements Comparable{
     public void setIsFriend(boolean isFriend){
         this.isFriend = isFriend;
     }
-    public void setIsRecieveNotifications(boolean isRecieve){ this.isReceiveNotifications = isRecieve; }
+    public void setIsRecieveNotifications(boolean isReceive){ this.isReceiveNotifications = isReceive; }
     public void setIsYourself(boolean isYourself){
         this.isYourself = isYourself;
     }
@@ -262,7 +259,7 @@ public class Player implements Comparable{
         int sum = 0;
         if (player.getIsYourself())
             sum += YOURSELF_VALUE;
-        if (player.getIsRecieveNotifications())
+        if (player.getIsReceiveNotifications())
             sum += NOTIFICATION_VALUE;
         if (player.getIsFriend())
             sum += FRIEND_VALUE;

@@ -3,13 +3,9 @@ package com.mooo.ziggypop.candconline;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-
 import java.util.ArrayList;
 
 /**
@@ -30,12 +26,6 @@ public abstract class RecyclerViewFragment extends Fragment {
     protected RecyclerView.LayoutManager mLayoutManager;
     protected ArrayList mDataset;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
 
     /**
      * Set RecyclerView's LayoutManager to the one given.
@@ -46,14 +36,6 @@ public abstract class RecyclerViewFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.scrollToPosition(scrollPosition);
     }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        // Save currently selected layout manager.
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-
 
     public static class VerticalSpaceItemDecoration extends RecyclerView.ItemDecoration {
 

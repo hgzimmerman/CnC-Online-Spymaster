@@ -33,9 +33,17 @@ public class NotificationMessage extends BroadcastReceiver {
     public static void showNotification(Context context, ArrayList<Player> players) {
         Log.d(TAG, "Attempting to show the notification");
 
-        IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        Intent batteryStatus = context.registerReceiver(null, ifilter);
-        int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+        IntentFilter iFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        Intent batteryStatus = context.registerReceiver(null, iFilter);
+
+        int status;
+        if (batteryStatus != null) {
+            status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+        } else {
+            status = BatteryManager.BATTERY_STATUS_CHARGING; // Fail to a working state
+            // TODO: Low priority: find a way to notify the user that this has failed
+        }
+
         boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
                 status == BatteryManager.BATTERY_STATUS_FULL;
         boolean userMustBeCharging = PreferenceManager.getDefaultSharedPreferences(context)
@@ -68,7 +76,7 @@ public class NotificationMessage extends BroadcastReceiver {
 
             //If there are players and if the user must be online, the user is online
             if (players.size() > 0 && !(userMustBeOnline && !userIsOnline)) {
-                Log.d(TAG, "Actually showing the notification: usermustBeOnLine"+ userMustBeOnline + "userIsOnline" + userIsOnline);
+                Log.d(TAG, "Actually showing the notification: userMustBeOnLine"+ userMustBeOnline + "userIsOnline" + userIsOnline);
 
                 contentText = contentText.substring(0, contentText.length() - separator.length());
 

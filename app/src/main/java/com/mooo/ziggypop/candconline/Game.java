@@ -9,9 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -70,15 +68,10 @@ public class Game {
     public static class GamesAdapter extends RecyclerView.Adapter {
         ArrayList<Game> games;
 
-        public GamesAdapter(Context context, int textViewResourceId) {
-            //super(context, textViewResourceId);
-        }
-
         public GamesAdapter( Context context, int resource, ArrayList<Game> games) {
             //super(context, resource, games);
             this.games = games;
         }
-        public GamesAdapter(ArrayList<Game> games){}
         public GamesAdapter(Context context, ArrayList<Game> games){
             this.games = games;
         }
@@ -243,7 +236,7 @@ public class Game {
             mDataset = new ArrayList<>();
 
             mAdapter = new GamesAdapter(getActivity(), mDataset);
-            Log.v(TAG, "setting the adapter for gameinprogress");
+            Log.v(TAG, "Setting the adapter for GameInProgress");
             mRecyclerView.setAdapter( mAdapter );
         }
 

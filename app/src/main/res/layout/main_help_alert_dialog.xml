@@ -33,6 +33,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="60dp">
             <ImageView
+                android:contentDescription="@string/heart_icon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@mipmap/ic_action_heart"
@@ -51,6 +52,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="60dp"
         >
         <ImageView
+            android:contentDescription="@string/bell_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@mipmap/ic_action_bell"
@@ -68,6 +70,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="60dp">
         <ImageView
+            android:contentDescription="@string/player_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@mipmap/ic_action_user"

@@ -15,9 +15,6 @@ import java.util.ArrayList;
  *
  */
 public class DrawerAdapter extends ArrayAdapter<DrawerItem> {
-    public DrawerAdapter(Context context, int resource) {
-        super(context, resource);
-    }
 
     public DrawerAdapter(Context context, int resource, ArrayList<DrawerItem> items){
         super(context, resource, items);

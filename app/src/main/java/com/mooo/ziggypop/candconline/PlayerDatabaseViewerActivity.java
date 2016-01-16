@@ -194,8 +194,4 @@ public class PlayerDatabaseViewerActivity extends AppCompatActivity
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    public void setSafeToRefresh(boolean isSafe){
-        mSwipeRefreshLayout.setEnabled(isSafe);
-    }
-
 }

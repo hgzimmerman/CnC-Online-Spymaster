@@ -128,7 +128,7 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_PLAYER_PID, player.getPID());
         values.put(KEY_PLAYER_NICKNAME, player.getNickname());
         values.put(KEY_PLAYER_IS_FRIEND, (player.getIsFriend())? 1 : 0);
-        values.put(KEY_PLAYER_NOTIFICATIONS, (player.getIsRecieveNotifications())? 1 : 0);
+        values.put(KEY_PLAYER_NOTIFICATIONS, (player.getIsReceiveNotifications())? 1 : 0);
         values.put(KEY_PLAYER_IS_YOURSELF, (player.getIsYourself())? 1 :0);
         values.put(KEY_PLAYER_IN_GAME_NAME, player.getUserName());
         values.put(KEY_PLAYER_GAME, Player.gameEnumToInt(player.getGame()));
@@ -201,7 +201,7 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_PLAYER_PID, player.getPID());
         values.put(KEY_PLAYER_NICKNAME, player.getNickname());
         values.put(KEY_PLAYER_IS_FRIEND, (player.getIsFriend())? 1 : 0);
-        values.put(KEY_PLAYER_NOTIFICATIONS, (player.getIsRecieveNotifications())? 1: 0);
+        values.put(KEY_PLAYER_NOTIFICATIONS, (player.getIsReceiveNotifications())? 1: 0);
         values.put(KEY_PLAYER_IS_YOURSELF, (player.getIsYourself())? 1 : 0);
         values.put(KEY_PLAYER_IN_GAME_NAME, player.getUserName());
         values.put(KEY_PLAYER_GAME, Player.gameEnumToInt(player.getGame()));
@@ -235,7 +235,7 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
                                 dbPlayer.getID(),
                                 dbPlayer.getPID(),
                                 dbPlayer.getIsFriend(),
-                                dbPlayer.getIsRecieveNotifications(),
+                                dbPlayer.getIsReceiveNotifications(),
                                 dbPlayer.getIsYourself(),
                                 dbPlayer.getUserName(),
                                 dbPlayer.getGame()
@@ -271,7 +271,7 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
         ArrayList<Player> dbPlayers = getAllPlayers();
         for (Player dbPlayer: dbPlayers) {
             for (Player player: players){
-                if (player.getID() == dbPlayer.getID() && dbPlayer.getIsRecieveNotifications()){
+                if (player.getID() == dbPlayer.getID() && dbPlayer.getIsReceiveNotifications()){
                     intersectedPlayers.add(dbPlayer);
                 }
             }
@@ -285,7 +285,9 @@ public class PlayerDatabaseHandler extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery("SELECT 1 FROM " + TABLE_PLAYERS
                 + " WHERE " + KEY_PLAYER_ID + " = '" + id + "'", new String[] {});
-        return (cursor.getCount() > 0);
+        boolean doesExist = cursor.getCount() > 0;
+        cursor.close();
+        return doesExist;
     }
 
 

@@ -4,7 +4,7 @@ package com.mooo.ziggypop.candconline;
  * Created by ziggypop on 3/31/15.
  *
  */
-public class DrawerItem {
+class DrawerItem {
     private String gameTitle;
     private int playerCount;
 

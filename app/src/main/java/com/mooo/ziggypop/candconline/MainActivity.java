@@ -10,9 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -389,8 +387,9 @@ public class MainActivity extends AppCompatActivity
             } else {
                 fragment = player;
             }
-            Bundle args = new Bundle();
+
             /*
+            Bundle args = new Bundle();
             args.putInt(Player.PlayersFragment.ARG_SECTION_NUMBER, position+1);
             if (fragment.getArguments() == null) {
                 fragment.setArguments(args);

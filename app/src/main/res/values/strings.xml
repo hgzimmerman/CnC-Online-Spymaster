@@ -6,7 +6,7 @@
     <string name="title_section1">Players</string>
     <string name="title_section2">Open Lobbies</string>
     <string name="title_section3">In Game</string>
-    <!--End SlidingTabLayoout labels-->
+    <!--End SlidingTabLayout labels-->
 
 
     <!--Names of the games in question. Do not need translation-->
@@ -110,6 +110,10 @@
     <string name="notification_description">This icon means that, if enabled, the app will notify you if this player is online.</string>
     <string name="friends_description">This icon indicates friends. This is useful for recognizing players as you scroll through the list of players.</string>
     <string name="help_player_checkbox">Clicking on a player will expand them. Clicking on any of checkboxes will save the player locally to the phone.</string>
+
+    <string name="player_icon">Player Icon</string>
+    <string name="bell_icon">Bell Icon</string>
+    <string name="heart_icon">Heart Icon</string>
     <!--End strings for main activity help-->
 
     <!--Start error messages for toasts-->
@@ -155,6 +159,7 @@
     <string name="receive_notifications">Receive Notifications</string>
     <string name="friends">Friends</string>
     <string name="player_is_you">Player is Yourself</string>
+
     <!--End Player Card-->
 
 

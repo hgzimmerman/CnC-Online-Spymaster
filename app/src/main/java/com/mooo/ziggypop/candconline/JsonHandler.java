@@ -26,7 +26,7 @@ import java.util.List;
  * Created by ziggypop on 4/7/15.
  * Handles getting data from the website and updating the set of fragments based on that data.
  */
-public class JsonHandler {
+class JsonHandler {
 
 
 
@@ -169,7 +169,6 @@ public class JsonHandler {
     private static ArrayList<Player> getIntersectionOfPlayersAllGames(JSONObject gameObject, Context context) {
         ArrayList<Player> returnArr = new ArrayList<>();
 
-        JSONObject playersObject;
         try {
             List<JSONObject> gameJSONs = new ArrayList<>();
             gameJSONs.add(gameObject.getJSONObject(KW_JSON));
@@ -189,10 +188,8 @@ public class JsonHandler {
             returnArr = db.getIntersectionOfPlayers(allOnlinePlayers);
 
         } catch (JSONException e ){
-            // do nothing
+            Log.e(TAG, "JSONException:" + e.toString());
         }
-
-
 
         return returnArr;
     }
@@ -334,7 +331,9 @@ public class JsonHandler {
             if (result == null) {
                 //TOAST
                 Context mContext = myActivity.getApplicationContext();
-                Toast toast = Toast.makeText(mContext, "Connection error.", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(mContext,
+                        mContext.getString(R.string.connection_error),
+                        Toast.LENGTH_LONG);
                 toast.show();
             }
             updateViews(myActivity); //fill the pager with new content
@@ -400,15 +399,11 @@ public class JsonHandler {
 
         @Override
         public void onPostExecute(JSONObject result) {
-
-            if (result == null) {
-                // do nothing
-            } else {
+            if (result != null) {
                 ArrayList<Player> players = getIntersectionOfPlayersAllGames(result, context);
                 Log.v(TAG, "Size of intersection of db players and players online: " + players.size());
                 NotificationMessage.showNotification(context, players);
             }
-
         }
 
     }

@@ -177,8 +177,6 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerToggle = new ActionBarDrawerToggle(
                 getActivity(),                    /* host Activity */
                 mDrawerLayout,                    /* DrawerLayout object */
-                //R.mipmap.ic_drawer,             /* nav drawer image to replace 'Up' caret */
-                //R.mipmap.ic_image_dehaze,       /* Was the icon for v.4. Invalidated by the switch to v.7 */
                 getToolBar(),
                 R.string.navigation_drawer_open,  /* "open drawer" description for accessibility */
                 R.string.navigation_drawer_close  /* "close drawer" description for accessibility */
