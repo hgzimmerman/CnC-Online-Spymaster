@@ -100,9 +100,6 @@ public class SettingsActivity extends AppCompatActivity{
         switch (item.getItemId()) {
             case android.R.id.home:
                 // go to previous screen when app icon in action bar is clicked
-                //Intent intent = new Intent(this, MainActivity.class);
-                //intent.putExtra("current_game", currentGame);
-                //startActivity(intent);
                 finish();
                 return true;
         }
@@ -266,11 +263,4 @@ public class SettingsActivity extends AppCompatActivity{
             window.setStatusBarColor(getResources().getColor(colorResourceId, getTheme()));
     }
 
-    @Override
-    public void onBackPressed(){
-        //Intent intent = new Intent(this, MainActivity.class);
-        //intent.putExtra("current_game", currentGame);
-        //startActivity(intent);
-        super.onBackPressed();
-    }
 }

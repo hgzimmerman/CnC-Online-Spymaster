@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_stats"
-            android:text="Total Games"/>
+            android:text="@string/total_games"/>
         <TextView
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_stats"
-            android:text="Ranked One Vs. One Wins"/>
+            android:text="@string/ranked_one_vs_one_wins"/>
         <TextView
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
@@ -70,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_stats"
-            android:text="Ranked One Vs. One Losses"/>
+            android:text="@string/ranked_one_vs_one_losses"/>
         <TextView
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_stats"
-            android:text="Ranked One Vs. One Disconnects"/>
+            android:text="@string/ranked_one_vs_one_disconnects"/>
         <TextView
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
@@ -109,7 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_stats"
-            android:text="Ranked One Vs. One Desyncs"/>
+            android:text="@string/ranked_one_vs_one_desyncs"/>
         <TextView
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
@@ -128,7 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_stats"
-            android:text="Ranked Two Vs. Two Games"/>
+            android:text="@string/ranked_two_vs_two_games"/>
         <TextView
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
@@ -147,7 +147,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_stats"
-            android:text="Total Wins"/>
+            android:text="@string/total_wins"/>
         <TextView
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
@@ -166,7 +166,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_stats"
-            android:text="Total Losses"/>
+            android:text="@string/total_losses"/>
         <TextView
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
@@ -185,7 +185,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_stats"
-            android:text="Total Disconnects"/>
+            android:text="@string/total_disconnects"/>
         <TextView
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
@@ -204,7 +204,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_stats"
-            android:text="Total Desyncs"/>
+            android:text="@string/total_desyncs"/>
         <TextView
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"

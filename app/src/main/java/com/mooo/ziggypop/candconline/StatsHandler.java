@@ -2,12 +2,10 @@ package com.mooo.ziggypop.candconline;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -103,7 +101,7 @@ public class StatsHandler {
                     Element table;
 
                     Log.d(TAG, "tables size = " + tables.size());
-                    //Do game specific parsing actions here
+                    // Do game specific parsing actions here
                     // Find the most populated table, avoid empty tables.
                     switch (players[0].getGame()){
                         case KanesWrath:

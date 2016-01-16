@@ -33,7 +33,7 @@ android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_stats"
-        android:text="Rank One Vs One"/>
+        android:text="@string/rank_one_vs_one"/>
     <TextView
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
@@ -52,7 +52,7 @@ android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_stats"
-        android:text="Ladder W/L"/>
+        android:text="@string/ladder_win_loss"/>
     <TextView
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
@@ -70,7 +70,7 @@ android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_stats"
-        android:text="ELO"/>
+        android:text="@string/elo"/>
     <TextView
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
@@ -90,7 +90,7 @@ android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_stats"
-        android:text="Games"/>
+        android:text="@string/games"/>
     <TextView
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
@@ -109,7 +109,7 @@ android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_stats"
-        android:text="Wins"/>
+        android:text="@string/wins"/>
     <TextView
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
@@ -128,7 +128,7 @@ android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_stats"
-        android:text="Losses"/>
+        android:text="@string/losses"/>
     <TextView
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
@@ -147,7 +147,7 @@ android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_stats"
-        android:text="Disconnects"/>
+        android:text="@string/disconnects"/>
     <TextView
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
@@ -166,7 +166,7 @@ android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_stats"
-        android:text="Desyncs"/>
+        android:text="@string/desyncs"/>
     <TextView
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"

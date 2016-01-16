@@ -1,13 +1,15 @@
 <resources>
+    <!--App name-->
     <string name="app_name">C&amp;C:Online Spymaster</string>
 
-
+    <!--Start SlidingTabLayout labels-->
     <string name="title_section1">Players</string>
     <string name="title_section2">Open Lobbies</string>
     <string name="title_section3">In Game</string>
+    <!--End SlidingTabLayoout labels-->
 
 
-    <!--Names of the games in question, Unsure if they need localization-->
+    <!--Names of the games in question. Do not need translation-->
     <string name="KanesWrath">Kane\'s Wrath</string>
     <string name="CandC3">C&amp;C 3</string>
     <string name="Generals">Generals</string>
@@ -104,15 +106,39 @@
     <string name="help_player_checkbox">Clicking on a player will expand them. Clicking on any of checkboxes will save the player locally to the phone.</string>
     <string name="local_player_database">Local Player Database</string>
 
+    <!--Start error messages for toasts-->
     <string name="err_malformed_url">Malformed URL</string>
     <string name="err_ladder_unavailable">Ladder Stats Unavailable</string>
     <string name="err_player_unavailable">Player Stats Unavailable</string>
     <string name="err_player_game_is_none">Player Stored Incorrectly</string>
+    <!--End error messages for toasts-->
 
+
+
+    <!-- Start statistics viewing activities-->
     <string name="player_stats">Player Statistics</string>
     <string name="ladder_stats">Ladder Statistics</string>
 
     <string name="preposition_for">for</string>
+    <string name="total_games">Total Games</string>
+    <string name="ranked_one_vs_one_wins">Ranked One Vs. One Wins</string>
+    <string name="ranked_one_vs_one_losses">Ranked One Vs. One Losses</string>
+    <string name="ranked_one_vs_one_disconnects">Ranked One Vs. One Disconnects</string>
+    <string name="ranked_one_vs_one_desyncs">Ranked One Vs. One Desyncs</string>
+    <string name="ranked_two_vs_two_games">Ranked Two Vs. Two Games</string>
+    <string name="total_wins">Total Wins</string>
+    <string name="total_losses">Total Losses</string>
+    <string name="total_disconnects">Total Disconnects</string>
+    <string name="total_desyncs">Total Desyncs</string>
+    <string name="rank_one_vs_one">Rank One Vs One</string>
+    <string name="ladder_win_loss">Ladder W/L</string>
+    <string name="elo">ELO</string>
+    <string name="games">Games</string>
+    <string name="wins">Wins</string>
+    <string name="losses">Losses</string>
+    <string name="disconnects">Disconnects</string>
+    <string name="desyncs">Desyncs</string>
+    <!--End statistics viewing activities-->
 
 
 </resources>
