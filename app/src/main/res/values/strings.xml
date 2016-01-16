@@ -17,13 +17,12 @@
     <string name="RedAlert3">Red Alert 3</string>
 
 
-    <string name="connection_error">Connection Error</string>
 
     <string name="action_settings">Settings</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-
+    <!-- Start Licences -->
     <string name="licence">Licence</string>
     <string name="BSD">Copyright © 2015, Henry Zimmerman\n
             All rights reserved.\n\n
@@ -66,29 +65,35 @@
         Creative Commons Attribution-ShareAlike 4.0 International Public License \n
         http://creativecommons.org/licenses/by-sa/4.0/
     </string>
+    <!--End Licences-->
+
+    <!--Start Game Cards-->
     <string name="map">Map:</string>
     <string name="players">Players:</string>
     <string name="the_game_is_locked">The game is locked</string>
+    <!--End Game Cards-->
 
+
+
+
+    <!--Start Generic-->
+    <string name="help">Help</string>
     <string name="ok">OK</string>
     <string name="settings">Settings</string>
-    <string name="nickname">Nickname:</string>
-    <string name="id">ID:</string>
-    <string name="pid">PID:</string>
-    <string name="receive_notifications">Receive Notifications</string>
-    <string name="friends">Friends</string>
     <string name="cancel">Cancel</string>
-    <string name="player_is_you">Player is Yourself</string>
+    <!--End Generic-->
+
+    <!--Start DB strings-->
+    <string name="reset_db_summary">Reset the local database that holds player data.</string>
+    <string name="reset_player_db">Reset Player Database</string>
+    <string name="player_db_help_message">This page displays all of the players you have marked as a friend, marked to receive notifications or marked as yourself. You can alter their marks here. Note: removing all marks will cause the player to be removed from this list and you will have to wait for them to come online again to add them again.</string>
+    <string name="local_player_database">Local Player Database</string>
     <string name="reset_db_disclaimer">
         "This will reset the database that holds all of the players that you have marked as your friend, for you to receive notifications about their online status, and those you marked as yourself.
 
         Are you sure you want to continue?
         "</string>
-    <string name="reset_db_summary">Reset the local database that holds player data.</string>
-    <string name="help">Help</string>
-
-    <string name="reset_player_db">Reset Player Database</string>
-    <string name="player_db_help_message">This page displays all of the players you have marked as a friend, marked to receive notifications or marked as yourself. You can alter their marks here. Note: removing all marks will cause the player to be removed from this list and you will have to wait for them to come online again to add them again.</string>
+    <!--End DB strings-->
 
     <string name="friends_online_service_label">CnC Players Online</string>
     <string name="flag_for_marking_friends">Flag for marking friends.</string>
@@ -98,18 +103,21 @@
     <string name="user_name">User Name</string>
     <string name="donate">Donate to Revora</string>
     <string name="donate_summary">Revora server is the source of the player data this app uses.</string>
+
+    <!--Start strings for main activity help-->
     <string name="yourself_description">This icon represents yourself. You can configure the app to only send notifications if you are also online.</string>
     <string name="help_manage_players_description"><![CDATA[To access players that you have saved while they are offline, you can visit Settings > Manage Players.]]></string>
     <string name="notification_description">This icon means that, if enabled, the app will notify you if this player is online.</string>
     <string name="friends_description">This icon indicates friends. This is useful for recognizing players as you scroll through the list of players.</string>
     <string name="help_player_checkbox">Clicking on a player will expand them. Clicking on any of checkboxes will save the player locally to the phone.</string>
-    <string name="local_player_database">Local Player Database</string>
+    <!--End strings for main activity help-->
 
     <!--Start error messages for toasts-->
     <string name="err_malformed_url">Malformed URL</string>
     <string name="err_ladder_unavailable">Ladder Stats Unavailable</string>
     <string name="err_player_unavailable">Player Stats Unavailable</string>
     <string name="err_player_game_is_none">Player Stored Incorrectly</string>
+    <string name="connection_error">Connection Error</string>
     <!--End error messages for toasts-->
 
 
@@ -139,9 +147,16 @@
     <string name="desyncs">Desyncs</string>
     <!--End statistics viewing activities-->
 
-    <!--Player Card-->
+    <!--Start Player Card-->
     <string name="player_statistics">Player Statistics</string>
     <string name="ladder_statistics">Ladder Statistics</string>
+    <string name="id">ID:</string>
+    <string name="pid">PID:</string>
+    <string name="receive_notifications">Receive Notifications</string>
+    <string name="friends">Friends</string>
+    <string name="player_is_you">Player is Yourself</string>
+    <!--End Player Card-->
+
 
 
 </resources>
