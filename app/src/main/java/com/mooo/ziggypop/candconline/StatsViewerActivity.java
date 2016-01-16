@@ -54,7 +54,16 @@ public class StatsViewerActivity extends AppCompatActivity {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.db_players_fragment, statsFragment);
             ft.commit();
-            toolbar.setTitle("Player Statistics");
+            //set title
+            String playerName = getIntent().getExtras().getString("player_name");
+            String playerStatsString = getString(R.string.player_stats);
+            String forPreposition = getString(R.string.preposition_for);
+            String title = String.format("%s %s %s",
+                    playerStatsString,
+                    forPreposition,
+                    playerName
+            );
+            toolbar.setTitle(title);
 
             statsFragment.setData(playerStats, this);
         } else if (ladderStats != null){
@@ -62,7 +71,16 @@ public class StatsViewerActivity extends AppCompatActivity {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.db_players_fragment, ladderStatsFragment);
             ft.commit();
-            toolbar.setTitle("Ladder Statistics");
+            //set title
+            String playerName = getIntent().getExtras().getString("player_name");
+            String ladderStatsString = getString(R.string.ladder_stats);
+            String forPreposition = getString(R.string.preposition_for);
+            String title = String.format("%s %s %s",
+                    ladderStatsString,
+                    forPreposition,
+                    playerName
+            );
+            toolbar.setTitle(title);
 
             ladderStatsFragment.setData(ladderStats, this);
         }

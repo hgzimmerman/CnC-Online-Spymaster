@@ -84,7 +84,6 @@
         "</string>
     <string name="reset_db_summary">Reset the local database that holds player data.</string>
     <string name="help">Help</string>
-    <string name="graph">Graph</string>
 
     <string name="reset_player_db">Reset Player Database</string>
     <string name="player_db_help_message">This page displays all of the players you have marked as a friend, marked to receive notifications or marked as yourself. You can alter their marks here. Note: removing all marks will cause the player to be removed from this list and you will have to wait for them to come online again to add them again.</string>
@@ -102,13 +101,18 @@
     <string name="help_manage_players_description"><![CDATA[To access players that you have saved while they are offline, you can visit Settings > Manage Players.]]></string>
     <string name="notification_description">This icon means that, if enabled, the app will notify you if this player is online.</string>
     <string name="friends_description">This icon indicates friends. This is useful for recognizing players as you scroll through the list of players.</string>
-    <string name="help_player_checkbox">Clicking on a player will bring up a dialog. Clicking on any of checkboxes will save the player locally to the phone.</string>
+    <string name="help_player_checkbox">Clicking on a player will expand them. Clicking on any of checkboxes will save the player locally to the phone.</string>
     <string name="local_player_database">Local Player Database</string>
 
     <string name="err_malformed_url">Malformed URL</string>
     <string name="err_ladder_unavailable">Ladder Stats Unavailable</string>
     <string name="err_player_unavailable">Player Stats Unavailable</string>
     <string name="err_player_game_is_none">Player Stored Incorrectly</string>
+
+    <string name="player_stats">Player Statistics</string>
+    <string name="ladder_stats">Ladder Statistics</string>
+
+    <string name="preposition_for">for</string>
 
 
 </resources>
