@@ -12,12 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 /**
  * Created by ziggypop on 1/13/16.
+ * Deals with the Statistics
  */
 public class PlayerStats implements Parcelable {
     private String nickname;
@@ -248,16 +247,5 @@ public class PlayerStats implements Parcelable {
         }
 
     }
-
-
-    //Todo, implement this class for generals
-    //I may want to make this a separate class and implement another statsHandler
-    public static class GeneralsStats {
-        public GeneralsStats(){
-
-        }
-    }
-
-
 
 }

@@ -139,14 +139,14 @@ public class LadderStats implements Parcelable {
         public void onBindViewHolder(LadderStatsViewHolder holder, int position) {
             final LadderStats playerStats = myStats.get(position);
             holder.nameView.setText(playerStats.nickname);
-            holder.rankOneVsOneView.setText(playerStats.rankOneVsOne + "");
+            holder.rankOneVsOneView.setText(String.format("%d", playerStats.rankOneVsOne));
             holder.ladderWinOverLossView.setText(playerStats.ladderWinOverLoss);
-            holder.eloView.setText(playerStats.elo + "");
-            holder.gamesView.setText(playerStats.games + "");
-            holder.winsView.setText(playerStats.wins + "");
-            holder.lossesView.setText(playerStats.losses + "");
-            holder.disconnectsView.setText(playerStats.disconnects + "");
-            holder.desyncsView.setText(playerStats.desyncs + "");
+            holder.eloView.setText(String.format("%d", playerStats.elo ));
+            holder.gamesView.setText(String.format("%d", playerStats.games ));
+            holder.winsView.setText(String.format("%d", playerStats.wins ));
+            holder.lossesView.setText(String.format("%d", playerStats.losses ));
+            holder.disconnectsView.setText(String.format("%d", playerStats.disconnects ));
+            holder.desyncsView.setText(String.format("%d", playerStats.desyncs ));
 
         }
 
