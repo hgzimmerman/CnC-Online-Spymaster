@@ -26,11 +26,9 @@ public class DrawerAdapter extends ArrayAdapter<DrawerItem> {
         View v = convertView;
 
         if (v == null) {
-
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
             v = vi.inflate(R.layout.drawer_item_layout, null);
-
         }
 
         DrawerItem p = getItem(position);

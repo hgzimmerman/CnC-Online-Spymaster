@@ -273,8 +273,6 @@ public class Player implements Comparable{
      */
     public static class PlayersAdapter extends RecyclerView.Adapter<PlayerViewHolder> {
 
-
-
         public ArrayList<Player> myPlayers;
         private static PlayerDatabaseHandler db;
 
@@ -483,8 +481,6 @@ public class Player implements Comparable{
             } else
                 return 0;
         }
-
-
 
 
         private void expandedViewUpdateDB(Player player, PlayerViewHolder holder){
