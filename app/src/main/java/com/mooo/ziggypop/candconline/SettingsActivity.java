@@ -168,7 +168,7 @@ public class SettingsActivity extends AppCompatActivity{
                         pm.setComponentEnabledSetting(receiver,
                                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                                 PackageManager.DONT_KILL_APP);
-                        AlarmArmingBootReceiver.setAlarm(getContext());
+                        AlarmArmingBootReceiver.setAlarm(getContext(), true);
                     } else {
                         Log.v(TAG, "Disable notification alarm");
                         ComponentName receiver = new ComponentName(getContext(), AlarmArmingBootReceiver.class);
@@ -231,7 +231,7 @@ public class SettingsActivity extends AppCompatActivity{
                     //Preferences.sync(getPreferenceManager(), key);
                     if (key.equals("time_interval_pref")) {
                         Log.v(TAG, "Shared prefs changed time interval");
-                        AlarmArmingBootReceiver.setAlarm(getContext());
+                        AlarmArmingBootReceiver.setAlarm(getContext(), true);
                     } else if (key.equals("default_game")){
                         Log.v(TAG, "default game selected");
                     }

@@ -23,11 +23,11 @@ public class AlarmArmingBootReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
             // Set the alarm here.
-            setAlarm(context);
+            setAlarm(context, false);
         }
     }
 
-    public static void setAlarm(Context context){
+    public static void setAlarm(Context context, boolean activateIfTrue){
         Log.v(TAG, "Setting Alarm");
         AlarmManager alarmMgr =  (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent alarmIntent = new Intent(context, NotificationMessage.class);
@@ -35,11 +35,13 @@ public class AlarmArmingBootReceiver extends BroadcastReceiver {
 
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        int interval = Integer.parseInt(preferences.getString("time_interval_pref", "15"));
+        int interval = Integer.parseInt(preferences.getString("time_interval_pref", "10"));
 
-
-        alarmMgr.setInexactRepeating(AlarmManager.RTC,
-                SystemClock.elapsedRealtime(), interval * 60 * 1000, pi);
+        if (preferences.getBoolean("receive_notifications_pref", false) || activateIfTrue) {
+            alarmMgr.setInexactRepeating(AlarmManager.RTC,
+                    SystemClock.elapsedRealtime(), interval * 60 * 1000, pi);
+            Log.v(TAG, "Actually set Alarm");
+        }
     }
 
     public static void stopAlarm(Context context){
