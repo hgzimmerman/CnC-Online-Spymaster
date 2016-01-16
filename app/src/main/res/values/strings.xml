@@ -105,4 +105,10 @@
     <string name="help_player_checkbox">Clicking on a player will bring up a dialog. Clicking on any of checkboxes will save the player locally to the phone.</string>
     <string name="local_player_database">Local Player Database</string>
 
+    <string name="err_malformed_url">Malformed URL</string>
+    <string name="err_ladder_unavailable">Ladder Stats Unavailable</string>
+    <string name="err_player_unavailable">Player Stats Unavailable</string>
+    <string name="err_player_game_is_none">Player Stored Incorrectly</string>
+
+
 </resources>

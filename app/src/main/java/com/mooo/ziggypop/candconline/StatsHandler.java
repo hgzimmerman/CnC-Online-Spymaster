@@ -1,6 +1,7 @@
 package com.mooo.ziggypop.candconline;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +31,9 @@ public class StatsHandler {
     private static final String STATS_PREFIX = "http://www.shatabrick.com/cco/";
     private static final String STATS_INFIX_1 = "/index.php?g=";
     private static final String STATS_INFIX_2 = "&a=sp&name=";
+
+    private static final String TBODY = "tbody"; // the table body
+    private static final String CALENDAR = "#calendar_wrap"; // the ID of the table
 
     Player.PlayerViewHolder viewHolder;
     Player mPlayer;
@@ -90,10 +94,10 @@ public class StatsHandler {
 
                     Element tableBody;
                     if (players[0].getGame() == Player.GameEnum.None){
-                        errorMessage = "Player Stored incorrectly";
+                        errorMessage = Resources.getSystem().getString(R.string.err_player_game_is_none);
                     }
 
-                    Elements tables = doc.select("#calendar_wrap"); // there may be multiple
+                    Elements tables = doc.select(CALENDAR); // there may be multiple
                     Element table;
 
                     Log.d(TAG, "tables size = " + tables.size());
@@ -104,11 +108,11 @@ public class StatsHandler {
                             switch (tables.size()) {
                                 case 0:
                                     Log.e(TAG, "No tables found, the URL was probably malformed");
-                                    errorMessage = "Malformed URL";
+                                    errorMessage = Resources.getSystem().getString(R.string.err_malformed_url);
                                     break;
                                 case 1:
                                     Log.e(TAG, "One table found, the player probably hasn't played a game");
-                                    errorMessage = "No Stats Available";
+                                    errorMessage = Resources.getSystem().getString(R.string.err_player_unavailable);
                                     break;
                                 case 2:
                                     // The first possible table is non-existent, so get the first possible one
@@ -119,12 +123,12 @@ public class StatsHandler {
                                         Log.v(TAG, "Ladder table found, selecting the second table");
                                         table = tables.get(0);
                                     }
-                                    tableBody = table.select("tbody").get(0);
+                                    tableBody = table.select(TBODY).get(0);
                                     allAccounts = parsePlayerStats(tableBody);
                                     break;
                                 case 3:
                                     table = tables.get(1);
-                                    tableBody = table.select("tbody").get(0);
+                                    tableBody = table.select(TBODY).get(0);
                                     allAccounts = parsePlayerStats(tableBody);
                             }
                             break;
@@ -132,11 +136,11 @@ public class StatsHandler {
                             switch (tables.size()){
                                 case 0:
                                     Log.e(TAG, "No tables found, the URL was probably malformed");
-                                    errorMessage = "Malformed URL";
+                                    errorMessage =  Resources.getSystem().getString(R.string.err_malformed_url);
                                     break;
                                 case 1:
                                     Log.e(TAG, "One table found, the player probably hasn't played a game");
-                                    errorMessage = "No Stats Available";
+                                    errorMessage = Resources.getSystem().getString(R.string.err_player_unavailable);
                                     break;
                                 case 2:
                                     // The first possible table is non-existent, so get the first possible one
@@ -146,12 +150,12 @@ public class StatsHandler {
                                         table = tables.get(1);
                                     }
 
-                                    tableBody = table.select("tbody").get(0);
+                                    tableBody = table.select(TBODY).get(0);
                                     allAccounts = parsePlayerStats(tableBody);
                                     break;
                                 case 3:
                                     table = tables.get(1);
-                                    tableBody = table.select("tbody").get(0);
+                                    tableBody = table.select(TBODY).get(0);
                                     allAccounts = parsePlayerStats(tableBody);
                             }
                             break;
@@ -165,20 +169,20 @@ public class StatsHandler {
                             switch (tables.size()){
                                 case 0:
                                     Log.e(TAG, "No tables found, the URL was probably malformed");
-                                    errorMessage = "Malformed URL";
+                                    errorMessage = Resources.getSystem().getString(R.string.err_malformed_url);
                                     break;
                                 case 1:
                                     Log.e(TAG, "One table found, the player probably hasn't played a game");
-                                    errorMessage = "No Stats Available";
+                                    errorMessage = Resources.getSystem().getString(R.string.err_player_unavailable);
                                     break;
                                 case 2:
                                     table = tables.get(0);
-                                    tableBody = table.select("tbody").get(0);
+                                    tableBody = table.select(TBODY).get(0);
                                     allAccounts = parsePlayerStats(tableBody);
                                     break;
                                 case 3:
                                     table = tables.get(1);
-                                    tableBody = table.select("tbody").get(0);
+                                    tableBody = table.select(TBODY).get(0);
                                     allAccounts = parsePlayerStats(tableBody);
                             }
 
@@ -294,10 +298,10 @@ public class StatsHandler {
 
                     Element tableBody;
                     if (players[0].getGame() == Player.GameEnum.None){
-                        errorMessage = "Player Stored incorrectly";
+                        errorMessage = Resources.getSystem().getString(R.string.err_player_game_is_none);
                     }
 
-                    Elements tables = doc.select("#calendar_wrap"); // there may be multiple
+                    Elements tables = doc.select(CALENDAR); // there may be multiple
                     Element table;
                     Log.d(TAG, "tables size = " + tables.size());
                     //Do game specific parsing actions here
@@ -307,19 +311,19 @@ public class StatsHandler {
                             switch (tables.size()){
                                 case 0:
                                     Log.e(TAG, "No tables found, the URL was probably malformed");
-                                    errorMessage = "Malformed URL";
+                                    errorMessage = Resources.getSystem().getString(R.string.err_malformed_url);
                                     break;
                                 case 1:
                                     Log.e(TAG, "One table found, the player probably hasn't played a game");
-                                    errorMessage = "No Ladder Stats Available";
+                                    errorMessage = Resources.getSystem().getString(R.string.err_ladder_unavailable);
                                     break;
                                 case 2:
                                     Log.e(TAG, "Ladder Table not found");
-                                    errorMessage = "Ladder Stats not Available";
+                                    errorMessage = Resources.getSystem().getString(R.string.err_ladder_unavailable);
                                     break;
                                 case 3:
                                     table = tables.get(1);
-                                    tableBody = table.select("tbody").get(0);
+                                    tableBody = table.select(TBODY).get(0);
                                     allAccounts = parseLadderStats(tableBody, Player.GameEnum.KanesWrath);
                                     break;
                             }
@@ -328,19 +332,19 @@ public class StatsHandler {
                             switch (tables.size()){
                                 case 0:
                                     Log.e(TAG, "No tables found, the URL was probably malformed");
-                                    errorMessage = "Malformed URL";
+                                    errorMessage = Resources.getSystem().getString(R.string.err_malformed_url);
                                     break;
                                 case 1:
                                     Log.e(TAG, "One table found, the player probably hasn't played a game");
-                                    errorMessage = "No Ladder Stats Available";
+                                    errorMessage = Resources.getSystem().getString(R.string.err_ladder_unavailable);
                                     break;
                                 case 2:
                                     Log.e(TAG, "Ladder Table not found");
-                                    errorMessage = "Ladder Stats not Available";
+                                    errorMessage = Resources.getSystem().getString(R.string.err_ladder_unavailable);
                                     break;
                                 case 3:
                                     table = tables.get(1);
-                                    tableBody = table.select("tbody").get(0);
+                                    tableBody = table.select(TBODY).get(0);
                                     allAccounts = parseLadderStats(tableBody, Player.GameEnum.CnC3);
                                     break;
                             }
@@ -349,25 +353,25 @@ public class StatsHandler {
                             switch (tables.size()){
                                 case 0:
                                     Log.e(TAG, "No tables found, the URL was probably malformed");
-                                    errorMessage = "Malformed URL";
+                                    errorMessage = Resources.getSystem().getString(R.string.err_malformed_url);
                                     break;
                                 case 1:
                                     Log.e(TAG, "One table found, the player probably hasn't played a game");
-                                    errorMessage = "No Ladder Stats Available";
+                                    errorMessage = Resources.getSystem().getString(R.string.err_ladder_unavailable);
                                     break;
                                 case 2:
                                     if (doc.getElementsContainingText("Not found in Generals").size() > 0){
-                                        errorMessage = "Ladder Stats not available";
+                                        errorMessage = Resources.getSystem().getString(R.string.err_ladder_unavailable);
                                     } else {
                                         table = tables.get(0);
-                                        tableBody = table.select("tbody").get(0);
+                                        tableBody = table.select(TBODY).get(0);
                                         allAccounts = parseLadderStats(tableBody, Player.GameEnum.Generals);
                                     }
                                     break;
                                 case 3:
                                     Log.v(TAG, "Three tables");
                                     table = tables.get(1);
-                                    tableBody = table.select("tbody").get(0);
+                                    tableBody = table.select(TBODY).get(0);
                                     allAccounts = parseLadderStats(tableBody, Player.GameEnum.Generals);
                             }
                             break;
@@ -375,26 +379,26 @@ public class StatsHandler {
                             switch (tables.size()){
                                 case 0:
                                     Log.e(TAG, "No tables found, the URL was probably malformed");
-                                    errorMessage = "Malformed URL";
+                                    errorMessage = Resources.getSystem().getString(R.string.err_malformed_url);
                                     break;
                                 case 1:
                                     Log.e(TAG, "One table found, the player probably hasn't played a game");
-                                    errorMessage = "No Ladder Stats Available";
+                                    errorMessage = Resources.getSystem().getString(R.string.err_ladder_unavailable);
                                     break;
                                 case 2:
                                     if (doc.getElementsContainingText("Not found in Generals").size() > 0){
                                         table = tables.get(0);
-                                        tableBody = table.select("tbody").get(0);
+                                        tableBody = table.select(TBODY).get(0);
                                         allAccounts = parseLadderStats(tableBody, Player.GameEnum.Generals);
                                     } else {
-                                        errorMessage = "Ladder Stats not available";
+                                        errorMessage = Resources.getSystem().getString(R.string.err_ladder_unavailable);
                                     }
 
                                     break;
                                 case 3:
                                     Log.v(TAG, "Three tables");
                                     table = tables.get(2);
-                                    tableBody = table.select("tbody").get(0);
+                                    tableBody = table.select(TBODY).get(0);
                                     allAccounts = parseLadderStats(tableBody, Player.GameEnum.Generals);
                             }
 
@@ -403,19 +407,19 @@ public class StatsHandler {
                             switch (tables.size()){
                                 case 0:
                                     Log.e(TAG, "No tables found, the URL was probably malformed");
-                                    errorMessage = "Malformed URL";
+                                    errorMessage = Resources.getSystem().getString(R.string.err_malformed_url);
                                     break;
                                 case 1:
                                     Log.e(TAG, "One table found, the player probably hasn't played a game");
-                                    errorMessage = "Ladder Stats Not Available";
+                                    errorMessage = Resources.getSystem().getString(R.string.err_ladder_unavailable);
                                     break;
                                 case 2:
                                     Log.e(TAG, "Ladder Table not found");
-                                    errorMessage = "Ladder Stats Not Available";
+                                    errorMessage = Resources.getSystem().getString(R.string.err_ladder_unavailable);
                                     break;
                                 case 3:
                                     table = tables.get(1);
-                                    tableBody = table.select("tbody").get(0);
+                                    tableBody = table.select(TBODY).get(0);
                                     allAccounts = parseLadderStats(tableBody, Player.GameEnum.RedAlert3);
                             }
 
